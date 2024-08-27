@@ -1,0 +1,81 @@
+
+  
+  .filter-group {
+    padding: 20px 0px;
+  }
+  
+  .filter-group h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .see-more {
+    color: #a67a44;
+    font-weight: 700;
+    cursor: pointer;
+    margin: 15px;
+  }
+
+  .css-cp2j25-MuiSlider-thumb{
+    height: 15px !important;
+    width: 15px !important;
+  }
+  
+  .MuiSlider-root {
+    margin-top: 10px;
+    color: #a67a44;
+  }
+  
+  .MuiSlider-thumb {
+    background-color: #a67a44;
+  }
+  
+  .MuiFormControlLabel-label {
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .MuiCheckbox-root {
+    color: #a67a44;
+  }
+  
+  .css-j204z7-MuiFormControlLabel-root{
+    width: 100%;
+  }
+
+  .css-i4bv87-MuiSvgIcon-root{
+  color: #00000080;
+  font-size: 20px !important;
+  }
+
+
+  .range-para{
+    margin: 0px;
+    padding: 0px;
+    color: #1C1B1F80;
+    font-size: 14px;
+  }
+
+  .css-3pgxue-MuiSlider-root{
+    padding: 0px !important;
+    width: 63% !important;
+   
+    margin: 0px !important;
+  }
+
+  .range-main{
+    gap: 10px;
+    align-items: center !important;
+  }
+
+  .css-ahj2mt-MuiTypography-root{
+    font-size: 15px !important;
+    color:  #1C1B1F80 !important;
+    font-weight: 500 !important;
+  }
+
+.brder{
+    border-bottom: 2px solid #1c1b1f3f;
+    padding-top: 0px !important;
+}

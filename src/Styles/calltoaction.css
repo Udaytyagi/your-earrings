@@ -1,0 +1,74 @@
+.calltoaction{
+    background-image: url(../assets/calltoaction.png);
+    padding: 140px 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .calltoaction-text h2{
+      color: #fff;
+      text-transform: uppercase;
+      font-size: 42px;
+      font-weight: 600;
+      letter-spacing: 1px;
+  }
+  .calltoaction-text p{
+      color: #fff;
+      font-size: 18px;
+      padding: 15px 0;
+      letter-spacing: 1px;
+  }
+
+  .calltoaction-text button {
+   background-color: #a07936;
+    padding: 10px 20px;
+    letter-spacing: 1px;
+    border: none;
+}
+
+
+.calltoaction-text button a {
+    color: #fff;
+     font-size: 18px;
+     text-transform: uppercase;
+     letter-spacing: 1px;
+ }
+
+ @media only screen and (min-width: 768px) and (max-width: 991px){
+    .calltoaction{
+        padding: 50px 0px;
+    }
+    .calltoaction-text h2{
+        font-size: 26px;
+    }
+    .calltoaction-text p{
+        padding: 0px;
+        font-size: 14px;
+        line-height: 21px;
+    }
+    .calltoaction-text button{
+        padding: 7px 14px;
+    }
+    .calltoaction-text button a{
+        font-size: 14px;
+    }
+ }
+
+ @media only screen and (min-width: 992px) and (max-width: 1199px){
+    .calltoaction{
+        padding: 65px 0px;
+    }
+    .calltoaction-text h2{
+        font-size: 35px;
+    }
+    .calltoaction-text p {
+        font-size: 16px;
+    }
+    .calltoaction-text p{
+        padding: 7px;
+    }
+    .calltoaction-text button{
+        padding: 8px 20px;
+    }
+
+
+ }

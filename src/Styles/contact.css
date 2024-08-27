@@ -1,0 +1,95 @@
+
+
+.contactus-sec{
+    padding: 60px 0 50px;
+}
+
+.contact-box{
+    box-shadow: 0 0 5px #dcdcdc;
+    padding: 30px 10px;
+    border-radius: 25px;
+    margin: 10px;
+}
+.contact-box span {
+    font-size: 38px;
+    color: #a07936;
+}
+.contact-box h4{
+    font-size: 21px;
+    padding-top: 20px;
+}
+
+.contact-box p a {
+   color: #232323;
+}
+
+.contact-box:hover{
+    border-bottom: 1px solid #a07936;
+}
+
+.contact-us{
+    padding: 10px 0 50px;
+}
+.getntouch h3{
+    font-size: 32px;
+    font-weight: 700;
+    padding-bottom: 30px;
+}
+
+.contact_message p {
+    font-size: 14px;
+    line-height: 24px;
+    color: #212121;
+    margin-bottom: 20px;
+}
+
+.contact_message label {
+    line-height: 18px;
+    color: #212121;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.contact_message input,textarea:focus{
+   outline: none;
+}
+
+.contact_message input {
+    border: 1px solid #ebebeb;
+    height: 45px;
+    background: #ffffff;
+    width: 100%;
+    padding: 0 20px;
+    color: #5a5a5a;
+}
+
+.contact_message textarea {
+    height: 140px;
+    border: 1px solid #ebebeb;
+    background: #ffffff;
+    resize: none;
+    margin-bottom: 20px;
+    width: 100%;
+    padding: 10px 20px;
+    color: #5a5a5a;
+}
+.contact_message button {
+    font-weight: 400;
+    height: 42px;
+    line-height: 42px;
+    padding: 0 30px;
+    text-transform: capitalize;
+    border: none;
+    background: #242424;
+    color: #ffffff;
+    cursor: pointer;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+    border-radius: 4px;
+}
+.contact_message button:hover {
+    background: #a07936;
+}
+.getintouch-map iframe{
+    border-radius: 10px;
+}

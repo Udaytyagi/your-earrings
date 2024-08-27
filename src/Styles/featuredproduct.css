@@ -1,0 +1,44 @@
+.featured-product{
+    padding: 60px 0 40px;
+}
+
+.featured-heading h2{
+    text-transform: uppercase;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.featuredpdt-items {
+    padding: 15px;
+}
+
+.featuredpdt-items img{
+    border-radius: 50%;
+}
+
+.slick-prev{
+    left: -40px !important;
+}
+.featuredpdt-items h4{
+    font-size: 21px;
+    padding-top: 20px;
+}
+.slick-prev:before, .slick-next:before {
+    font-family: 'slick';
+    font-size: 35px !important;
+    line-height: 1;
+    opacity: .75;
+    color: #A07936 !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.popularproducts-items img{
+    transition: transform 1s ease 0s;
+    padding: 20px 10px 10px;
+}
+
+.popularproducts-items img:hover{
+   transform: scale(1.1);
+}
+

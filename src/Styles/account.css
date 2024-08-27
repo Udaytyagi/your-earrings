@@ -1,0 +1,111 @@
+/* Container styles */
+.my__account--section__inner {
+    border-radius: 10px;
+    display: flex;
+    padding: 30px;
+    box-shadow: 0 2px 22px rgba(0, 0, 0, .16);
+  }
+  
+  /* Sidebar styles */
+  .account__left--sidebar {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .account__content--title {
+    font-size: 24px; /* Adjust as needed */
+padding-bottom: 20px;
+  }
+  
+  .account__menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .account__menu--list {
+    margin-bottom: 13px;
+  }
+  
+  .account__menu--list a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px; /* Adjust as needed */
+  }
+  
+
+  
+  /* Main content styles */
+  .account__wrapper {
+    flex: 3;
+
+  }
+  
+
+  
+  .account__details {
+    margin-bottom: 20px;
+  }
+  
+  .account__details.two {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+  }
+  
+  .account__details--title {
+    font-size: 18px; /* Adjust as needed */
+    margin-bottom: 10px;
+  }
+  
+  .account__details--desc {
+    font-size: 14px; /* Adjust as needed */
+    margin-bottom: 10px;
+  }
+  
+  .account__details--link {
+    text-decoration: underline;
+    color: #a07936; /* Adjust color as needed */
+  }
+  
+  .account__details--footer {
+    display: flex;
+   gap: 20px;
+  }
+  
+  .account__details--footer__btn {
+    border: none;
+    background-color: #343a40; /* Adjust color as needed */
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px; /* Adjust as needed */
+  }
+  
+  .account__details--footer__btn:hover {
+    background-color: #424649; /* Adjust hover color as needed */
+  }
+  
+  /* Button styles */
+  .new__address--btn {
+    background-color: #343a40; /* Adjust color as needed */
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px; /* Adjust as needed */
+  }
+  
+  .new__address--btn:hover {
+    background-color: #424649; /* Adjust hover color as needed */
+  }
+  
+
+  .dashboard{
+    background-color: white;
+    border-left: 1px solid #ededed;
+    border-radius: 0px;
+    padding: 20px 20px 20px 50px;
+  }

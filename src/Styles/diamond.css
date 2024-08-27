@@ -1,0 +1,158 @@
+.diamond-main-heading{
+    font-weight: 600;
+    padding-top: 40px;
+    margin: 0px;
+}
+
+.diamond-head{
+    background-color: #A07936;
+    padding: 13px 20px;
+}
+
+.diamond-head{
+    font-weight: 400;
+}
+
+.diamond-row{
+    padding-top: 35px;
+}
+
+.diamond-head h5{
+    color: white;
+    margin: 0px;
+}
+
+.shapes{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #A079361A;
+    padding: 20px 30px ;
+}
+
+.shapes h6{
+    text-align: center;
+    font-size: 16px;
+}
+
+
+.metals{
+    padding-bottom: 35px;
+}
+
+
+.diamond-card-btn{
+    background-color: #A07936;
+    color: white;
+    border: none;
+    width: -webkit-fill-available;
+    display: flex;
+    justify-content: center;
+    font-size: 13px;
+    padding: 6px;
+    border-radius: 3px;
+    margin-top: 10px;
+}
+
+.diamond-card-col{
+    padding: 50px 25px 0px 25px;
+}
+
+.filter-main{
+    padding: 35px 18px;
+}
+
+
+.range-contain{
+    background-color: #A079361A;
+}
+
+.range{
+    margin: 35px 0px;
+}
+
+.page-nav{
+    align-items: center;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+
+.page-nav p{
+padding: 0px;
+margin: 0px;
+color: #00000080;
+font-weight: 600;
+font-size: 18px;
+}
+
+
+.page-nav svg{
+font-size: 21px;
+color: #00000080;
+}
+
+.new-product-items-button button{
+    border: 2px solid #A07936;
+    border-radius: 0px;
+    background-color: transparent;
+    color: #A07936;
+    font-weight: 600;
+    font-size: 20px;
+    padding: 13px 0px;
+    width: 100%;
+}
+
+
+.select-btn{
+    justify-content: left !important;
+    gap: 15px !important;
+    padding: 40px 30px 60px;
+}
+
+.shapes-inner{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+}
+
+.shapes-inner button{
+    border: none;
+    box-shadow: 0px 4px 4px 0px #00000040 ;
+    color: #1C1B1F;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 14px 20px;
+    width: 150px;
+}
+
+.White-Gold{
+    background-color: #D5DDE0;
+}
+
+.yellow-Gold{
+    background-color: #FDD748;
+}
+
+.Rose-Gold{
+    background-color: #FDD6C5;
+}
+
+.platinum{
+    background-color: #E9F1F4;
+}
+
+
+@media only screen and (min-width: 768px) and (max-width: 991px){
+    .diamond-card-col{
+        padding: 0px 25px;
+    }
+    .new-product-items-button button{
+        padding: 6px 0px;
+        font-size: 17px;
+    }
+    
+}

@@ -1,0 +1,30 @@
+.brands{
+    padding: 40px 0;
+    background-color: #e9e9e9;
+}
+
+.brands-heading h2 {
+    text-transform: uppercase;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.brands-heading p {
+    font-size: 18px;
+}
+.brands-logo img{
+    width: 20%;
+    padding: 20px;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px){
+    .brands-logo img {
+        width: 30%;
+        padding: 10px;
+    }
+    .brands-logo{
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+}
