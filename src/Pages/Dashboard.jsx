@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 import Topbar from "../sections/common/Topbar";
 import Navbarmid from "../sections/common/Navbarmid";
 import NavbarBottom from "../sections/common/NavbarBottom";
@@ -24,7 +24,7 @@ function Account() {
         heading="Dashboard"
         image="/images/earrings-bg.png"
         para="Explore our exquisite hoop earrings, climbers and
-fashion earrings to find your perfect pair."
+           fashion earrings to find your perfect pair."
       />
       <div className="page-nav container px-0">
         <p>Home</p>
@@ -52,7 +52,7 @@ fashion earrings to find your perfect pair."
                   onClick={() => handleMenuClick("Profile")}
                   className={activeMenu === "Profile" ? "active" : ""}
                 >
-                 My Profile
+                  My Profile
                 </a>
               </li>
               <li className="account__menu--list">

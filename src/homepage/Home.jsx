@@ -20,22 +20,20 @@ const Home = () => {
     <>
       <Topbar />
       <Navbarmid />
-    <NavbarBottom />
+      <NavbarBottom />
       <Banner />
       <ShippingInfo />
       <Popularproducts />
-
       <NewProducts />
-
-    <CallToAction />
-    <FeaturedProduct />
-    <Testimonial />
+      <CallToAction />
+      <FeaturedProduct />
+      <Testimonial />
       <Homeblog />
       <Brands />
       <Footer />
 
 
-    
+
     </>
   );
 };

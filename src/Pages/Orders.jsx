@@ -15,11 +15,9 @@ function Orders() {
       <Topbar />
       <Navbarmid />
       <NavbarBottom />
-
       <Breadcrumb
         heading="Orders"
         image="/images/earrings-bg.png"
-     
       />
       <div className="container py-5">
         <div className="table-responsive">
@@ -88,15 +86,15 @@ function Orders() {
               </tr>
               {/* Repeat <tr> for each order item */}
             </tbody>
-        
+
           </table>
         </div>
-        
+
         <nav>
           <ul className="pagination d-flex justify-content-end">
             <li className="page-item">
               <a href="#" className="page-link prev-page">
-              <TbPlayerTrackPrevFilled />
+                <TbPlayerTrackPrevFilled />
 
               </a>
             </li>
@@ -107,7 +105,7 @@ function Orders() {
             </li>
             <li className="page-item">
               <a href="#" className="page-link next-page">
-              <TbPlayerTrackNextFilled />
+                <TbPlayerTrackNextFilled />
 
               </a>
             </li>

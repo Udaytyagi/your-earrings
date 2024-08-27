@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 import Topbar from "../sections/common/Topbar";
 import Navbarmid from "../sections/common/Navbarmid";
 import NavbarBottom from "../sections/common/NavbarBottom";
@@ -22,7 +22,7 @@ function Account() {
 
 
 
-  
+
   const [activeMenu, setActiveMenu] = useState("Profile");
 
   const handleMenuClick = (data) => {
@@ -68,7 +68,7 @@ fashion earrings to find your perfect pair."
                   onClick={() => handleMenuClick("Profile")}
                   className={activeMenu === "Profile" ? "active" : ""}
                 >
-                My Profile
+                  My Profile
                 </a>
               </li>
               <li className="account__menu--list">
@@ -99,115 +99,115 @@ fashion earrings to find your perfect pair."
           <div className="account__wrapper">
             <div className="account__content">
               <div className="adreress-right dashboard">
-              <main className="container">
-        <div className="row gx-5 m-0">
-       
-          <aside className="col-md-12 col-xl-6 profile-slider-left">
-            <div className="profile-slider-left-top-div">
-              <img
-                src="https://img.freepik.com/free-icon/user_318-159711.jpg"
-                alt="profile"
-              />
-              <h4>Vishal Bhardwaj</h4>
-              <p>user@example.com</p>
-              <button>Edit image</button>
-              <input
-                type="file"
-                accept="image/png"
-                style={{ display: "none" }}
-              />
-            </div>
-            <h5>Edit Profile</h5>
-            <div className="profile-right-side">
-              <form>
-                <div className="input-div-profile">
-                  <label htmlFor="Email">Email Address</label>
-                  <input
-                    disabled=""
-                    type="text"
-                    placeholder="Email Address"
-                    id="Email"
-                    defaultValue="user@example.com"
-                  />
-                </div>
-                <div className="input-div-profile">
-                  <label htmlFor="phone">Mobile Number</label>
-                  <input type="text" placeholder="Mobile Number" id="phone" />
-                </div>
-                <div className="input-div-profile">
-                  <label htmlFor="username">Username</label>
-                  <input type="text" placeholder="Username" id="username" />
-                </div>
-                <button
-                  className="btn update text-white d-flex justify-content-center align-items-center w-100 save-detalis"
-                  type="submit"
-                >
-                  Update
-                </button>
-              </form>
-              <div className="pt-3 d-flex justify-content-between">
-                <button className="update">Change Password</button>
-                <button className="update" onClick={openPopup}>
-                  Add Address
-                </button>
-              </div>
-            </div>
-          </aside>
-          <div className="col-md-12 col-xl-6 pt-md-5">
-            <div className="adreress-right">
-              <div className="d-flex justify-content-between align-iteam-center adreress-right-heading">
-                <h6>Select Delivery Address</h6>
-              </div>
-              <div className="row pb-md-0 pb-2">
-                <div className="col-12">
-                  <div className="add-right-check-box">
-                    <div className="right-address-border">
-                      <div className="form-check">
-                        <input
-                          className="form-check-input formcheckinput-right"
-                          type="radio"
-                          name="DelvieryAddress"
-                          id="DelvieryAddress1"
+                <main className="container">
+                  <div className="row gx-5 m-0">
+
+                    <aside className="col-md-12 col-xl-6 profile-slider-left">
+                      <div className="profile-slider-left-top-div">
+                        <img
+                          src="https://img.freepik.com/free-icon/user_318-159711.jpg"
+                          alt="profile"
                         />
-                        <div className="ms-3 address-right-iteam">
-                          <div>
-                            <span>Vishal Bhardwaj</span>
-                            <span> (Home)</span>
+                        <h4>Vishal Bhardwaj</h4>
+                        <p>user@example.com</p>
+                        <button>Edit image</button>
+                        <input
+                          type="file"
+                          accept="image/png"
+                          style={{ display: "none" }}
+                        />
+                      </div>
+                      <h5>Edit Profile</h5>
+                      <div className="profile-right-side">
+                        <form>
+                          <div className="input-div-profile">
+                            <label htmlFor="Email">Email Address</label>
+                            <input
+                              disabled=""
+                              type="text"
+                              placeholder="Email Address"
+                              id="Email"
+                              defaultValue="user@example.com"
+                            />
                           </div>
-                          <div>
-                            <span>+91</span>
-                            <span>8888888888</span>
+                          <div className="input-div-profile">
+                            <label htmlFor="phone">Mobile Number</label>
+                            <input type="text" placeholder="Mobile Number" id="phone" />
                           </div>
-                          <div>
-                            <span>Ballabgarh </span>
-                            <span>Faridabad </span>
-                            <span>Haryana </span>
+                          <div className="input-div-profile">
+                            <label htmlFor="username">Username</label>
+                            <input type="text" placeholder="Username" id="username" />
                           </div>
-                          <div>
-                            <span>Pin Code: </span>
-                            <span>121004</span>
-                          </div>
-                          <div className="mt-3">
-                            <button className="btn btn-dark right-button-address">
-                              Edit
-                            </button>
-                            <button className="btn btn-dark ms-3 right-button-address">
-                              Remove
-                            </button>
+                          <button
+                            className="btn update text-white d-flex justify-content-center align-items-center w-100 save-detalis"
+                            type="submit"
+                          >
+                            Update
+                          </button>
+                        </form>
+                        <div className="pt-3 d-flex justify-content-between">
+                          <button className="update">Change Password</button>
+                          <button className="update" onClick={openPopup}>
+                            Add Address
+                          </button>
+                        </div>
+                      </div>
+                    </aside>
+                    <div className="col-md-12 col-xl-6 pt-md-5">
+                      <div className="adreress-right">
+                        <div className="d-flex justify-content-between align-iteam-center adreress-right-heading">
+                          <h6>Select Delivery Address</h6>
+                        </div>
+                        <div className="row pb-md-0 pb-2">
+                          <div className="col-12">
+                            <div className="add-right-check-box">
+                              <div className="right-address-border">
+                                <div className="form-check">
+                                  <input
+                                    className="form-check-input formcheckinput-right"
+                                    type="radio"
+                                    name="DelvieryAddress"
+                                    id="DelvieryAddress1"
+                                  />
+                                  <div className="ms-3 address-right-iteam">
+                                    <div>
+                                      <span>Vishal Bhardwaj</span>
+                                      <span> (Home)</span>
+                                    </div>
+                                    <div>
+                                      <span>+91</span>
+                                      <span>8888888888</span>
+                                    </div>
+                                    <div>
+                                      <span>Ballabgarh </span>
+                                      <span>Faridabad </span>
+                                      <span>Haryana </span>
+                                    </div>
+                                    <div>
+                                      <span>Pin Code: </span>
+                                      <span>121004</span>
+                                    </div>
+                                    <div className="mt-3">
+                                      <button className="btn btn-dark right-button-address">
+                                        Edit
+                                      </button>
+                                      <button className="btn btn-dark ms-3 right-button-address">
+                                        Remove
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              {/* Repeat the above block for each address */}
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                    {/* Repeat the above block for each address */}
+
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-        </div>
-      </main>
-             
+                </main>
+
               </div>
             </div>
           </div>

@@ -18,8 +18,6 @@ import Account from "./Pages/Account";
 import Dashboard from "./Pages/Dashboard";
 
 
-
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -33,69 +31,54 @@ const router = createBrowserRouter([
     path: "/contact-us/",
     element: <Contact />,
   },
-
   {
     path: "login/",
     element: <Login />,
   },
-
   {
     path: "/sign-up",
     element: <Signup />,
   },
-  
   {
     path: "/diamond",
     element: <Diamond />,
   },
-
   {
     path: "/single-products",
     element: <SingleProducts />,
   },
-
   {
     path: "/cart",
     element: <Cart />,
   },
-
   {
     path: "/wishlist",
     element: <Wishlist />,
   },
-
   {
     path: "/profile",
     element: <Profile />,
   },
-
   {
     path: "/my-orders",
     element: <Orders />,
   },
-
   {
     path: "/blog",
     element: <Blog />,
   },
-
-  
   {
     path: "/checkout",
-    element: <Checkout/>,
+    element: <Checkout />,
   },
-    
   {
     path: "/my-account",
-    element: <Account/>,
+    element: <Account />,
   },
   {
     path: "/dashboard",
     element: <Dashboard />,
   },
-
-
-
 ]);
 
 function Routes() {

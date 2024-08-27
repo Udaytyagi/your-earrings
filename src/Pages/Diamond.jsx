@@ -166,25 +166,25 @@ fashion earrings to find your perfect pair."
             </div>
             <div className="shapes select-btn">
               <div className="shapes-inner">
-               <a href="#"><button className="White-Gold">14k White Gold</button></a>
+                <a href="#"><button className="White-Gold">14k White Gold</button></a>
               </div>
               <div className="shapes-inner">
-               <a href="#"><button className="yellow-Gold">14k Yellow Gold</button></a>
+                <a href="#"><button className="yellow-Gold">14k Yellow Gold</button></a>
               </div>
               <div className="shapes-inner">
-               <a href="#"><button className="Rose-Gold">14k Rose Gold</button></a>
+                <a href="#"><button className="Rose-Gold">14k Rose Gold</button></a>
               </div>
               <div className="shapes-inner">
-               <a href="#"><button className="White-Gold">18k White Gold</button></a>
+                <a href="#"><button className="White-Gold">18k White Gold</button></a>
               </div>
               <div className="shapes-inner">
-               <a href="#"><button className="yellow-Gold">18k Yellow Gold</button></a>
+                <a href="#"><button className="yellow-Gold">18k Yellow Gold</button></a>
               </div>
               <div className="shapes-inner">
-               <a href="#"><button className="Rose-Gold">14k Rose Gold</button></a>
+                <a href="#"><button className="Rose-Gold">14k Rose Gold</button></a>
               </div>
               <div className="shapes-inner">
-               <a href="#"><button className="platinum">Platinum</button></a>
+                <a href="#"><button className="platinum">Platinum</button></a>
               </div>
             </div>
           </div>
@@ -232,7 +232,7 @@ fashion earrings to find your perfect pair."
                       <div className="rating-price d-flex">
                         <h4>
                           <span>£500</span>
-                          
+
                           £300
                         </h4>
                         <Rating initialValue={4} />

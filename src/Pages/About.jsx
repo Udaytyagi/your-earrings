@@ -19,29 +19,28 @@ const About = () => {
             <Topbar />
             <Navbarmid />
             <NavbarBottom />
-
             <Breadcrumb
-        heading="About Us"
-        image="/images/earrings-bg.png"
-        para="Explore our exquisite hoop earrings, climbers and
-fashion earrings to find your perfect pair."
-      />
-           <div className="page-nav container px-0">
-<p>Home</p>
-<FaAngleRight/>
-<p>About Us</p>
-      </div>
-           
+                heading="About Us"
+                image="/images/earrings-bg.png"
+                para="Explore our exquisite hoop earrings, climbers and
+                    fashion earrings to find your perfect pair."
+            />
+            <div className="page-nav container px-0">
+                <p>Home</p>
+                <FaAngleRight />
+                <p>About Us</p>
+            </div>
+
 
 
             <section className="about-us">
                 <div className="container">
-                <h3>About Us</h3>
+                    <h3>About Us</h3>
                     <div className="row about-main">
-                    
+
                         <div className="col-md-12 col-lg-6">
                             <div className="about-test">
-                        
+
 
                                 <p className="pt-md-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. A expedita cumque voluptate enim, animi doloribus hic possimus, distinctio, repellendus nostrum cupiditate rem temporibus optio eaque aliquid ea veritatis error voluptatem! Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque ea laudantium velit reprehenderit accusamus sed sit qui, placeat autem repudiandae amet repellendus quibusdam maiores sunt vel itaque nisi delectus harum!</p>
 
@@ -85,7 +84,7 @@ fashion earrings to find your perfect pair."
                     <div className="row">
                         <div className="col-md-4">
                             <div className="whychoose-test text-center">
-                           <span> <AiOutlineAntDesign /></span>
+                                <span> <AiOutlineAntDesign /></span>
                                 <h4>Creative Design</h4>
 
                                 <p>Erat metus sodales eget dolor consectetuer, porta ut purus at et alias, nulla ornare velit amet enim</p>
@@ -95,7 +94,7 @@ fashion earrings to find your perfect pair."
 
                         <div className="col-md-4">
                             <div className="whychoose-test text-center">
-                           <span> <RiMoneyDollarCircleLine /></span>
+                                <span> <RiMoneyDollarCircleLine /></span>
                                 <h4>100% Money Back Guarantee</h4>
 
                                 <p>Erat metus sodales eget dolor consectetuer, porta ut purus at et alias, nulla ornare velit amet enim</p>
@@ -105,7 +104,7 @@ fashion earrings to find your perfect pair."
 
                         <div className="col-md-4">
                             <div className="whychoose-test text-center">
-                           <span> <MdSupportAgent /></span>
+                                <span> <MdSupportAgent /></span>
                                 <h4>Online Support 24/7</h4>
 
                                 <p>Erat metus sodales eget dolor consectetuer, porta ut purus at et alias, nulla ornare velit amet enim</p>
@@ -113,7 +112,7 @@ fashion earrings to find your perfect pair."
                             </div>
                         </div>
 
-                      
+
 
                     </div>
                 </div>
@@ -121,7 +120,7 @@ fashion earrings to find your perfect pair."
 
 
 
-       
+
 
 
 
