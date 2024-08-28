@@ -1,10 +1,8 @@
 import "../../Styles/breadcrumb.css";
 
-const Breadcrumb = ({ heading, image,para }) => {
-  console.log("imagesssss", image);
-
+const Breadcrumb = ({ heading, image, para }) => {
   var sectionStyle = {
-  backgroundImage: `url(${image})`,
+    backgroundImage: `url(${image})`,
   };
   return (
     <>

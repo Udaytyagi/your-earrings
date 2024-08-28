@@ -3,88 +3,52 @@ import { FaAngleRight } from "react-icons/fa6";
 
 import '../../Styles/blog.css'
 
-const Blog = () => {
-  return (
-    
-     <>
+const Blog = ({ blogs }) => {
+    return (
 
-   
-      <section className="blog-sec">
-            <div className="container">
-
-                <div className="row">
-                    <div className="col-md-12 text-center">
-                        <div className="blog-latestpost">
-                            <h2>Latest Post</h2>
+        <>
+            <section className="blog-sec">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-md-12 text-center">
+                            <div className="blog-latestpost">
+                                <h2>Latest Post</h2>
+                            </div>
                         </div>
+                    </div>
+
+                    <div className="row">
+                        {
+                            blogs && blogs.length > 0 && blogs?.map((blog, i) => (
+                                <div className="col-md-4" key={i}>
+                                    <div className="blog-post">
+                                        <h5>{blog?.Created_at}</h5>
+                                        <img className='img-fluid' src={blog?.Images || "/images/blog-1.png"} alt="" />
+
+                                        <h3>{blog?.Title}</h3>
+
+
+                                        <div className="admin-info">
+                                            <a href="#"><CiUser /> admin </a>
+                                            <a href="#">{blog?.Category_name} </a>
+                                        </div>
+
+                                        <p dangerouslySetInnerHTML={{ __html: blog?.Description }}></p>
+
+                                        <a href="#">Read More <FaAngleRight /></a>
+                                    </div>
+                                </div>
+                            ))
+                        }
+
+
                     </div>
                 </div>
-
-                <div className="row">
-                    <div className="col-md-4">
-                        <div className="blog-post">
-                            <h5>20<br/> july</h5>
-                            <img className='img-fluid' src="/images/blog-1.png" alt="" />
-                            
-                            <h3>Exquisite Designer Earrings</h3>
-                            
-
-                            <div className="admin-info">
-                               <a href="#"><CiUser /> admin </a>
-                               <a href="#">Diamond </a>
-                            </div>
-
-                            <p>Voluptatum sed natus doloremque totam harum, ad excepturi. Id pariatur quos nulla saepe nesciunt cum, repellat esse magnam eveniet molestiae...</p>
-
-                            <a href="#">Read More <FaAngleRight /></a>
-                        </div>
-                    </div>
-
-                    <div className="col-md-4">
-                        <div className="blog-post">
-                            <h5>20<br/> july</h5>
-                            <img className='img-fluid' src="/images/blog-2.png" alt="" />
-                            
-                            <h3>Exquisite Designer Earrings</h3>
-                            
-
-                            <div className="admin-info">
-                               <a href="#"><CiUser /> admin </a>
-                               <a href="#">Diamond </a>
-                            </div>
-
-                            <p>Voluptatum sed natus doloremque totam harum, ad excepturi. Id pariatur quos nulla saepe nesciunt cum, repellat esse magnam eveniet molestiae...</p>
-
-                            <a href="#">Read More <FaAngleRight /></a>
-                        </div>
-                    </div>
-
-                    <div className="col-md-4">
-                        <div className="blog-post">
-                            <h5>20<br/> july</h5>
-                            <img className='img-fluid' src="/images/blog-3.png" alt="" />
-                            
-                            <h3>Exquisite Designer Earrings</h3>
-                            
-
-                            <div className="admin-info">
-                               <a href="#"><CiUser /> admin </a>
-                               <a href="#">Diamond </a>
-                            </div>
-
-                            <p>Voluptatum sed natus doloremque totam harum, ad excepturi. Id pariatur quos nulla saepe nesciunt cum, repellat esse magnam eveniet molestiae...</p>
-
-                            <a href="#">Read More <FaAngleRight /></a>
-                        </div>
-                    </div>
-                    
-                </div>
-            </div>
-        </section>
+            </section>
 
 
-    </>
-  )
+        </>
+    )
 }
 
 export default Blog

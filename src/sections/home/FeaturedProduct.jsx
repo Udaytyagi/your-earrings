@@ -1,18 +1,17 @@
 import React from 'react'
 import '../../Styles/featuredproduct.css'
 import Slider from "react-slick";
-
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 
-const FeaturedProduct = () => {
+const FeaturedProduct = ({ products }) => {
 
   var settings = {
     // dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 5,
+    slidesToShow: 4,
     slidesToScroll: 1,
     initialSlide: 0,
     responsive: [
@@ -51,61 +50,40 @@ const FeaturedProduct = () => {
           <div className="row">
             <div className="col-md-12">
               <div className="featured-heading text-center">
-                <h2>Featured Products</h2>
+                <h2>{products?.Collection_name || "Collection Name"}</h2>
 
               </div>
             </div>
           </div>
 
           <div className="row">
+            {
+              products && products?.Product_details && products?.Product_details?.length > 3 ? <div className="slider-container">
+                <Slider {...settings}>
+                  {
+                    products && products?.Product_details && products?.Product_details?.length > 0 && products.Product_details.map((product, i) => (
+                      <div className="featuredpdt-items text-center" key={i}>
+                        <div className='featuredpdt-round'>
+                          <img className='img-fluid' src={product.image || "/images/products-1.png"} alt="" />
+                        </div>
 
-
-            <div className="slider-container">
-              <Slider {...settings}>
-
-                <div className="featuredpdt-items text-center">
-                  <img className='img-fluid' src="/images/featured-1.png" alt="" />
-                  <h4>Earrings</h4>
-                </div>
-                
-               <div className="featuredpdt-items text-center">
-                  <img className='img-fluid' src="/images/featured-2.png" alt="" />
-                  <h4>Earrings</h4>
-                </div>
-
-               <div className="featuredpdt-items text-center">
-                  <img className='img-fluid' src="/images/featured-3.png" alt="" />
-                  <h4>Earrings</h4>
-                </div>
-
-               <div className="featuredpdt-items text-center">
-                  <img className='img-fluid' src="/images/featured-4.png" alt="" />
-                  <h4>Earrings</h4>
-                </div>
-
-               <div className="featuredpdt-items text-center">
-                  <img className='img-fluid' src="/images/featured-5.png" alt="" />
-                  <h4>Earrings</h4>
-                </div>
-
-               <div className="featuredpdt-items text-center">
-                  <img className='img-fluid' src="/images/featured-6.png" alt="" />
-                  <h4>Earrings</h4>
-                </div>
-
-               <div className="featuredpdt-items text-center">
-                  <img className='img-fluid' src="/images/featured-2.png" alt="" />
-                  <h4>Earrings</h4>
-                </div>
-
-               <div className="featuredpdt-items text-center">
-                  <img className='img-fluid' src="/images/featured-3.png" alt="" />
-                  <h4>Earrings</h4>
-                </div>
-
-              </Slider>
-            </div>
-
+                        <h3>{product.Name || 'Product Name'}</h3>
+                      </div>
+                    ))
+                  }
+                </Slider>   </div> : <>
+                {
+                  products && products?.Product_details && products?.Product_details?.length > 0 && products.Product_details.map((product, i) => (
+                    <div className="col-lg-3 col-md-6 featuredpdt-items text-center d-flex flex-column align-items-center" key={i}>
+                      <div className='featuredpdt-round'>
+                        <img className='img-fluid' src={product.image || "/images/products-1.png"} alt="" />
+                      </div>
+                      <h3>{product.Name || 'Product Name'}</h3>
+                    </div>
+                  ))
+                }
+              </>
+            }
           </div>
         </div>
       </section>

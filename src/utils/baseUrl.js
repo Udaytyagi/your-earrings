@@ -1,0 +1,1 @@
+export const baseUrl = "https://earring-backend.cyberx-infosystem.us/api/"

@@ -1,14 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { fetchHomeDataApi } from "../../../apis/mainApis/home/homeApis";
 
 export const fetchHomeProducts = createAsyncThunk(
     "fetchHomeProducts",
-    async (userId) => {
-        // try {
-        //     const response = await homeProductApi(userId);
-        //     return response?.data?.data?.homeProduct;
-        // } catch (error) {
-        //     return null;
-        // }
+    async () => {
+        try {
+            const response = await fetchHomeDataApi();
+            return response?.data?.data;
+        } catch (error) {
+            return null;
+        }
     }
 );
 
