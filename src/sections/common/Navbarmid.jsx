@@ -3,8 +3,14 @@ import { IoIosHeartEmpty } from "react-icons/io";
 import { HiOutlineUser } from "react-icons/hi2";
 import { AiOutlineLogin } from "react-icons/ai";
 import "../../Styles/navbarmid.css";
+import { useSelector } from "react-redux";
+import { useNavigate } from 'react-router-dom'
+
 
 const Navbarmid = () => {
+  const user = useSelector(state => state?.user?.data);
+  const navigate = useNavigate()
+
   return (
     <>
       <section className="navbarmid">
@@ -16,11 +22,9 @@ const Navbarmid = () => {
                   <img className="img-fluid" src="/images/logo.png" alt="Logo" />
                 </div>
               </a>
-
             </div>
 
             <div className="col-md-1"></div>
-
             <div className="col-md-6">
               <div className="search">
                 <input
@@ -38,21 +42,19 @@ const Navbarmid = () => {
 
             <div className="col-md-2">
               <div className="cart d-flex align-items-center justify-content-end">
-                <a href="wishlist">
+                <div onClick={() => navigate('/wishlist')}>
                   <IoIosHeartEmpty />
-                </a>
-                <a href="cart">
-                  {" "}
+                </div>
+                <div onClick={() => navigate('/cart')}>
                   <PiShoppingCartSimple />
-                </a>
-                <a href="login">
-                  {" "}
-                  <AiOutlineLogin />
-                </a>
-                {/* <a href="dashboard">
-                  {" "}
-                  <HiOutlineUser />
-                </a> */}
+                </div>
+                {
+                  user ? <div onClick={() => navigate('/dashboard')}>
+                    <HiOutlineUser />
+                  </div> : <div onClick={() => navigate('/login')}>
+                    <AiOutlineLogin />
+                  </div>
+                }
               </div>
             </div>
           </div>

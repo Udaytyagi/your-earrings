@@ -22,6 +22,7 @@ const Home = () => {
   const newArrival = useSelector(state => state?.homeProducts?.data?.New_arrival);
   const testimonial = useSelector(state => state?.homeProducts?.data?.Testinomial);
   const blogs = useSelector(state => state?.homeProducts?.data?.Latest_blog_list);
+  const bannerInfo = useSelector(state => state?.homeProducts?.data?.banner_info)
 
 
   useEffect(() => {
@@ -41,7 +42,9 @@ const Home = () => {
       {
         newArrival && newArrival.length > 0 && <NewProducts products={newArrival} />
       }
-      <CallToAction />
+      {
+        bannerInfo && <CallToAction products={bannerInfo[0]} />
+      }
       {
         allCollection && allCollection.length > 1 && <FeaturedProduct products={allCollection[1]} />
       }
@@ -49,7 +52,7 @@ const Home = () => {
         testimonial && testimonial.length > 0 && <Testimonial products={testimonial} />
       }
       {
-        blogs && blogs.length > 0 && <Homeblog blogs={blogs}/>
+        blogs && blogs.length > 0 && <Homeblog blogs={blogs} />
       }
       <Brands />
       <Footer />

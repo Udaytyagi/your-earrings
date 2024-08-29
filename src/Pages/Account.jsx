@@ -37,17 +37,17 @@ function Account() {
         para="Explore our exquisite hoop earrings, climbers and
 fashion earrings to find your perfect pair."
       />
-  <div className="page-nav container px-0">
+      <div className="page-nav container px-0">
         <p>Home</p>
         <FaAngleRight />
         <p>My account</p>
       </div>
 
-<div className="container px-0 py-5">
-<div className=" my__account--section__inner border-radius-10 d-flex">
-<div className="account__left--sidebar">
-    <h2 className="account__content--title h3 mb-20">My Profile</h2>
-    <ul className="account__menu">
+      <div className="container px-0 py-5">
+        <div className=" my__account--section__inner border-radius-10 d-flex">
+          <div className="account__left--sidebar">
+            <h2 className="account__content--title h3 mb-20">My Profile</h2>
+            <ul className="account__menu">
               <li className="account__menu--list">
                 <a
                   href="dashboard"
@@ -63,7 +63,7 @@ fashion earrings to find your perfect pair."
                   onClick={() => handleMenuClick("Profile")}
                   className={activeMenu === "Profile" ? "active" : ""}
                 >
-                 My Profile
+                  My Profile
                 </a>
               </li>
               <li className="account__menu--list">
@@ -78,7 +78,7 @@ fashion earrings to find your perfect pair."
               <li className="account__menu--list">
                 <a
                   href="wishlist"
-               
+
                 >
                   Wishlist
                 </a>
@@ -86,83 +86,83 @@ fashion earrings to find your perfect pair."
               <li className="account__menu--list">
                 <a
                   href="login"
-                
+
                 >
                   Log Out
                 </a>
               </li>
             </ul>
-  </div>
-  <div className="account__wrapper">
-    <div className="account__content">
-  
-      
-            <div className="adreress-right dashboard">
-            <h2 className="account__content--title h3 mb-20">Addresses</h2>
-      <button className="new__address--btn primary__btn mb-25" type="button" onClick={openPopup}>
-        Add a new address
-      </button>
-              <div className="d-flex justify-content-between align-iteam-center adreress-right-heading">
-                <h6>Home</h6>
-              </div>
-              <div className="row pb-md-0 pb-2">
-                <div className="col-md-12 col-lg-6">
-                  <div className="add-right-check-box">
-                    <div className="right-address-border">
-                      <div className="form-check">
-                        <input
-                          className="form-check-input formcheckinput-right"
-                          type="radio"
-                          name="DelvieryAddress"
-                          id="DelvieryAddress1"
-                        />
-                        <div className="ms-3 address-right-iteam">
-                          <div>
-                            <span>Vishal Bhardwaj</span>
-                            <span> (Home)</span>
+          </div>
+          <div className="account__wrapper">
+            <div className="account__content">
+
+
+              <div className="adreress-right dashboard">
+                <h2 className="account__content--title h3 mb-20">Addresses</h2>
+                <button className="new__address--btn primary__btn mb-25" type="button" onClick={openPopup}>
+                  Add a new address
+                </button>
+                <div className="d-flex justify-content-between align-iteam-center adreress-right-heading">
+                  <h6>Home</h6>
+                </div>
+                <div className="row pb-md-0 pb-2">
+                  <div className="col-md-12 col-lg-6">
+                    <div className="add-right-check-box">
+                      <div className="right-address-border">
+                        <div className="form-check">
+                          <input
+                            className="form-check-input formcheckinput-right"
+                            type="radio"
+                            name="DelvieryAddress"
+                            id="DelvieryAddress1"
+                          />
+                          <div className="ms-3 address-right-iteam">
+                            <div>
+                              <span>Vishal Bhardwaj</span>
+                              <span> (Home)</span>
+                            </div>
+                            <div>
+                              <span>+91</span>
+                              <span>8888888888</span>
+                            </div>
+                            <div>
+                              <span>Ballabgarh </span>
+                              <span>Faridabad </span>
+                              <span>Haryana </span>
+                            </div>
+                            <div>
+                              <span>Pin Code: </span>
+                              <span>121004</span>
+                            </div>
+
                           </div>
-                          <div>
-                            <span>+91</span>
-                            <span>8888888888</span>
-                          </div>
-                          <div>
-                            <span>Ballabgarh </span>
-                            <span>Faridabad </span>
-                            <span>Haryana </span>
-                          </div>
-                          <div>
-                            <span>Pin Code: </span>
-                            <span>121004</span>
-                          </div>
-                  
                         </div>
                       </div>
+                      {/* Repeat the above block for each address */}
                     </div>
-                    {/* Repeat the above block for each address */}
                   </div>
                 </div>
+                <a className="account__details--link" href="">
+                  View Addresses (1)
+                </a>
+
+                <div className="account__details--footer d-flex mt-3">
+                  <button className="account__details--footer__btn" type="button">
+                    Edit
+                  </button>
+                  <button className="account__details--footer__btn" type="button">
+                    Delete
+                  </button>
+                </div>
               </div>
-              <a className="account__details--link" href="">
-          View Addresses (1)
-        </a>
-                 
-      <div className="account__details--footer d-flex mt-3">
-        <button className="account__details--footer__btn" type="button">
-          Edit
-        </button>
-        <button className="account__details--footer__btn" type="button">
-          Delete
-        </button>
-      </div>
+
             </div>
-            
+
           </div>
+        </div>
+      </div>
 
-    </div>
-</div>
-  </div>
-
-      <Footer/>
+      <Footer />
       {isPopupOpen ? (
         <div className="popup">
           <div className="popup-content">

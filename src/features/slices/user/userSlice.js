@@ -1,20 +1,20 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-
+import { fetchUserApi } from '../../../apis/mainApis/user/userApis';
 
 export const fetchUser = createAsyncThunk("fetchUser", async () => {
-    // try {
-    //     const response = await fetchUserApi();
-    //     return response?.data?.data?.user;
-    // } catch (error) {
-    //     return null;
-    // }
+    try {
+        const response = await fetchUserApi();
+        return response?.data?.data;
+    } catch (error) {
+        return null;
+    }
 });
 
 const userSlice = createSlice({
     name: "user",
     initialState: {
         isLoading: false,
-        data: [],
+        data: null,
         isError: false,
     },
     extraReducers: (builder) => {

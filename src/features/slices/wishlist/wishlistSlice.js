@@ -45,14 +45,14 @@ const wishlistSlice = createSlice({
         isError: false,
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchWishlist.pending, (state, action) => {
+        builder.addCase(fetchWishlist.pending, (state) => {
             state.isLoading = true;
         });
         builder.addCase(fetchWishlist.fulfilled, (state, action) => {
             state.isLoading = false;
             state.data = action.payload;
         });
-        builder.addCase(fetchWishlist.rejected, (state, action) => {
+        builder.addCase(fetchWishlist.rejected, (state) => {
             state.isLoading = false;
             state.isError = true;
         });
