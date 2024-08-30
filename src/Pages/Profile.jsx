@@ -8,8 +8,10 @@ import "../Styles/dashboard.css";
 import { FaAngleRight } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
 import "../Styles/profile.css";
+import { useSelector } from "react-redux";
 
 function Account() {
+  const user = useSelector(state => state?.user?.data?.user_record);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const openPopup = () => {
@@ -108,8 +110,8 @@ fashion earrings to find your perfect pair."
                           src="https://img.freepik.com/free-icon/user_318-159711.jpg"
                           alt="profile"
                         />
-                        <h4>Vishal Bhardwaj</h4>
-                        <p>user@example.com</p>
+                        <h4>{user && user?.name}</h4>
+                        <p>{user && user.email}</p>
                         <button>Edit image</button>
                         <input
                           type="file"

@@ -30,7 +30,6 @@ function Account() {
       <Topbar />
       <Navbarmid />
       <NavbarBottom />
-
       <Breadcrumb
         heading="My Account"
         image="/images/earrings-bg.png"

@@ -72,6 +72,12 @@
 .new-product-items p {
   font-weight: 500;
   font-size: 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 3.7em;
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
