@@ -8,7 +8,6 @@ export const fetchUserApi = async () => {
             Authorization: `Bearer ${token}`,
         };
         const response = await axios.get(`${baseUrl}fetch/profile`, { headers });
-        console.log("response from fetchUserApi", response)
         return response;
     } catch (error) {
         return null;

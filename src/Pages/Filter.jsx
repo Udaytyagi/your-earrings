@@ -59,7 +59,7 @@ function Filter({ sizes, selectedSizes, setSelectedSizes, setPriceRange, priceRa
       <div className="filter-group">
         <h3>Prices</h3>
         <div className="d-flex range-main">
-          <p className="range-para">£0</p>
+          <p className="range-para">$0</p>
           <Slider
             value={priceRange}
             onChange={handlePriceChange}
@@ -68,7 +68,7 @@ function Filter({ sizes, selectedSizes, setSelectedSizes, setPriceRange, priceRa
             max={50000}
             sx={{ color: "#A67A44" }}
           />
-          <p className="range-para">£50000</p>
+          <p className="range-para">$50000</p>
         </div>
       </div>
     </div>

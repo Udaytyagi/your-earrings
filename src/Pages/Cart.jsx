@@ -54,7 +54,7 @@ function Cart() {
                   </div>
                 </div>
                 <div className="col-md-5 product-price">
-                  <p>£65.00</p>
+                  <p>$65.00</p>
                   <div className="quantity__box" style={{}}>
                     <button
                       type="button"
@@ -79,7 +79,7 @@ function Cart() {
                       <FiPlus />
                     </button>
                   </div>
-                  <p>£65.00</p>
+                  <p>$65.00</p>
                 </div>
               </div>
               <div className="row product-row">
@@ -97,7 +97,7 @@ function Cart() {
                   </div>
                 </div>
                 <div className="col-md-5 product-price">
-                  <p>£65.00</p>
+                  <p>$65.00</p>
                   <div className="quantity__box" style={{}}>
                     <button
                       type="button"
@@ -122,7 +122,7 @@ function Cart() {
                       <FiPlus />
                     </button>
                   </div>
-                  <p>£65.00</p>
+                  <p>$65.00</p>
                 </div>
               </div>
 
@@ -141,7 +141,7 @@ function Cart() {
                   </div>
                 </div>
                 <div className="col-md-5 product-price">
-                  <p>£65.00</p>
+                  <p>$65.00</p>
                   <div className="quantity__box" style={{}}>
                     <button
                       type="button"
@@ -166,7 +166,7 @@ function Cart() {
                       <FiPlus />
                     </button>
                   </div>
-                  <p>£65.00</p>
+                  <p>$65.00</p>
                 </div>
               </div>
               <div className="row product-row">
@@ -184,7 +184,7 @@ function Cart() {
                   </div>
                 </div>
                 <div className="col-md-5 product-price">
-                  <p>£65.00</p>
+                  <p>$65.00</p>
                   <div className="quantity__box" style={{}}>
                     <button
                       type="button"
@@ -209,7 +209,7 @@ function Cart() {
                       <FiPlus />
                     </button>
                   </div>
-                  <p>£65.00</p>
+                  <p>$65.00</p>
                 </div>
               </div>
             </div>

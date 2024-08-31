@@ -17,10 +17,10 @@ function Coupon() {
       </div>
       <div className="totals">
         <h6 className="sub-total">
-          SUBTOTAL <span>£860.00</span>
+          SUBTOTAL <span>$860.00</span>
         </h6>
         <h6 className="grand-total">
-          GRAND TOTAL <span>£860.00</span>
+          GRAND TOTAL <span>$860.00</span>
         </h6>
         <p>Shipping &amp; taxes calculated at checkout</p>
       </div>

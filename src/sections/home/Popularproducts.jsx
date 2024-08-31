@@ -1,8 +1,9 @@
-import { FaRegHeart } from "react-icons/fa";
+import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { Rating } from 'react-simple-star-rating'
 import '../../Styles/popularproducts.css'
 
-const Popularproducts = ({ products }) => {
+
+const Popularproducts = ({ products, handleUpdateWishlist }) => {
     return (
         <>
             <section className="popular-product">
@@ -16,23 +17,29 @@ const Popularproducts = ({ products }) => {
                     </div>
 
                     <div className="row gy-4">
-                        {products && products?.Product_details && products?.Product_details?.length > 0 && products.Product_details.map((product, i) => (
-                            <div key={i} className="col-md-6 col-lg-3">
-                                <div className="popularproducts-items">
-                                    <a href="#"><FaRegHeart /></a>
-                                    <img className='img-fluid' src={product.image || "/images/products-1.png"} alt={product.Name || 'Product Image'} />
-                                    <hr />
-                                    <h3>{product.Name || 'Product Name'}</h3>
-                                    <div className="rating-pricepopopular d-flex">
-                                        <Rating ratingValue={product.Rating || 5} readonly />
-                                        <h4>${product.Sale_price || '$0'}</h4>
+                        {products && products?.Product_details && products?.Product_details?.length > 0 && products.Product_details.map((product, i) => {
+                            return (
+                                <div key={i} className="col-md-6 col-lg-3" >
+                                    <div className="popularproducts-items">
+                                        {
+                                            product?.Wishlist === true ? <div className="wishlist-icon-fill d-flex justify-content-end" onClick={() => handleUpdateWishlist(product?.Variation_id)}><FaHeart /></div> : <div className="wishlist-icon d-flex justify-content-end" onClick={() => handleUpdateWishlist(product?.Variation_id)}><FaRegHeart /></div>
+                                        }
+                                        <img className='img-fluid' src={product.image || "/images/products-1.png"} alt={product.Name || 'Product Image'} />
+                                        <hr />
+                                        <h3>{product.Name || 'Product Name'}</h3>
+                                        <div className="rating-pricepopopular d-flex">
+                                            <Rating ratingValue={product.Rating || 5} readonly />
+                                            <h4>${product.Sale_price || '$0'}</h4>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            )
+                        }
+
+                        )}
                     </div>
                 </div>
-            </section>
+            </section >
         </>
     )
 }

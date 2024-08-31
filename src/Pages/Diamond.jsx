@@ -12,6 +12,7 @@ import axios from 'axios';
 import "../Styles/diamond.css";
 import { TbPlayerTrackNextFilled } from "react-icons/tb";
 import { TbPlayerTrackPrevFilled } from "react-icons/tb";
+import { fetchFilterApi } from '../apis/mainApis/filter/filterApis';
 
 const Diamond = () => {
   const [selectedShapeSlug, setSelectedShapeSlug] = useState("");
@@ -28,59 +29,53 @@ const Diamond = () => {
   const [sizes, setSizes] = useState([]);
   const [selectedSizes, setSelectedSizes] = useState([]);
   const [priceRange, setPriceRange] = useState([0, 0]);
+  const [updatePage, setUpdatePage] = useState(false);
 
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const data = {
-          ...(selectedShapeSlug && { shape_names: [selectedShapeSlug] }),
-          ...(selectedSettingSlug && { setting_names: [selectedSettingSlug] }),
-          ...(selectedMetalSlug && { metal_names: [selectedMetalSlug] }),
-          ...(selectedSizes?.length > 0 && { size_names: selectedSizes }),
-          ...(priceRange[0] && { min_price: priceRange[0] }),
-          ...(priceRange[1] && { max_price: priceRange[1] }),
-        }
-
-        const response = await axios.post('https://earring-backend.cyberx-infosystem.us/api/fetch/all/filters/earrings', data);
-        const { Shape_list, Size_list, types, selected } = response.data.data;
-        // selected.shape_slug
-        // selected.setting_slug
-        // selected.metal_slug
-
-        setShapes(Shape_list);
-        const selectedShape = Shape_list.find(shape => shape.slug === selectedShapeSlug);
-        setSettings(selectedShape?.settings || []);
-        const selectedSetting = selectedShape?.settings.find(setting => setting.slug === selectedSettingSlug);
-        setMetals(selectedSetting?.metal || []);
-        setSizes(Size_list);
-        setBeautifullProducts(types.Beautiful);
-        setBrilliantProducts(types.Brilliant);
-        setMasterpieceProducts(types.Masterpiece);
-        if (!selectedShapeSlug && !selectedSettingSlug && !selectedMetalSlug) {
-          setSelectedShapeSlug("round");
-          setSelectedSettingSlug("4-prong-basket");
-          setSelectedMetalSlug("14k-white-gold")
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
+      const data = {
+        ...(selectedShapeSlug && { shape_names: selectedShapeSlug }),
+        ...(selectedSettingSlug && { setting_names: selectedSettingSlug }),
+        ...(selectedMetalSlug && { metal_names: selectedMetalSlug }),
+        ...(selectedSizes?.length > 0 && { size_names: selectedSizes }),
+        ...(priceRange[0] && { min_price: priceRange[0] }),
+        ...(priceRange[1] && { max_price: priceRange[1] }),
       }
+
+      const response = await fetchFilterApi(data)
+      const { Shape_list, Size_list, types, selected } = response.data.data;
+      setShapes(Shape_list);
+      const selectedShape = Shape_list.find(shape => shape.slug === selected.shape_id);
+      setSettings(selectedShape?.settings || []);
+      const selectedSetting = selectedShape?.settings.find(setting => setting.slug === selected.setting_id);
+      setMetals(selectedSetting?.metal || []);
+      setSizes(Size_list);
+      setBeautifullProducts(types.Beautiful);
+      setBrilliantProducts(types.Brilliant);
+      setMasterpieceProducts(types.Masterpiece);
+      setSelectedShapeSlug(selected.shape_id);
+      setSelectedSettingSlug(selected.setting_id);
+      setSelectedMetalSlug(selected.metal_id)
     };
 
     fetchData();
-  }, [selectedShapeSlug, selectedSettingSlug, selectedMetalSlug, selectedSize, priceRange, selectedSizes]);
+  }, [updatePage, selectedSize, priceRange, selectedSizes]);
 
 
   const handleShapeChangeSlug = (slug) => {
     setSelectedShapeSlug(slug);
+    setUpdatePage(!updatePage);
   };
 
   const handleSettingChangeSlug = (slug) => {
     setSelectedSettingSlug(slug);
+    setUpdatePage(!updatePage);
   };
 
   const handleMetalChangeSlug = (slug) => {
     setSelectedMetalSlug(slug);
+    setUpdatePage(!updatePage);
   };
 
 
@@ -142,7 +137,7 @@ const Diamond = () => {
             </div>
             <div className="shapes select-btn">
               {Object.entries(metals).map(([key, metal]) => (
-                <div className={`shapes-inner ${metal.slug === selectedMetalSlug ? 'selected' : ""}`} key={metal.id} onClick={() => { handleMetalChangeSlug(metal.slug); setSelectedMetalId(metal.id) }} style={{ backgroundColor: metal.color }} >
+                <div className={`shapes-inner ${metal.slug === selectedMetalSlug ? 'selected' : ""}`} key={metal.id} onClick={() => { handleMetalChangeSlug(metal.slug); setSelectedMetalId(metal.id) }} style={{ backgroundColor: metal.color_code }} >
                   <h6>{metal.title}</h6>
                 </div>
               ))}
@@ -198,9 +193,9 @@ const Diamond = () => {
                         </p>
                         <div className="rating-price d-flex">
                           <h4>
-                            <span>£{product?.base_price}</span>
+                            <span>${product?.base_price}</span>
 
-                            £{product?.sale_price}
+                            ${product?.sale_price}
                           </h4>
                           <Rating initialValue={product?.Rating} readonly />
                         </div>
@@ -231,9 +226,9 @@ const Diamond = () => {
                         </p>
                         <div className="rating-price d-flex">
                           <h4>
-                            <span>£{product?.base_price}</span>
+                            <span>${product?.base_price}</span>
 
-                            £{product?.sale_price}
+                            ${product?.sale_price}
                           </h4>
                           <Rating initialValue={product?.Rating} readonly />
                         </div>
@@ -263,9 +258,9 @@ const Diamond = () => {
                         </p>
                         <div className="rating-price d-flex">
                           <h4>
-                            <span>£{product?.base_price}</span>
+                            <span>${product?.base_price}</span>
 
-                            £{product?.sale_price}
+                            ${product?.sale_price}
                           </h4>
                           <Rating initialValue={product?.Rating} readonly />
                         </div>

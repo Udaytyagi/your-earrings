@@ -18,12 +18,16 @@
   padding: 15px;
 }
 
-.popularproducts-items a {
-  position: relative;
-  z-index: 99;
+.wishlist-icon {
   color: #a07936;
   font-size: 25px;
-  left: 86%;
+  cursor: pointer;
+}
+
+.wishlist-icon-fill {
+  color: #a07936;
+  font-size: 25px;
+  cursor: pointer;
 }
 
 .popularproducts-items h3 {

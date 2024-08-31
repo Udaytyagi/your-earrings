@@ -1,7 +1,8 @@
-
 import '../../Styles/navbarbottom.css'
+import { useNavigate } from 'react-router-dom'
 
 const NavbarBottom = () => {
+    const navigate = useNavigate()
     return (
         <>
             <section className="navbarbottom">
@@ -12,15 +13,15 @@ const NavbarBottom = () => {
                         <div className="col-md-12 d-flex align-items-center justify-content-center">
                             <div className="navigation">
                                 <ul>
-                                    <li><a href="/">Home</a></li>
+                                    <li onClick={() => navigate('/')}>Home</li>
 
-                                    <li><a href="/diamond">Diamond Earrings </a></li>
+                                    <li onClick={() => navigate('/diamond')}>Diamond Earrings</li>
 
-                                    <li><a href="/about-us">About Us</a></li>
+                                    <li onClick={() => navigate('/about-us')}>About Us</li>
 
-                                    <li><a href="/contact-us">Contact</a></li>
+                                    <li onClick={() => navigate('/contact-us')}>Contact</li>
 
-                                    <li><a href="/blog">Blog</a></li>
+                                    <li onClick={() => navigate('/blog')}>Blog</li>
 
 
                                 </ul>

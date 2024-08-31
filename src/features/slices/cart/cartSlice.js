@@ -1,90 +1,22 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { fetchCartApi, updateCartApi } from '../../../apis/mainApis/cart/cartApis';
 
-export const fetchCart = createAsyncThunk('fetchCart', async () => {
-    //   try {
-    //     const headers = {
-    //       Authorization: `Bearer ${token}`,
-    //     };
-    //     const response = await axios.post(`${BaseUrl}fetch-carts`, {}, {headers});
-    //     return response?.data;
-    //   } catch (error) {
-    //     console.error('Error fetching cart products:', error);
-    //   }
+export const fetchCart = createAsyncThunk("fetchCart", async () => {
+    try {
+        const response = await fetchCartApi();
+        return response?.data?.data;
+    } catch (error) {
+        return null;
+    }
 });
 
-export const removeFromCart = createAsyncThunk(
-    'removeFromCart',
-    async ({ cartId, productId, dispatch }) => {
-        // try {
-        //   const data = {
-        //     cartId: cartId,
-        //     productId: parseInt(productId),
-        //   };
-        //   const headers = {
-        //     Authorization: `Bearer ${token}`,
-        //   };
-        //   const response = await axios.post(`${BaseUrl}remove-from-cart`, data, {
-        //     headers,
-        //   });
-        //   dispatch(fetchCart());
-        //   SuccessToast(response?.data?.message);
-        // } catch (error) {
-        //   console.error('Error remove cart products:', error);
-        //   ErrorToast(error?.response?.data?.message);
-        //   // throw error;
-        // }
-    },
-);
 
-export const addToCart = createAsyncThunk(
-    'addToCart',
-    async ({ productId, variationId, quantity, dispatch }, thunkAPI) => {
-        // let token = await AsyncStorage.getItem('logFeller_Token');
-        // try {
-        //   const data = {
-        //     product_id: productId,
-        //     variant_id: variationId || '',
-        //     quantity: quantity,
-        //   };
-        //   const headers = {
-        //     Authorization: `Bearer ${token}`,
-        //   };
-        //   const response = await axios.post(`${BaseUrl}add-to-cart`, data, {
-        //     headers,
-        //   });
-        //   dispatch(fetchCart());
-        //   SuccessToast(response?.data?.message);
-        // } catch (error) {
-        //   console.log('Error add cart products:', error.response);
-        //   ErrorToast(error?.response?.data?.message);
-        //   // throw error;
-        // }
-    },
-);
-
-export const updateToCart = createAsyncThunk(
-    'updateToCart',
-    async ({ cartId, quantity, dispatch }, thunkAPI) => {
-        // try {
-        //     let token = await AsyncStorage.getItem('logFeller_Token');
-        //     const data = {
-        //         cart_id: cartId,
-        //         quantity: quantity,
-        //     };
-        //     const headers = {
-        //         Authorization: `Bearer ${token}`,
-        //     };
-        //     const response = await axios.post(`${BaseUrl}update-cart`, data, {
-        //         headers,
-        //     });
-        //     dispatch(fetchCart());
-        //     SuccessToast(response?.data?.message);
-        // } catch (error) {
-        //     console.log('Error update cart products:', error.response.data.message);
-        //     ErrorToast(error?.response?.data?.message);
-        //     // throw error;
-        // }
-    },
+export const updateWishlist = createAsyncThunk(
+    "updateWishlist",
+    async (data, { dispatch }) => {
+        await updateCartApi(data);
+        dispatch(fetchCart());
+    }
 );
 
 const cartSlice = createSlice({

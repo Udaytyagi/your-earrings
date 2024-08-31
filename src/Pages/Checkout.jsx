@@ -425,7 +425,7 @@ function Checkout() {
       <span>Fluids &amp; Chemicals</span>
       <small>COLOR: Blue</small>
     </div>
-    <span>£65.00</span>
+    <span>$65.00</span>
   </div>
   <div className="order-item">
     <img src="images/product2.webp" alt="Item 2" />
@@ -433,7 +433,7 @@ function Checkout() {
       <span>Cargo Accessories</span>
       <small>COLOR: Green</small>
     </div>
-    <span>£82.00</span>
+    <span>$82.00</span>
   </div>
   <div className="order-item">
     <img src="images/product2.webp" alt="Item 3" />
@@ -441,7 +441,7 @@ function Checkout() {
       <span>Motorbike Care</span>
       <small>COLOR: White</small>
     </div>
-    <span>£78.00</span>
+    <span>$78.00</span>
   </div>
   <div className="my-3 discount-main">
     <input
@@ -454,7 +454,7 @@ function Checkout() {
   <div className="order-total">
     <div className="d-flex justify-content-between subtotal-btn">
       <span>Subtotal</span>
-      <span>£860.00</span>
+      <span>$860.00</span>
     </div>
     <div className="d-flex justify-content-between shipping-btn">
       <span>Shipping</span>
@@ -462,7 +462,7 @@ function Checkout() {
     </div>
     <div className="d-flex justify-content-between total-main">
       <span>Total</span>
-      <span>£860.00</span>
+      <span>$860.00</span>
     </div>
   </div>
 <div className="payment-main py-3">

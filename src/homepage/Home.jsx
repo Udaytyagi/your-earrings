@@ -14,6 +14,7 @@ import Brands from "../sections/home/Brands";
 import Footer from "../sections/common/Footer";
 import { fetchHomeProducts } from "../features/slices/home/homeSlice";
 import { useDispatch, useSelector } from 'react-redux';
+import { updateHomeWishlist } from "../features/slices/wishlist/wishlistSlice";
 
 
 const Home = () => {
@@ -22,12 +23,19 @@ const Home = () => {
   const newArrival = useSelector(state => state?.homeProducts?.data?.New_arrival);
   const testimonial = useSelector(state => state?.homeProducts?.data?.Testinomial);
   const blogs = useSelector(state => state?.homeProducts?.data?.Latest_blog_list);
-  const bannerInfo = useSelector(state => state?.homeProducts?.data?.banner_info)
-
+  const bannerInfo = useSelector(state => state?.homeProducts?.data?.banner_info);
+  const wishlistHomeUpdate = useSelector(state => state?.wishlist?.isUpdatingHome);
 
   useEffect(() => {
     dispatch(fetchHomeProducts())
-  }, [dispatch])
+  }, [dispatch, wishlistHomeUpdate])
+
+  const handleUpdateWishlist = (variationId) => {
+    const data = {
+      variation_id: variationId
+    }
+    dispatch(updateHomeWishlist(data))
+  }
 
   return (
     <>
@@ -37,10 +45,10 @@ const Home = () => {
       <Banner />
       <ShippingInfo />
       {
-        allCollection && allCollection.length > 0 && <Popularproducts products={allCollection[0]} />
+        allCollection && allCollection.length > 0 && <Popularproducts products={allCollection[0]} handleUpdateWishlist={handleUpdateWishlist} />
       }
       {
-        newArrival && newArrival.length > 0 && <NewProducts products={newArrival} />
+        newArrival && newArrival.length > 0 && <NewProducts products={newArrival} handleUpdateWishlist={handleUpdateWishlist} />
       }
       {
         bannerInfo && <CallToAction products={bannerInfo[0]} />

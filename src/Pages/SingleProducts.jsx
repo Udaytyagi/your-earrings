@@ -145,11 +145,11 @@ fashion earrings to find your perfect pair."
 
             <div className="col-md-3 price-col">
               <div className="product-pric">
-                <h5>Retail: £599.00</h5>
+                <h5>Retail: $599.00</h5>
                 <h5>
-                  Sale : <span>£299.00</span>
+                  Sale : <span>$299.00</span>
                 </h5>
-                <h4>Buy Now : £239.00</h4>
+                <h4>Buy Now : $239.00</h4>
               </div>
               <div className="wishlist-btn">
                 <a href="cart"><button className="button-bag">Add to Bag</button></a>

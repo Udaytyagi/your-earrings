@@ -6,9 +6,9 @@ import "../../Styles/navbarmid.css";
 import { useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom'
 
-
 const Navbarmid = () => {
   const user = useSelector(state => state?.user?.data);
+  const wishlists = useSelector(state => state?.wishlist?.data?.Wishlist_product);
   const navigate = useNavigate()
 
   return (
@@ -42,8 +42,13 @@ const Navbarmid = () => {
 
             <div className="col-md-2">
               <div className="cart d-flex align-items-center justify-content-end">
-                <div onClick={() => navigate('/wishlist')}>
+                <div onClick={() => navigate('/wishlist')} className="position-relative">
                   <IoIosHeartEmpty />
+                  {
+                    wishlists && wishlists.length || user?.user_record?.wishlist_count ? <div className="wishlist-count d-flex justify-content-center align-items-center">
+                      {wishlists && wishlists.length || user?.user_record?.wishlist_count}
+                    </div> : ""
+                  }
                 </div>
                 <div onClick={() => navigate('/cart')}>
                   <PiShoppingCartSimple />
