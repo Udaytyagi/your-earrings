@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, createRef, useState } from "react";
 import Topbar from "../sections/common/Topbar";
 import Navbarmid from "../sections/common/Navbarmid";
 import NavbarBottom from "../sections/common/NavbarBottom";
@@ -12,13 +12,59 @@ import Testimonial from "../sections/home/Testimonial";
 import { FaRegHeart } from "react-icons/fa";
 import { RiUploadCloud2Line } from "react-icons/ri";
 import { FaAngleRight } from "react-icons/fa6";
+import { useSearchParams } from "react-router-dom";
+import { fetchProductDetail } from "../features/slices/productDetail/productDetailSlice";
+import { useDispatch, useSelector } from "react-redux";
+import ImageGallery from "react-image-gallery";
+import "react-image-gallery/styles/css/image-gallery.css";
 
 const SingleProducts = () => {
-  const fileInputRef = React.createRef();
+  const [searchParams] = useSearchParams();
+  const variationId = searchParams.get("vId");
+  const dispatch = useDispatch();
+  const fileInputRef = createRef();
+  const fullScreenRef = useRef();
+  const product = useSelector((state) => state.productDetail.data);
+  const { Already_selected_filter, All_available_filter } = product;
+
+  const [selectedShapeId, setSelectedShapeId] = useState(null);
+  const [selectedSettingId, setSelectedSettingId] = useState(null);
+  const [selectedMetalId, setSelectedMetalId] = useState(null);
+  const [selectedSizeId, setSelectedSizeId] = useState(null);
+
+  console.log(selectedShapeId);
+
+  useEffect(() => {
+    dispatch(fetchProductDetail(variationId));
+  }, [variationId]);
+
+  useEffect(() => {
+    if (product) {
+      const { Already_selected_filter } = product;
+      setSelectedShapeId(Already_selected_filter?.shape?.id || null);
+      setSelectedSettingId(Already_selected_filter?.setting?.id || null);
+      setSelectedMetalId(Already_selected_filter?.metal?.id || null);
+      setSelectedSizeId(Already_selected_filter?.size?.id || null);
+    }
+  }, [product]);
+
+  useEffect(() => {}, [selectedShapeId]);
+
+  const images =
+    product &&
+    product?.Gallery_images?.map((imgUrl) => ({
+      original: imgUrl,
+      thumbnail: imgUrl,
+    }));
 
   const handleIconClick = () => {
     fileInputRef.current.click();
   };
+
+  const showFullScreen = () => {
+    fullScreenRef.current.toggleFullScreen();
+  };
+
   return (
     <>
       <Topbar />
@@ -32,128 +78,166 @@ const SingleProducts = () => {
 fashion earrings to find your perfect pair."
       />
       <div className="page-nav container px-0">
-<p>Home</p>
-<FaAngleRight/>
-<p>Earrings</p>
-<FaAngleRight/>
-<p>Round</p>
+        <p>Home</p>
+        <FaAngleRight />
+        <p>Earrings</p>
+        <FaAngleRight />
+        <p>Round</p>
       </div>
 
       <section>
         <div className="container">
           <div className="row pt-5 justify-content-between">
             <div className="col-md-4 products-col">
-              <div className="popularproducts-items single-item">
-                <a href="#">
-                  <FaRegHeart />
-                </a>
-                <img
-                  className="img-fluid"
-                  src="/images/products-1.png"
-                  alt=""
+              {images ? (
+                <ImageGallery
+                  ref={fullScreenRef}
+                  items={images}
+                  thumbnailPosition={"bottom"}
+                  showFullscreenButton={false}
+                  showPlayButton={false}
+                  lazyLoad={true}
+                  slideOnThumbnailOver={true}
+                  onClick={showFullScreen}
                 />
-              </div>
-              <div className="d-flex four-item-main">
-                <div className="popularproducts-items single-item four-item">
-                  <img
-                    className="img-fluid"
-                    src="/images/products-1.png"
-                    alt=""
-                  />
-                </div>
-                <div className="popularproducts-items single-item four-item">
-                  <img
-                    className="img-fluid"
-                    src="/images/products-1.png"
-                    alt=""
-                  />
-                </div>
-                <div className="popularproducts-items single-item four-item">
-                  <img
-                    className="img-fluid"
-                    src="/images/products-1.png"
-                    alt=""
-                  />
-                </div>
-                <div className="popularproducts-items single-item four-item">
-                  <img
-                    className="img-fluid"
-                    src="/images/products-1.png"
-                    alt=""
-                  />
-                </div>
-              </div>
+              ) : (
+                <p>Loading images...</p>
+              )}
             </div>
             <div className="col-md-4 product-detail">
               <p>Item ID #: 038586</p>
-              <h4>
-                Diamond Stud Earrings Round 0.25 ct. tw. (H-l, VS) 14k White
-                Gold 4-Prong Basket
-              </h4>
+              <h4>{product.Title}</h4>
               <div className="d-flex review-rating">
                 <Rating />
 
                 <p>(09 Reviews)</p>
               </div>
-              <p>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry standard dummy text
-                ever since the 1500s, when an unknown printer took a galley of
-                type and scrambled it to make a type specimen book.
-              </p>
+              <p dangerouslySetInnerHTML={{ __html: product.Description }}></p>
               <div className="product-accordion">
-                <Accordion defaultActiveKey="0">
+                <h6>Shapes</h6>
+                {All_available_filter?.shape &&
+                  Object.entries(All_available_filter.shape).map(
+                    ([key, shape]) => {
+                      console.log("hello");
+
+                      return (
+                        <div
+                          key={key}
+                          className={`product-shape ${
+                            key == selectedShapeId ? "selected" : ""
+                          }`}
+                          onClick={() => setSelectedShapeId(parseInt(key))}
+                        >
+                          {shape.name}
+                        </div>
+                      );
+                    }
+                  )}
+                <h6>Settings</h6>
+                {All_available_filter?.shape[selectedShapeId]?.settings &&
+                  Object.entries(
+                    All_available_filter.shape[selectedShapeId].settings
+                  ).map(([key, setting]) => {
+                    console.log('hello2')
+                    return  <div
+                    key={key}
+                    className={`product-shape ${
+                      key == selectedSettingId ? "selected" : ""
+                    }`}
+                    onClick={() => setSelectedSettingId(key)}
+                  >
+                    {setting.name}
+                  </div>
+                  }
+                   
+                  )}
+
+                <h6>Metals</h6>
+                {All_available_filter?.shape[selectedShapeId]?.settings[
+                    selectedSettingId
+                  ]?.metals && Object.entries(
+                  All_available_filter?.shape[selectedShapeId]?.settings[
+                    selectedSettingId
+                  ]?.metals || {}
+                ).map(([key, metal]) => {
+                  console.log('hello3')
+                  return  <div
+                  key={key}
+                  className={`product-shape ${
+                    key == selectedMetalId ? "selected" : ""
+                  }`}
+                  onClick={() => setSelectedMetalId(key)}
+                >
+                  {metal.name}
+                </div>
+                }
+                 
+                )}
+
+                <h6>Size</h6>
+                {Object.entries(
+                  All_available_filter?.shape[selectedShapeId]?.settings[
+                    selectedSettingId
+                  ]?.metals[selectedMetalId]?.sizes || {}
+                ).map(([key, size]) => {
+                  console.log('hello4')
+                  return   <div
+                  key={key}
+                  className={`product-shape ${
+                    key == selectedSizeId ? "selected" : ""
+                  }`}
+                  onClick={() => setSelectedSizeId(key)}
+                >
+                  {size.name}
+                </div>
+                }
+                
+                )}
+
+                 {/* <Accordion defaultActiveKey="0">
                   <Accordion.Item eventKey="1">
-                    <Accordion.Header>Change Metal</Accordion.Header>
+                    <Accordion.Header>Change Shape</Accordion.Header>
                     <Accordion.Body>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                      <div className="product-shape">Round</div>
                     </Accordion.Body>
                   </Accordion.Item>
                   <Accordion.Item eventKey="2">
-                    <Accordion.Header>Change Carat Tw</Accordion.Header>
+                    <Accordion.Header>Change Setting</Accordion.Header>
                     <Accordion.Body>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                      <div className="product-shape">4- Prong Basket</div>
                     </Accordion.Body>
                   </Accordion.Item>
                   <Accordion.Item eventKey="3">
-                    <Accordion.Header>Change Quality</Accordion.Header>
+                    <Accordion.Header>Change Metal</Accordion.Header>
                     <Accordion.Body>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                      <div className="product-shape">14k- White gold</div>
                     </Accordion.Body>
                   </Accordion.Item>
                   <Accordion.Item eventKey="4">
-                    <Accordion.Header>Change Settings</Accordion.Header>
+                    <Accordion.Header>Change Size</Accordion.Header>
                     <Accordion.Body>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                      <div className="product-shape">0.25</div>
                     </Accordion.Body>
                   </Accordion.Item>
-                </Accordion>
+                </Accordion> */}
               </div>
             </div>
 
             <div className="col-md-3 price-col">
               <div className="product-pric">
-                <h5>Retail: $599.00</h5>
+                {/* <h5>Retail: $599.00</h5> */}
                 <h5>
-                  Sale : <span>$299.00</span>
+                  Sale : <span>${product.Base_price}</span>
                 </h5>
-                <h4>Buy Now : $239.00</h4>
+                <h4>Buy Now : ${product.Sale_price}</h4>
               </div>
               <div className="wishlist-btn">
-                <a href="cart"><button className="button-bag">Add to Bag</button></a>
-               <a href="wishlist"><button className="button wishlist">Add to Wishlist</button></a> 
+                <a href="cart">
+                  <button className="button-bag">Add to Bag</button>
+                </a>
+                <a href="wishlist">
+                  <button className="button wishlist">Add to Wishlist</button>
+                </a>
               </div>
               <div className="coupon">
                 <p>Coupon Code</p>
@@ -190,70 +274,39 @@ fashion earrings to find your perfect pair."
               <h5>PRODUCT DETAILS</h5>
             </div>
 
-            <div className="col-md-6 earing-information">
-              <h6>EARRING INFORMATION</h6>
-              <div className="product-information-main">
-                <div className="product-information">
-                  <p>Item No:</p>
-                  <p>038586</p>
-                </div>
-                <div className="product-information">
-                  <p>Metal:</p>
-                  <p>14k White Gold</p>
-                </div>
-                <div className="product-information">
-                  <p>Setting:</p>
-                  <p>4-Prong Basket</p>
-                </div>
-                <div className="product-information">
-                  <p>Backing:</p>
-                  <p>Push Back, Screw Back</p>
-                </div>
-                <div className="product-information">
-                  <p>Origin:</p>
-                  <p>Handcrafted in the USA</p>
+            {product?.Earrings_information && (
+              <div className="col-md-6 earing-information">
+                <h6>EARRING INFORMATION</h6>
+                <div className="product-information-main">
+                  {Object.entries(product.Earrings_information || {}).map(
+                    ([key, value]) => (
+                      <div className="product-information" key={key}>
+                        <p>{key}:</p>
+                        <p>{value}</p>
+                      </div>
+                    )
+                  )}
                 </div>
               </div>
-            </div>
-            <div className="col-md-6 earing-information">
-              <h6>DIAMOND INFORMATION</h6>
-              <div className="product-information-main">
-                <div className="product-information">
-                  <p>Number of Diamonds:</p>
-                  <p>02</p>
-                </div>
-                <div className="product-information">
-                  <p>Shape:</p>
-                  <p>Round</p>
-                </div>
-                <div className="product-information">
-                  <p>Total Carat Weight:</p>
-                  <p>0.25 ct. tw.</p>
-                </div>
-                <div className="product-information">
-                  <p>Color:</p>
-                  <p>H-I</p>
-                </div>
-                <div className="product-information">
-                  <p>Clarity:</p>
-                  <p>VS</p>
-                </div>
-                <div className="product-information">
-                  <p>Cut:</p>
-                  <p>Very Good</p>
-                </div>
-                <div className="product-information">
-                  <p>Creation:</p>
-                  <p>Lab Created</p>
+            )}
+            {product?.Daimond_information && (
+              <div className="col-md-6 earing-information">
+                <h6>DIAMOND INFORMATION</h6>
+                <div className="product-information-main">
+                  {product.Diamond_information.map((info, index) => (
+                    <div className="product-information" key={index}>
+                      <p>{info.label}:</p>
+                      <p>{info.value}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </section>
 
       <SingleProductSlider />
-      <Testimonial />
 
       <div className="container review-main my-5">
         {/* Reviews Section */}
@@ -371,147 +424,138 @@ fashion earrings to find your perfect pair."
                 defaultValue={""}
               />
 
-<div className="file-upload">
-      <input
-        type="file"
-        ref={fileInputRef}
-        style={{ display: 'none' }}
-      />
-      <div className="upload-icon" onClick={handleIconClick}>
-        <RiUploadCloud2Line />
-      </div>
-      <div className="upload-icon" onClick={handleIconClick}>
-        <RiUploadCloud2Line />
-      </div>
-      <div className="upload-icon" onClick={handleIconClick}>
-        <RiUploadCloud2Line />
-      </div>
-      <div className="upload-icon" onClick={handleIconClick}>
-        <RiUploadCloud2Line />
-      </div>
-    </div>
+              <div className="file-upload">
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  style={{ display: "none" }}
+                />
+                <div className="upload-icon" onClick={handleIconClick}>
+                  <RiUploadCloud2Line />
+                </div>
+                <div className="upload-icon" onClick={handleIconClick}>
+                  <RiUploadCloud2Line />
+                </div>
+                <div className="upload-icon" onClick={handleIconClick}>
+                  <RiUploadCloud2Line />
+                </div>
+                <div className="upload-icon" onClick={handleIconClick}>
+                  <RiUploadCloud2Line />
+                </div>
+              </div>
               <button className="submit-btn mt-3">Submit Review</button>
             </div>
           </div>
         </div>
 
         <div className="container p-0 mt-4">
-  <div className="review-box">
-    <div className="review-header">
-      <img src="https://via.placeholder.com/40" alt="User Avatar" />
-      <div className="user-info">
-        <h6>
-          Random Person{" "}
-          <span >
-            (Stayed 24 Nov, 2023)
-          </span>
-        </h6>
-        <p>Customer | 1 Review Written</p>
-      </div>
-    </div>
-    <div className="review-content">
-      Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-      Lorem Ipsum has been the industrys standard dummy text ever since the
-      1500s, when an unknown printer took a galley of type and scrambled it to
-      make a type specimen book. It has survived not only five centuries, but
-      also the leap into electronic typesetting.
-    </div>
-    <div className="review-images">
-      <img src="images\review-img.png" alt="Review Image 1" />
-      <img src="images\review-img.png" alt="Review Image 2" />
-      <img src="images\review-img.png" alt="Review Image 3" />
-      <img src="images\review-img.png" alt="Review Image 4" />
-    </div>
-  </div>
-</div>
-     <div className="container p-0 mt-3">
-  <div className="review-box">
-    <div className="review-header">
-      <img src="https://via.placeholder.com/40" alt="User Avatar" />
-      <div className="user-info">
-        <h6>
-          Random Person{" "}
-          <span >
-            (Stayed 24 Nov, 2023)
-          </span>
-        </h6>
-        <p>Customer | 1 Review Written</p>
-      </div>
-    </div>
-    <div className="review-content">
-      Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-      Lorem Ipsum has been the industrys standard dummy text ever since the
-      1500s, when an unknown printer took a galley of type and scrambled it to
-      make a type specimen book. It has survived not only five centuries, but
-      also the leap into electronic typesetting.
-    </div>
-    <div className="review-images">
-      <img src="images\review-img.png" alt="Review Image 1" />
-      <img src="images\review-img.png" alt="Review Image 2" />
-      <img src="images\review-img.png" alt="Review Image 3" />
-      <img src="images\review-img.png" alt="Review Image 4" />
-    </div>
-  </div>
-</div>
-     <div className="container p-0 mt-3">
-  <div className="review-box">
-    <div className="review-header">
-      <img src="https://via.placeholder.com/40" alt="User Avatar" />
-      <div className="user-info">
-        <h6>
-          Random Person{" "}
-          <span >
-            (Stayed 24 Nov, 2023)
-          </span>
-        </h6>
-        <p>Customer | 1 Review Written</p>
-      </div>
-    </div>
-    <div className="review-content">
-      Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-      Lorem Ipsum has been the industrys standard dummy text ever since the
-      1500s, when an unknown printer took a galley of type and scrambled it to
-      make a type specimen book. It has survived not only five centuries, but
-      also the leap into electronic typesetting.
-    </div>
-    <div className="review-images">
-      <img src="images\review-img.png" alt="Review Image 1" />
-      <img src="images\review-img.png" alt="Review Image 2" />
-      <img src="images\review-img.png" alt="Review Image 3" />
-      <img src="images\review-img.png" alt="Review Image 4" />
-    </div>
-  </div>
-</div>
-     <div className="container p-0 mt-3">
-  <div className="review-box">
-    <div className="review-header">
-      <img src="https://via.placeholder.com/40" alt="User Avatar" />
-      <div className="user-info">
-        <h6>
-          Random Person{" "}
-          <span >
-            (Stayed 24 Nov, 2023)
-          </span>
-        </h6>
-        <p>Customer | 1 Review Written</p>
-      </div>
-    </div>
-    <div className="review-content">
-      Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-      Lorem Ipsum has been the industrys standard dummy text ever since the
-      1500s, when an unknown printer took a galley of type and scrambled it to
-      make a type specimen book. It has survived not only five centuries, but
-      also the leap into electronic typesetting.
-    </div>
-    <div className="review-images">
-      <img src="images\review-img.png" alt="Review Image 1" />
-      <img src="images\review-img.png" alt="Review Image 2" />
-      <img src="images\review-img.png" alt="Review Image 3" />
-      <img src="images\review-img.png" alt="Review Image 4" />
-    </div>
-  </div>
-</div>
-
+          <div className="review-box">
+            <div className="review-header">
+              <img src="https://via.placeholder.com/40" alt="User Avatar" />
+              <div className="user-info">
+                <h6>
+                  Random Person <span>(Stayed 24 Nov, 2023)</span>
+                </h6>
+                <p>Customer | 1 Review Written</p>
+              </div>
+            </div>
+            <div className="review-content">
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industrys standard dummy text
+              ever since the 1500s, when an unknown printer took a galley of
+              type and scrambled it to make a type specimen book. It has
+              survived not only five centuries, but also the leap into
+              electronic typesetting.
+            </div>
+            <div className="review-images">
+              <img src="images\review-img.png" alt="Review Image 1" />
+              <img src="images\review-img.png" alt="Review Image 2" />
+              <img src="images\review-img.png" alt="Review Image 3" />
+              <img src="images\review-img.png" alt="Review Image 4" />
+            </div>
+          </div>
+        </div>
+        <div className="container p-0 mt-3">
+          <div className="review-box">
+            <div className="review-header">
+              <img src="https://via.placeholder.com/40" alt="User Avatar" />
+              <div className="user-info">
+                <h6>
+                  Random Person <span>(Stayed 24 Nov, 2023)</span>
+                </h6>
+                <p>Customer | 1 Review Written</p>
+              </div>
+            </div>
+            <div className="review-content">
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industrys standard dummy text
+              ever since the 1500s, when an unknown printer took a galley of
+              type and scrambled it to make a type specimen book. It has
+              survived not only five centuries, but also the leap into
+              electronic typesetting.
+            </div>
+            <div className="review-images">
+              <img src="images\review-img.png" alt="Review Image 1" />
+              <img src="images\review-img.png" alt="Review Image 2" />
+              <img src="images\review-img.png" alt="Review Image 3" />
+              <img src="images\review-img.png" alt="Review Image 4" />
+            </div>
+          </div>
+        </div>
+        <div className="container p-0 mt-3">
+          <div className="review-box">
+            <div className="review-header">
+              <img src="https://via.placeholder.com/40" alt="User Avatar" />
+              <div className="user-info">
+                <h6>
+                  Random Person <span>(Stayed 24 Nov, 2023)</span>
+                </h6>
+                <p>Customer | 1 Review Written</p>
+              </div>
+            </div>
+            <div className="review-content">
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industrys standard dummy text
+              ever since the 1500s, when an unknown printer took a galley of
+              type and scrambled it to make a type specimen book. It has
+              survived not only five centuries, but also the leap into
+              electronic typesetting.
+            </div>
+            <div className="review-images">
+              <img src="images\review-img.png" alt="Review Image 1" />
+              <img src="images\review-img.png" alt="Review Image 2" />
+              <img src="images\review-img.png" alt="Review Image 3" />
+              <img src="images\review-img.png" alt="Review Image 4" />
+            </div>
+          </div>
+        </div>
+        <div className="container p-0 mt-3">
+          <div className="review-box">
+            <div className="review-header">
+              <img src="https://via.placeholder.com/40" alt="User Avatar" />
+              <div className="user-info">
+                <h6>
+                  Random Person <span>(Stayed 24 Nov, 2023)</span>
+                </h6>
+                <p>Customer | 1 Review Written</p>
+              </div>
+            </div>
+            <div className="review-content">
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industrys standard dummy text
+              ever since the 1500s, when an unknown printer took a galley of
+              type and scrambled it to make a type specimen book. It has
+              survived not only five centuries, but also the leap into
+              electronic typesetting.
+            </div>
+            <div className="review-images">
+              <img src="images\review-img.png" alt="Review Image 1" />
+              <img src="images\review-img.png" alt="Review Image 2" />
+              <img src="images\review-img.png" alt="Review Image 3" />
+              <img src="images\review-img.png" alt="Review Image 4" />
+            </div>
+          </div>
+        </div>
       </div>
 
       <Footer />

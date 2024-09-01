@@ -1,9 +1,8 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import ScrollToTop from "./components/ScrollToTop";
 import Home from "./homepage/Home";
 import About from "./Pages/About";
-
 import Contact from "./Pages/Contact";
-
 import Login from "./Pages/authpages/Login";
 import Signup from "./Pages/authpages/Signup";
 import Diamond from "./Pages/Diamond";
@@ -17,67 +16,126 @@ import Checkout from "./Pages/Checkout";
 import Account from "./Pages/Account";
 import Dashboard from "./Pages/Dashboard";
 
-
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
-  },
-  {
-    path: "/about-us",
-    element: <About />,
+    element: (
+      <ScrollToTop>
+        <Home />
+      </ScrollToTop>
+    ),
   },
   {
     path: "/contact-us",
-    element: <Contact />,
+    element: (
+      <ScrollToTop>
+        <Contact />
+      </ScrollToTop>
+    ),
   },
   {
     path: "/login",
-    element: <Login />,
+    element: (
+      <ScrollToTop>
+        <Login />
+      </ScrollToTop>
+    ),
   },
   {
     path: "/register",
-    element: <Signup />,
+    element: (
+      <ScrollToTop>
+        <Signup />
+      </ScrollToTop>
+    ),
   },
   {
     path: "/diamond",
-    element: <Diamond />,
+    element: (
+      <ScrollToTop>
+        <Diamond />
+      </ScrollToTop>
+    ),
   },
   {
-    path: "/single-products",
-    element: <SingleProducts />,
+    path: "/about-us",
+    element: (
+      <ScrollToTop>
+        <About />
+      </ScrollToTop>
+    ),
   },
   {
     path: "/cart",
-    element: <Cart />,
+    element: (
+      <ScrollToTop>
+        <Cart />
+      </ScrollToTop>
+    ),
   },
   {
     path: "/wishlist",
-    element: <Wishlist />,
+    element: (
+      <ScrollToTop>
+        <Wishlist />
+      </ScrollToTop>
+    ),
   },
   {
     path: "/profile",
-    element: <Profile />,
+    element: (
+      <ScrollToTop>
+        <Profile />
+      </ScrollToTop>
+    ),
   },
   {
     path: "/my-orders",
-    element: <Orders />,
+    element: (
+      <ScrollToTop>
+        <Orders />
+      </ScrollToTop>
+    ),
   },
   {
     path: "/blog",
-    element: <Blog />,
+    element: (
+      <ScrollToTop>
+        <Blog />
+      </ScrollToTop>
+    ),
   },
   {
     path: "/checkout",
-    element: <Checkout />,
+    element: (
+      <ScrollToTop>
+        <Checkout />
+      </ScrollToTop>
+    ),
   },
   {
     path: "/my-account",
-    element: <Account />,
+    element: (
+      <ScrollToTop>
+        <Account />
+      </ScrollToTop>
+    ),
   },
   {
     path: "/dashboard",
-    element: <Dashboard />,
+    element: (
+      <ScrollToTop>
+        <Dashboard />
+      </ScrollToTop>
+    ),
+  },
+  {
+    path: "/:categoryslug",
+    element: (
+      <ScrollToTop>
+        <SingleProducts />
+      </ScrollToTop>
+    ),
   },
 ]);
 
