@@ -15,6 +15,7 @@ import Blog from "./sections/home/Blog";
 import Checkout from "./Pages/Checkout";
 import Account from "./Pages/Account";
 import Dashboard from "./Pages/Dashboard";
+import SingleBlog from "./Pages/SingleBlog";
 
 const router = createBrowserRouter([
   {
@@ -98,7 +99,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/blog",
+    path: "/blogs",
     element: (
       <ScrollToTop>
         <Blog />
@@ -134,6 +135,14 @@ const router = createBrowserRouter([
     element: (
       <ScrollToTop>
         <SingleProducts />
+      </ScrollToTop>
+    ),
+  },
+  {
+    path: "/blog/:blogslug",
+    element: (
+      <ScrollToTop>
+        <SingleBlog />
       </ScrollToTop>
     ),
   },

@@ -19,24 +19,22 @@ import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 
 const SingleProducts = () => {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const variationId = searchParams.get("vId");
   const dispatch = useDispatch();
   const fileInputRef = createRef();
   const fullScreenRef = useRef();
   const product = useSelector((state) => state.productDetail.data);
-  const { Already_selected_filter, All_available_filter } = product;
+  const { All_available_filter } = product && product;
 
   const [selectedShapeId, setSelectedShapeId] = useState(null);
   const [selectedSettingId, setSelectedSettingId] = useState(null);
   const [selectedMetalId, setSelectedMetalId] = useState(null);
   const [selectedSizeId, setSelectedSizeId] = useState(null);
 
-  console.log(selectedShapeId);
-
   useEffect(() => {
     dispatch(fetchProductDetail(variationId));
-  }, [variationId]);
+  }, [variationId, dispatch]);
 
   useEffect(() => {
     if (product) {
@@ -48,7 +46,7 @@ const SingleProducts = () => {
     }
   }, [product]);
 
-  useEffect(() => {}, [selectedShapeId]);
+  useEffect(() => { }, [selectedShapeId]);
 
   const images =
     product &&
@@ -64,6 +62,11 @@ const SingleProducts = () => {
   const showFullScreen = () => {
     fullScreenRef.current.toggleFullScreen();
   };
+
+  const handleSelectSize = (key, variationId) => {
+    setSelectedSizeId(key)
+    setSearchParams({ vId: variationId });
+  }
 
   return (
     <>
@@ -113,88 +116,108 @@ fashion earrings to find your perfect pair."
                 <p>(09 Reviews)</p>
               </div>
               <p dangerouslySetInnerHTML={{ __html: product.Description }}></p>
+              <h5>Select Your Variation</h5>
               <div className="product-accordion">
-                <h6>Shapes</h6>
                 {All_available_filter?.shape &&
-                  Object.entries(All_available_filter.shape).map(
-                    ([key, shape]) => {
-                      console.log("hello");
+                  <>
+                    <h6>Select Shapes</h6>
+                    <div className="d-flex align-items-center gap-2 mb-2">
+                      {
+                        Object.entries(All_available_filter.shape).map(
+                          ([key, shape]) => {
+                            return (
+                              <div
+                                key={key}
+                                className={`product-shape ${key == selectedShapeId ? "selected" : ""
+                                  }`}
+                                onClick={() => setSelectedShapeId(parseInt(key))}
+                              >
+                                {shape.name}
+                              </div>
+                            );
+                          }
+                        )
+                      }
+                    </div>
+                  </>
+                }
 
-                      return (
-                        <div
+                {All_available_filter?.shape[selectedShapeId]?.settings && <>
+                  <h6>Select Settings</h6>
+                  <div className="d-flex align-items-center gap-2 mb-2">
+                    {
+                      Object.entries(
+                        All_available_filter.shape[selectedShapeId].settings
+                      ).map(([key, setting]) => {
+                        return <div
                           key={key}
-                          className={`product-shape ${
-                            key == selectedShapeId ? "selected" : ""
-                          }`}
-                          onClick={() => setSelectedShapeId(parseInt(key))}
+                          className={`product-shape ${key == selectedSettingId ? "selected" : ""
+                            }`}
+                          onClick={() => { setSelectedSettingId(key); setSelectedMetalId(null); setSelectedSizeId(null) }}
                         >
-                          {shape.name}
+                          {setting.name}
                         </div>
-                      );
-                    }
-                  )}
-                <h6>Settings</h6>
-                {All_available_filter?.shape[selectedShapeId]?.settings &&
-                  Object.entries(
-                    All_available_filter.shape[selectedShapeId].settings
-                  ).map(([key, setting]) => {
-                    console.log('hello2')
-                    return  <div
-                    key={key}
-                    className={`product-shape ${
-                      key == selectedSettingId ? "selected" : ""
-                    }`}
-                    onClick={() => setSelectedSettingId(key)}
-                  >
-                    {setting.name}
+                      }
+
+                      )}
                   </div>
-                  }
-                   
-                  )}
+                </>
+                }
 
-                <h6>Metals</h6>
-                {All_available_filter?.shape[selectedShapeId]?.settings[
-                    selectedSettingId
-                  ]?.metals && Object.entries(
+                {
                   All_available_filter?.shape[selectedShapeId]?.settings[
                     selectedSettingId
-                  ]?.metals || {}
-                ).map(([key, metal]) => {
-                  console.log('hello3')
-                  return  <div
-                  key={key}
-                  className={`product-shape ${
-                    key == selectedMetalId ? "selected" : ""
-                  }`}
-                  onClick={() => setSelectedMetalId(key)}
-                >
-                  {metal.name}
-                </div>
-                }
-                 
-                )}
+                  ]?.metals && <>
+                    <h6>Select Metals</h6>
+                    <div className="d-flex align-items-center gap-2 mb-2">
+                      {Object.entries(
+                        All_available_filter?.shape[selectedShapeId]?.settings[
+                          selectedSettingId
+                        ]?.metals || {}
+                      ).map(([key, metal]) => {
+                        return <div
+                          key={key}
+                          className={`product-shape ${key == selectedMetalId ? "selected" : ""
+                            }`}
+                          onClick={() => { setSelectedMetalId(key); setSelectedSizeId(null) }}
+                        >
+                          {metal.name}
+                        </div>
+                      }
 
-                <h6>Size</h6>
-                {Object.entries(
+                      )}
+                    </div>
+                  </>
+                }
+
+                {
                   All_available_filter?.shape[selectedShapeId]?.settings[
                     selectedSettingId
-                  ]?.metals[selectedMetalId]?.sizes || {}
-                ).map(([key, size]) => {
-                  console.log('hello4')
-                  return   <div
-                  key={key}
-                  className={`product-shape ${
-                    key == selectedSizeId ? "selected" : ""
-                  }`}
-                  onClick={() => setSelectedSizeId(key)}
-                >
-                  {size.name}
-                </div>
-                }
-                
-                )}
+                  ]?.metals[selectedMetalId]?.sizes && <>
+                    <h6>Select Size</h6>
+                    <div className="d-flex align-items-center gap-2">
+                      {Object.entries(
+                        All_available_filter?.shape[selectedShapeId]?.settings[
+                          selectedSettingId
+                        ]?.metals[selectedMetalId]?.sizes || {}
+                      ).map(([key, size]) => {
+                        return <div
+                          key={key}
+                          className={`product-shape ${key == selectedSizeId ? "selected" : ""
+                            }`}
+                          onClick={() => handleSelectSize(key, size.variation_ids)}
+                        >
+                          {size.name}
+                        </div>
+                      }
 
-                 {/* <Accordion defaultActiveKey="0">
+                      )}
+                    </div>
+                  </>
+                }
+
+
+                {/* <Accordion defaultActiveKey="0">
                   <Accordion.Item eventKey="1">
                     <Accordion.Header>Change Shape</Accordion.Header>
                     <Accordion.Body>

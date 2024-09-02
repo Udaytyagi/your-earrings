@@ -15,6 +15,9 @@
   align-items: center;
 }
 
+.slider-container img{
+  cursor: pointer;
+}
 /* .slider-home-images{
   border-radius: 50%;
   background-color: #f5f5f5;

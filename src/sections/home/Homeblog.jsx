@@ -29,13 +29,13 @@ const Blog = ({ blogs }) => {
 
 
                                         <div className="admin-info">
-                                            <a href="#"><CiUser /> admin </a>
-                                            <a href="#">{blog?.Category_name} </a>
+                                            <span className="d-flex align-items-center"><CiUser className="me-1" /> admin</span>
+                                            <span className="ms-2">{blog?.Category_name} </span>
                                         </div>
 
                                         <p dangerouslySetInnerHTML={{ __html: blog?.Description }}></p>
 
-                                        <a href="#">Read More <FaAngleRight /></a>
+                                        <span>Read More <FaAngleRight /></span>
                                     </div>
                                 </div>
                             ))

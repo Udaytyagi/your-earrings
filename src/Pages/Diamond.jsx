@@ -5,16 +5,20 @@ import NavbarBottom from "../sections/common/NavbarBottom";
 import Footer from "../sections/common/Footer";
 import Breadcrumb from "../sections/common/Breadcrumb";
 import Filter from "./Filter";
-import { FaRegHeart } from "react-icons/fa";
+import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { Rating } from "react-simple-star-rating";
 import { FaAngleRight } from "react-icons/fa6";
-import axios from 'axios';
 import "../Styles/diamond.css";
 import { TbPlayerTrackNextFilled } from "react-icons/tb";
 import { TbPlayerTrackPrevFilled } from "react-icons/tb";
 import { fetchFilterApi } from '../apis/mainApis/filter/filterApis';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { updateWishlist } from '../features/slices/wishlist/wishlistSlice';
 
 const Diamond = () => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
   const [selectedShapeSlug, setSelectedShapeSlug] = useState("");
   const [selectedSettingSlug, setSelectedSettingSlug] = useState("");
   const [selectedMetalSlug, setSelectedMetalSlug] = useState("");
@@ -77,6 +81,15 @@ const Diamond = () => {
     setSelectedMetalSlug(slug);
     setUpdatePage(!updatePage);
   };
+
+  const handleUpdateWishlist = (variationId) => {
+    const data = {
+      variation_id: variationId
+    }
+    dispatch(updateWishlist(data))
+    setUpdatePage(!updatePage);
+  }
+
 
 
   return (
@@ -179,9 +192,9 @@ const Diamond = () => {
                   beautifullProducts && <div className="col-md-4 mb-4" >
                     {beautifullProducts && beautifullProducts?.map((product, i) => (
                       <div className="new-product-items mt-3" key={i}>
-                        <a href="#">
-                          <FaRegHeart />
-                        </a>
+                        {
+                          product?.wishlist === true ? <div className="wishlist-icon-fill d-flex justify-content-end" onClick={() => handleUpdateWishlist(product?.variation_id)}><FaHeart /></div> : <div className="wishlist-icon d-flex justify-content-end" onClick={() => handleUpdateWishlist(product?.variation_id)}><FaRegHeart /></div>
+                        }
                         <img
                           className="img-fluid"
                           src={product?.featured_image || "/images/products-1.png"}
@@ -199,9 +212,9 @@ const Diamond = () => {
                           </h4>
                           <Rating initialValue={product?.Rating} readonly />
                         </div>
-                        <a href="single-products">
-                          <button className="diamond-card-btn">BUY NOW</button>
-                        </a>
+
+                        <button className="diamond-card-btn" onClick={() => navigate(`/${product.slug}?vId=${product.variation_id}`)}>BUY NOW</button>
+
                       </div>
                     ))}
                   </div>
@@ -212,9 +225,9 @@ const Diamond = () => {
                   brilliantProducts && <div className="col-md-4 mb-4" >
                     {brilliantProducts && brilliantProducts?.map((product, i) => (
                       <div className="new-product-items mt-3" key={i}>
-                        <a href="#">
-                          <FaRegHeart />
-                        </a>
+                        {
+                          product?.wishlist === true ? <div className="wishlist-icon-fill d-flex justify-content-end" onClick={() => handleUpdateWishlist(product?.variation_id)}><FaHeart /></div> : <div className="wishlist-icon d-flex justify-content-end" onClick={() => handleUpdateWishlist(product?.variation_id)}><FaRegHeart /></div>
+                        }
                         <img
                           className="img-fluid"
                           src={product?.featured_image || "/images/products-1.png"}
@@ -232,9 +245,7 @@ const Diamond = () => {
                           </h4>
                           <Rating initialValue={product?.Rating} readonly />
                         </div>
-                        <a href="single-products">
-                          <button className="diamond-card-btn">BUY NOW</button>
-                        </a>
+                        <button className="diamond-card-btn" onClick={() => navigate(`/${product.slug}?vId=${product.variation_id}`)}>BUY NOW</button>
                       </div>
                     ))}
                   </div>
@@ -244,9 +255,9 @@ const Diamond = () => {
                   masterpieceProducts && <div className="col-md-4 mb-4" >
                     {masterpieceProducts && masterpieceProducts?.map((product, i) => (
                       <div className="new-product-items mt-3" key={i}>
-                        <a href="#">
-                          <FaRegHeart />
-                        </a>
+                        {
+                          product?.wishlist === true ? <div className="wishlist-icon-fill d-flex justify-content-end" onClick={() => handleUpdateWishlist(product?.variation_id)}><FaHeart /></div> : <div className="wishlist-icon d-flex justify-content-end" onClick={() => handleUpdateWishlist(product?.variation_id)}><FaRegHeart /></div>
+                        }
                         <img
                           className="img-fluid"
                           src={product?.featured_image || "/images/products-1.png"}
@@ -264,9 +275,7 @@ const Diamond = () => {
                           </h4>
                           <Rating initialValue={product?.Rating} readonly />
                         </div>
-                        <a href="single-products">
-                          <button className="diamond-card-btn">BUY NOW</button>
-                        </a>
+                        <button className="diamond-card-btn" onClick={() => navigate(`/${product.slug}?vId=${product.variation_id}`)}>BUY NOW</button>
                       </div>
                     ))}
                   </div>

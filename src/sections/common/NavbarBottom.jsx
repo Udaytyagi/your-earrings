@@ -21,7 +21,7 @@ const NavbarBottom = () => {
 
                                     <li onClick={() => navigate('/contact-us')}>Contact</li>
 
-                                    <li onClick={() => navigate('/blog')}>Blog</li>
+                                    <li onClick={() => navigate('/blogs')}>Blogs</li>
 
 
                                 </ul>
