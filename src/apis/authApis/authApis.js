@@ -32,3 +32,17 @@ export const signUpApi = async (data, setLoading, navigate) => {
         setLoading(false)
     }
 };
+
+export const forgotPasswordApi = async (data, setLoading, navigate) => {
+    setLoading(true);
+    try {
+        const response = await axios.post(`${baseUrl}auth/forgot/password`, data);
+        SuccessToaster(response.data.message);
+        navigate('/otp-verification');
+    } catch (error) {
+        ErrorToaster(error.response.data.message)
+        return null;
+    } finally {
+        setLoading(false)
+    }
+};

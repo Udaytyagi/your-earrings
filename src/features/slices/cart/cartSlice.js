@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { fetchCartApi, updateCartApi } from '../../../apis/mainApis/cart/cartApis';
+import { fetchCartApi, deleteAddCartApi, updateCartQuantityApi } from '../../../apis/mainApis/cart/cartApis';
 
 export const fetchCart = createAsyncThunk("fetchCart", async () => {
     try {
@@ -11,10 +11,18 @@ export const fetchCart = createAsyncThunk("fetchCart", async () => {
 });
 
 
-export const updateWishlist = createAsyncThunk(
-    "updateWishlist",
+export const updateCart = createAsyncThunk(
+    "updateCart",
+    async ({ data, variationId }, { dispatch }) => {
+        await deleteAddCartApi(data, variationId);
+        dispatch(fetchCart());
+    }
+);
+
+export const updateQuantityCart = createAsyncThunk(
+    "updateCartQuantity",
     async (data, { dispatch }) => {
-        await updateCartApi(data);
+        await updateCartQuantityApi(data);
         dispatch(fetchCart());
     }
 );

@@ -16,6 +16,9 @@ import Checkout from "./Pages/Checkout";
 import Account from "./Pages/Account";
 import Dashboard from "./Pages/Dashboard";
 import SingleBlog from "./Pages/SingleBlog";
+import ForgotPassword from "./Pages/authpages/ForgotPassword";
+import NewPassword from "./Pages/authpages/NewPassword";
+import OtpVerification from "./Pages/authpages/OtpVerification";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +50,30 @@ const router = createBrowserRouter([
     element: (
       <ScrollToTop>
         <Signup />
+      </ScrollToTop>
+    ),
+  },
+  {
+    path: "/forgot-password",
+    element: (
+      <ScrollToTop>
+        <ForgotPassword />
+      </ScrollToTop>
+    ),
+  },
+  {
+    path: "/new-password",
+    element: (
+      <ScrollToTop>
+        <NewPassword />
+      </ScrollToTop>
+    ),
+  },
+  {
+    path: "/otp-verification",
+    element: (
+      <ScrollToTop>
+        <OtpVerification />
       </ScrollToTop>
     ),
   },

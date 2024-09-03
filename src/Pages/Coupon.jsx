@@ -1,4 +1,4 @@
-function Coupon() {
+function Coupon({ carts, navigate }) {
   return (
     <div className="summary">
       <h5>Coupon</h5>
@@ -16,17 +16,17 @@ function Coupon() {
         />
       </div>
       <div className="totals">
-        <h6 className="sub-total">
+        {/* <h6 className="sub-total">
           SUBTOTAL <span>$860.00</span>
-        </h6>
+        </h6> */}
         <h6 className="grand-total">
-          GRAND TOTAL <span>$860.00</span>
+          GRAND TOTAL <span>${carts?.grand_total?.toFixed(2) || "Something went wrong"}</span>
         </h6>
         <p>Shipping &amp; taxes calculated at checkout</p>
       </div>
-      <div className="d-flex justify-content-between">
-        <button className="update-cart">Update Cart</button>
-        <a href="checkout"><button className="checkout">Check Out</button></a>
+      <div className="d-flex justify-content-end">
+        {/* <button className="update-cart">Update Cart</button> */}
+        <button className="checkout" onClick={() => navigate('/checkout')}>Check Out</button>
       </div>
     </div>
   );

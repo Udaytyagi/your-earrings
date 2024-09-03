@@ -9,9 +9,12 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { fetchWishlist } from "../features/slices/wishlist/wishlistSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { updateWishlist } from "../features/slices/wishlist/wishlistSlice";
+import { updateCart } from "../features/slices/cart/cartSlice";
+import { useNavigate } from "react-router-dom";
 
 function Wishlist() {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const wishlists = useSelector(state => state?.wishlist?.data?.Wishlist_product);
 
 
@@ -24,6 +27,14 @@ function Wishlist() {
       variation_id: variationId
     }
     dispatch(updateWishlist(data))
+  }
+
+  const handleAddToCart = (variationId) => {
+    const data = {
+      coupon_id: "",
+      action: "add"
+    }
+    dispatch(updateCart({ data: data, variationId: variationId }))
   }
 
   return (
@@ -43,7 +54,7 @@ function Wishlist() {
           <div className="container">
             <div className="row">
               <div className="col-md-12">
-                {wishlists && wishlists.length > 0 ? <div className="main-heading mb-20">My wishlist</div> : <div className="main-heading mb-20 d-flex justify-content-center">Your Wishlist is empty</div>}
+                {wishlists && wishlists.length > 0 ? <div className="main-heading mb-20">My Wishlist</div> : <h1 className="main-heading mb-20 d-flex justify-content-center fw-bold">Your Wishlist is empty</h1>}
                 {
                   wishlists && wishlists.length > 0 ? <div className="table-wishlist">
                     <table
@@ -80,12 +91,10 @@ function Wishlist() {
                                 ${wishlist?.Sale_price}
                               </td>
                               <td width="15%">
-                                <a href="#" className="trash-icon">
-                                  <span className="in-stock-box">View Item</span>
-                                </a>
+                                <span className="in-stock-box" onClick={() => navigate(`/${wishlist.Slug}?vId=${wishlist.Variation_id}`)}>View Item</span>
                               </td>
                               <td width="15%">
-                                <button className="round-black-btn small-btn">
+                                <button className="round-black-btn small-btn" onClick={() => handleAddToCart(wishlist?.Variation_id)}>
                                   Add to Cart
                                 </button>
                               </td>

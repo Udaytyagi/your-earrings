@@ -3,7 +3,7 @@ import '../../Styles/calltoaction.css'
 const CallToAction = ({ products }) => {
   return (
     <>
-      <section className="calltoaction">
+      <section className="calltoaction" style={{ backgroundImage: `url(${products?.banner_image})` }}>
         <div className="container">
           <div className="row">
             <div className="col-md-7"></div>

@@ -17,6 +17,8 @@ import { fetchProductDetail } from "../features/slices/productDetail/productDeta
 import { useDispatch, useSelector } from "react-redux";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
+import { updateCart } from "../features/slices/cart/cartSlice";
+import { ErrorToaster } from "../components/Toaster";
 
 const SingleProducts = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -46,8 +48,6 @@ const SingleProducts = () => {
     }
   }, [product]);
 
-  useEffect(() => { }, [selectedShapeId]);
-
   const images =
     product &&
     product?.Gallery_images?.map((imgUrl) => ({
@@ -68,12 +68,30 @@ const SingleProducts = () => {
     setSearchParams({ vId: variationId });
   }
 
+  const handleAddToCart = () => {
+    const data = {
+      coupon_id: "",
+      action: "add"
+    }
+    dispatch(updateCart({ data: data, variationId: variationId }))
+  }
+
+
+  const handleAccordionClick = (eventKey) => {
+    if (eventKey === "2" && !selectedSettingId) {
+      ErrorToaster("Please first select shape");
+    } else if (eventKey === "3" && !selectedMetalId) {
+      ErrorToaster("Please first select setting");
+    } else if (eventKey === "4" && !selectedSizeId) {
+      ErrorToaster("Please first select metal");
+    }
+  };
+
   return (
     <>
       <Topbar />
       <Navbarmid />
       <NavbarBottom />
-
       <Breadcrumb
         heading="Round Diamond Stud Earrings"
         image="/images/round-bg.png"
@@ -108,156 +126,148 @@ fashion earrings to find your perfect pair."
               )}
             </div>
             <div className="col-md-4 product-detail">
-              <p>Item ID #: 038586</p>
+              <p>Item ID #: {product?.Item_id}</p>
               <h4>{product.Title}</h4>
               <div className="d-flex review-rating">
                 <Rating />
-
-                <p>(09 Reviews)</p>
               </div>
               <p dangerouslySetInnerHTML={{ __html: product.Description }}></p>
-              <h5>Select Your Variation</h5>
+              <h5>Select Other Variation</h5>
               <div className="product-accordion">
-                {All_available_filter?.shape &&
-                  <>
-                    <h6>Select Shapes</h6>
-                    <div className="d-flex align-items-center gap-2 mb-2">
-                      {
-                        Object.entries(All_available_filter.shape).map(
-                          ([key, shape]) => {
-                            return (
-                              <div
-                                key={key}
-                                className={`product-shape ${key == selectedShapeId ? "selected" : ""
-                                  }`}
-                                onClick={() => setSelectedShapeId(parseInt(key))}
-                              >
-                                {shape.name}
-                              </div>
-                            );
-                          }
-                        )
-                      }
-                    </div>
-                  </>
-                }
-
-                {All_available_filter?.shape[selectedShapeId]?.settings && <>
-                  <h6>Select Settings</h6>
-                  <div className="d-flex align-items-center gap-2 mb-2">
-                    {
-                      Object.entries(
-                        All_available_filter.shape[selectedShapeId].settings
-                      ).map(([key, setting]) => {
-                        return <div
-                          key={key}
-                          className={`product-shape ${key == selectedSettingId ? "selected" : ""
-                            }`}
-                          onClick={() => { setSelectedSettingId(key); setSelectedMetalId(null); setSelectedSizeId(null) }}
-                        >
-                          {setting.name}
-                        </div>
-                      }
-
-                      )}
-                  </div>
-                </>
-                }
-
-                {
-                  All_available_filter?.shape[selectedShapeId]?.settings[
-                    selectedSettingId
-                  ]?.metals && <>
-                    <h6>Select Metals</h6>
-                    <div className="d-flex align-items-center gap-2 mb-2">
-                      {Object.entries(
-                        All_available_filter?.shape[selectedShapeId]?.settings[
-                          selectedSettingId
-                        ]?.metals || {}
-                      ).map(([key, metal]) => {
-                        return <div
-                          key={key}
-                          className={`product-shape ${key == selectedMetalId ? "selected" : ""
-                            }`}
-                          onClick={() => { setSelectedMetalId(key); setSelectedSizeId(null) }}
-                        >
-                          {metal.name}
-                        </div>
-                      }
-
-                      )}
-                    </div>
-                  </>
-                }
-
-                {
-                  All_available_filter?.shape[selectedShapeId]?.settings[
-                    selectedSettingId
-                  ]?.metals[selectedMetalId]?.sizes && <>
-                    <h6>Select Size</h6>
-                    <div className="d-flex align-items-center gap-2">
-                      {Object.entries(
-                        All_available_filter?.shape[selectedShapeId]?.settings[
-                          selectedSettingId
-                        ]?.metals[selectedMetalId]?.sizes || {}
-                      ).map(([key, size]) => {
-                        return <div
-                          key={key}
-                          className={`product-shape ${key == selectedSizeId ? "selected" : ""
-                            }`}
-                          onClick={() => handleSelectSize(key, size.variation_ids)}
-                        >
-                          {size.name}
-                        </div>
-                      }
-
-                      )}
-                    </div>
-                  </>
-                }
-
-
-                {/* <Accordion defaultActiveKey="0">
+                <Accordion defaultActiveKey="0" onSelect={handleAccordionClick}>
                   <Accordion.Item eventKey="1">
                     <Accordion.Header>Change Shape</Accordion.Header>
                     <Accordion.Body>
-                      <div className="product-shape">Round</div>
+                      {All_available_filter?.shape &&
+                        <>
+                          <div className="d-flex align-items-center gap-2 mb-2">
+                            {
+                              Object.entries(All_available_filter.shape).map(
+                                ([key, shape]) => {
+                                  return (
+                                    <div key={key}
+                                      className={`product-shape ${key == selectedShapeId ? "selected" : ""
+                                        }`}>
+                                      <div
+                                        className="product-shape"
+                                        onClick={() => setSelectedShapeId(parseInt(key))}
+                                        style={{ backgroundColor: "#a0793633" }}
+                                      >
+                                        {shape.name}
+                                      </div>
+                                    </div>
+                                  );
+                                }
+                              )
+                            }
+                          </div>
+                        </>
+                      }
                     </Accordion.Body>
                   </Accordion.Item>
                   <Accordion.Item eventKey="2">
                     <Accordion.Header>Change Setting</Accordion.Header>
                     <Accordion.Body>
-                      <div className="product-shape">4- Prong Basket</div>
+                      {All_available_filter?.shape[selectedShapeId]?.settings && <>
+                        <div className="d-flex align-items-center gap-2 mb-2">
+                          {
+                            Object.entries(
+                              All_available_filter.shape[selectedShapeId].settings
+                            ).map(([key, setting]) => {
+                              return <div key={key} className={`product-shape ${key == selectedSettingId ? "selected" : ""
+                                }`}>
+                                <div
+                                  className="product-shape"
+                                  onClick={() => { setSelectedSettingId(key); setSelectedMetalId(null); setSelectedSizeId(null) }}
+                                  style={{ backgroundColor: "#a0793633" }}
+                                >
+                                  {setting.name}
+                                </div>
+                              </div>
+                            }
+
+                            )}
+                        </div>
+                      </>
+                      }
                     </Accordion.Body>
                   </Accordion.Item>
                   <Accordion.Item eventKey="3">
                     <Accordion.Header>Change Metal</Accordion.Header>
                     <Accordion.Body>
-                      <div className="product-shape">14k- White gold</div>
+                      {
+                        All_available_filter?.shape[selectedShapeId]?.settings[
+                          selectedSettingId
+                        ]?.metals && <>
+                          <div className="d-flex align-items-center gap-2 mb-2">
+                            {Object.entries(
+                              All_available_filter?.shape[selectedShapeId]?.settings[
+                                selectedSettingId
+                              ]?.metals || {}
+                            ).map(([key, metal]) => {
+                              return <div className={`product-metal ${key == selectedMetalId ? "selected" : ""
+                                }`} key={key}>
+                                <div
+                                  className="product-metal"
+                                  onClick={() => { setSelectedMetalId(key); setSelectedSizeId(null) }}
+                                  style={{ backgroundColor: `${metal.color_code}` }}
+                                >
+                                  {metal.name}
+                                </div>
+                              </div>
+                            }
+
+                            )}
+                          </div>
+                        </>
+                      }
                     </Accordion.Body>
                   </Accordion.Item>
                   <Accordion.Item eventKey="4">
                     <Accordion.Header>Change Size</Accordion.Header>
                     <Accordion.Body>
-                      <div className="product-shape">0.25</div>
+                      {
+                        All_available_filter?.shape[selectedShapeId]?.settings[
+                          selectedSettingId
+                        ]?.metals[selectedMetalId]?.sizes && <>
+                          <div className="d-flex align-items-center gap-2">
+                            {Object.entries(
+                              All_available_filter?.shape[selectedShapeId]?.settings[
+                                selectedSettingId
+                              ]?.metals[selectedMetalId]?.sizes || {}
+                            ).map(([key, size]) => {
+                              return <div key={key}
+                                className={`product-shape ${key == selectedSizeId ? "selected" : ""
+                                  }`}>
+                                <div
+                                  className="product-shape"
+                                  onClick={() => handleSelectSize(key, size.variation_ids)}
+                                  style={{ backgroundColor: "#a0793633" }}
+                                >
+                                  {size.name}
+                                </div>
+                              </div>
+                            }
+
+                            )}
+                          </div>
+                        </>
+                      }
                     </Accordion.Body>
                   </Accordion.Item>
-                </Accordion> */}
+                </Accordion>
               </div>
             </div>
 
             <div className="col-md-3 price-col">
               <div className="product-pric">
-                {/* <h5>Retail: $599.00</h5> */}
                 <h5>
                   Sale : <span>${product.Base_price}</span>
                 </h5>
                 <h4>Buy Now : ${product.Sale_price}</h4>
               </div>
               <div className="wishlist-btn">
-                <a href="cart">
-                  <button className="button-bag">Add to Bag</button>
-                </a>
+                <button className="button-bag" onClick={() => handleAddToCart()}>Add to Bag</button>
                 <a href="wishlist">
                   <button className="button wishlist">Add to Wishlist</button>
                 </a>
@@ -332,7 +342,6 @@ fashion earrings to find your perfect pair."
       <SingleProductSlider />
 
       <div className="container review-main my-5">
-        {/* Reviews Section */}
         <div className="row">
           <div className="col-12 pb-1">
             <h4>Reviews</h4>
@@ -429,7 +438,6 @@ fashion earrings to find your perfect pair."
             </div>
           </div>
         </div>
-        {/* Write Review Section */}
         <div className="review-section">
           <div className="row">
             <div className="col-12 pt-1 pb-1 review-rating">
@@ -472,87 +480,6 @@ fashion earrings to find your perfect pair."
         </div>
 
         <div className="container p-0 mt-4">
-          <div className="review-box">
-            <div className="review-header">
-              <img src="https://via.placeholder.com/40" alt="User Avatar" />
-              <div className="user-info">
-                <h6>
-                  Random Person <span>(Stayed 24 Nov, 2023)</span>
-                </h6>
-                <p>Customer | 1 Review Written</p>
-              </div>
-            </div>
-            <div className="review-content">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industrys standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, but also the leap into
-              electronic typesetting.
-            </div>
-            <div className="review-images">
-              <img src="images\review-img.png" alt="Review Image 1" />
-              <img src="images\review-img.png" alt="Review Image 2" />
-              <img src="images\review-img.png" alt="Review Image 3" />
-              <img src="images\review-img.png" alt="Review Image 4" />
-            </div>
-          </div>
-        </div>
-        <div className="container p-0 mt-3">
-          <div className="review-box">
-            <div className="review-header">
-              <img src="https://via.placeholder.com/40" alt="User Avatar" />
-              <div className="user-info">
-                <h6>
-                  Random Person <span>(Stayed 24 Nov, 2023)</span>
-                </h6>
-                <p>Customer | 1 Review Written</p>
-              </div>
-            </div>
-            <div className="review-content">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industrys standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, but also the leap into
-              electronic typesetting.
-            </div>
-            <div className="review-images">
-              <img src="images\review-img.png" alt="Review Image 1" />
-              <img src="images\review-img.png" alt="Review Image 2" />
-              <img src="images\review-img.png" alt="Review Image 3" />
-              <img src="images\review-img.png" alt="Review Image 4" />
-            </div>
-          </div>
-        </div>
-        <div className="container p-0 mt-3">
-          <div className="review-box">
-            <div className="review-header">
-              <img src="https://via.placeholder.com/40" alt="User Avatar" />
-              <div className="user-info">
-                <h6>
-                  Random Person <span>(Stayed 24 Nov, 2023)</span>
-                </h6>
-                <p>Customer | 1 Review Written</p>
-              </div>
-            </div>
-            <div className="review-content">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industrys standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, but also the leap into
-              electronic typesetting.
-            </div>
-            <div className="review-images">
-              <img src="images\review-img.png" alt="Review Image 1" />
-              <img src="images\review-img.png" alt="Review Image 2" />
-              <img src="images\review-img.png" alt="Review Image 3" />
-              <img src="images\review-img.png" alt="Review Image 4" />
-            </div>
-          </div>
-        </div>
-        <div className="container p-0 mt-3">
           <div className="review-box">
             <div className="review-header">
               <img src="https://via.placeholder.com/40" alt="User Avatar" />
