@@ -1,31 +1,22 @@
-import React, { useState } from "react";
-import "../../src/styles/LoginModal.css";
-import { Modal, Button, Form } from "react-bootstrap";
-import Swal from "sweetalert2";
+import { useState } from "react";
+import { Modal, Form } from "react-bootstrap";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { fetchUser } from "../redux/slice/fetchUserSlice";
-import { fetchWishListApi } from "Apis/MainApis";
-import { fetchHomeProducts } from "../redux/slice/fetchHomeProductsSlice";
-import { useDispatch } from "react-redux";
-import { baseURl } from "Utils/BaseURL";
-import axios from "axios";
-import { fetchWishlist } from "../redux/slice/fetchWishlistSlice";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
+import "../Styles/LoginModal.css"
+import { useSelector, useDispatch } from "react-redux";
+import { closeLoginModal } from "../features/slices/user/userSlice";
+import { loginApi } from "../apis/authApis/authApis";
+import { useNavigate } from 'react-router-dom'
 
-function LoginModal({ showModal, setShowModal }) {
+function LoginModal({ openLoginModal, setOpenLoginModal }) {
+    const dispatch = useDispatch();
+    const navigate = useNavigate()
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [login_validationErrors, setlogin_ValidationErrors] = useState({});
     const [showPassword, setShowPassword] = useState(false);
+    const [loading, setLoading] = useState(false)
 
-    const dispatch = useDispatch();
-    const login_resetForm = () => {
-        setEmail("");
-        setPassword("");
-        setlogin_ValidationErrors({});
-    };
 
     const login_validateform = () => {
         const login_errors = {};
@@ -38,6 +29,8 @@ function LoginModal({ showModal, setShowModal }) {
         setlogin_ValidationErrors(login_errors);
         return Object.keys(login_errors).length === 0;
     };
+
+
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
         if (login_validationErrors.email) {
@@ -58,31 +51,16 @@ function LoginModal({ showModal, setShowModal }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (login_validateform()) {
-            const userData = {
+            const data = {
                 email: email,
-                password: password,
-            };
-            try {
-                const response = await axios.post(`${baseURl}login`, userData);
-                if (response.data.status === "success") {
-                    localStorage.setItem("Meteor_Key", response.data.data.token);
-                    dispatch(fetchUser());
-                    dispatch(fetchWishlist());
-                    dispatch(fetchHomeProducts());
-                    setShowModal(false);
-                    login_resetForm();
-                    toast.success(response?.data?.message);
-                }
-            } catch (error) {
-                toast.error(error?.response?.data?.message);
+                password: password
             }
-        } else {
-            console.log("Form is invalid!");
+            await loginApi(data, setLoading, dispatch, navigate, setOpenLoginModal)
         }
     };
     return (
         <>
-            <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+            <Modal show={openLoginModal} onHide={() => setOpenLoginModal(false)} centered>
                 <Modal.Header closeButton>
                     <Modal.Title className="login_heading_title fw-bold">
                         Login to continue
@@ -91,7 +69,7 @@ function LoginModal({ showModal, setShowModal }) {
                 <Modal.Body>
                     <Form onSubmit={handleSubmit}>
                         <Form.Group controlId="email">
-                            <Form.Label className="signin-label"> Email</Form.Label>
+                            <Form.Label className="signin-label">Email</Form.Label>
                             <Form.Control
                                 style={{
                                     border: login_validationErrors.email ? "1px solid red" : "",
@@ -152,7 +130,7 @@ function LoginModal({ showModal, setShowModal }) {
                         <p className="my-md-2">
                             Don’t have an account?{" "}
                             <span>
-                                <Link to="/signup">Sign Up</Link>
+                                <Link to="/register">Sign Up</Link>
                             </span>
                         </p>
                     </Form>

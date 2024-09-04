@@ -46,8 +46,9 @@ const Blog = () => {
                     <div className="row">
                         {
                             blogs?.map((blog, i) => (
-                                <div className="col-md-4" key={i}>
-                                    <div className="blog-post" onClick={() => navigate(`/blog/${blog.Slug}`)}>
+                                <div className="col-md-4" key={blog.Slug}>
+                                    {/* onClick={() => navigate(`/blog/${blog.Slug}`)} */}
+                                    <div className="blog-post">
                                         <h5>{blog?.Created_at}</h5>
                                         <img className='img-fluid' src={blog?.Images || "/images/blog-1.png"} alt="" />
                                         <h3>{blog.Title}</h3>

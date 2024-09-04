@@ -90,11 +90,7 @@ fashion earrings to find your perfect pair."
                 </a>
               </li>
               <li className="account__menu--list">
-                <a
-                  href="login"
-                >
                   Log Out
-                </a>
               </li>
             </ul>
           </div>

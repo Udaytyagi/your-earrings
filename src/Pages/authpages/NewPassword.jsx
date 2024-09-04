@@ -6,24 +6,39 @@ import NavbarBottom from '../../sections/common/NavbarBottom'
 import Breadcrumb from '../../sections/common/Breadcrumb'
 import Footer from '../../sections/common/Footer'
 import { useNavigate } from 'react-router-dom'
-import { loginApi } from '../../apis/authApis/authApis'
-import { useDispatch } from 'react-redux';
+import { newPasswordApi } from '../../apis/authApis/authApis'
 import { Loader } from '../../components/Loader'
+import { ErrorToaster } from '../../components/Toaster'
 
 const NewPassword = () => {
     const navigate = useNavigate()
-    const dispatch = useDispatch()
     const [newPassword, setNewPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [loading, setLoading] = useState(false)
 
-    const handleLogin = async (event) => {
-        event.preventDefault()
-        const data = {
-            email: "",
-            password: ""
+    const validateForm = () => {
+        if (newPassword.length < 8) {
+            ErrorToaster('New password must be at least 8 characters long')
+            return false;
         }
-        loginApi(data, setLoading, dispatch, navigate);
+        if (newPassword !== confirmPassword) {
+            ErrorToaster('New password and Confirm password does not match')
+            return false;
+        }
+        return true;
+    }
+
+    const handleNewPassword = async (event) => {
+        event.preventDefault();
+        const token = localStorage.getItem("verifyOtpToken")
+        const data = {
+            token: token,
+            newPassword: newPassword,
+            confirmPassword: confirmPassword
+        }
+        if (validateForm()) {
+            await newPasswordApi(data, setLoading, navigate);
+        }
     }
 
     return (
@@ -31,7 +46,7 @@ const NewPassword = () => {
             <Topbar />
             <Navbarmid />
             <NavbarBottom />
-            <Breadcrumb heading="Login" image="/images/earrings-bg.png" />
+            <Breadcrumb heading="New Password" image="/images/earrings-bg.png" />
             <section className="loginpage">
                 <div className="container">
                     <div className="row">
@@ -42,11 +57,11 @@ const NewPassword = () => {
                                     <p>Setup your new password.</p>
                                 </div>
 
-                                <form className="account_login-field" onSubmit={handleLogin}>
+                                <form className="account_login-field" onSubmit={handleNewPassword}>
                                     <label>
                                         <input
                                             className="account_login-input"
-                                            placeholder="Password"
+                                            placeholder="New Password"
                                             type="password"
                                             value={newPassword}
                                             onChange={(e) => setNewPassword(e.target.value)}
@@ -56,13 +71,18 @@ const NewPassword = () => {
                                     <label>
                                         <input
                                             className="account_login-input"
-                                            placeholder="Password"
+                                            placeholder="Confirm Password"
                                             type="password"
                                             value={confirmPassword}
                                             onChange={(e) => setConfirmPassword(e.target.value)}
                                             required
                                         />
                                     </label>
+                                    <button className="account_login-btn primary_btn" type="submit" disabled={loading}>
+                                        {loading ? <Loader height="22"
+                                            width="22"
+                                            color="white" /> : 'Submit'}
+                                    </button>
                                 </form>
                             </div>
                         </div>

@@ -23,7 +23,7 @@ const Login = () => {
       email: email,
       password: password
     }
-    loginApi(data, setLoading, dispatch, navigate)
+    await loginApi(data, setLoading, dispatch, navigate)
   }
 
   return (

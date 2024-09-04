@@ -44,7 +44,7 @@ const Signup = () => {
             password: password,
             password_confirmation: confirmPassword
         }
-        signUpApi(data, setLoading, navigate)
+        await signUpApi(data, setLoading, navigate)
     }
 
     return (

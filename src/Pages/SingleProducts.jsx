@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, createRef, useState } from "react";
+import { useEffect, useRef, createRef, useState } from "react";
 import Topbar from "../sections/common/Topbar";
 import Navbarmid from "../sections/common/Navbarmid";
 import NavbarBottom from "../sections/common/NavbarBottom";
@@ -8,8 +8,6 @@ import "../Styles/singleproducts.css";
 import Accordion from "react-bootstrap/Accordion";
 import { Rating } from "react-simple-star-rating";
 import SingleProductSlider from "../Pages/SingleProductSlider";
-import Testimonial from "../sections/home/Testimonial";
-import { FaRegHeart } from "react-icons/fa";
 import { RiUploadCloud2Line } from "react-icons/ri";
 import { FaAngleRight } from "react-icons/fa6";
 import { useSearchParams } from "react-router-dom";
@@ -19,6 +17,8 @@ import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import { updateCart } from "../features/slices/cart/cartSlice";
 import { ErrorToaster } from "../components/Toaster";
+import FeaturedProduct from "../sections/home/FeaturedProduct";
+import LoginModal from "../components/LoginModal";
 
 const SingleProducts = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -26,21 +26,23 @@ const SingleProducts = () => {
   const dispatch = useDispatch();
   const fileInputRef = createRef();
   const fullScreenRef = useRef();
-  const product = useSelector((state) => state.productDetail.data);
-  const { All_available_filter } = product && product;
-
+  const product = useSelector((state) => state?.productDetail?.data);
+  const user = useSelector(state => state?.user?.data);
+  const All_available_filter = product?.Product_info?.All_available_filter || {};
   const [selectedShapeId, setSelectedShapeId] = useState(null);
   const [selectedSettingId, setSelectedSettingId] = useState(null);
   const [selectedMetalId, setSelectedMetalId] = useState(null);
   const [selectedSizeId, setSelectedSizeId] = useState(null);
+  const [activeAccordionKey, setActiveAccordionKey] = useState("0");
+  const [openLoginModal, setOpenLoginModal] = useState(false);
 
   useEffect(() => {
     dispatch(fetchProductDetail(variationId));
   }, [variationId, dispatch]);
 
   useEffect(() => {
-    if (product) {
-      const { Already_selected_filter } = product;
+    if (product && product?.Product_info) {
+      const { Already_selected_filter } = product.Product_info;
       setSelectedShapeId(Already_selected_filter?.shape?.id || null);
       setSelectedSettingId(Already_selected_filter?.setting?.id || null);
       setSelectedMetalId(Already_selected_filter?.metal?.id || null);
@@ -49,8 +51,8 @@ const SingleProducts = () => {
   }, [product]);
 
   const images =
-    product &&
-    product?.Gallery_images?.map((imgUrl) => ({
+    product && product?.Product_info &&
+    product?.Product_info?.Gallery_images?.map((imgUrl) => ({
       original: imgUrl,
       thumbnail: imgUrl,
     }));
@@ -69,26 +71,47 @@ const SingleProducts = () => {
   }
 
   const handleAddToCart = () => {
-    const data = {
-      coupon_id: "",
-      action: "add"
+    if (user) {
+      const data = {
+        coupon_id: "",
+        action: "add"
+      }
+      dispatch(updateCart({ data: data, variationId: variationId }))
+    } else {
+      setOpenLoginModal(true)
     }
-    dispatch(updateCart({ data: data, variationId: variationId }))
+  }
+
+  const handleAddToWishlist = () => {
+    if (user) {
+      const data = {
+        coupon_id: "",
+        action: "add"
+      }
+      dispatch(updateCart({ data: data, variationId: variationId }))
+    } else {
+      setOpenLoginModal(true)
+    }
   }
 
 
   const handleAccordionClick = (eventKey) => {
-    if (eventKey === "2" && !selectedSettingId) {
+    if (eventKey === "2" && !selectedShapeId) {
       ErrorToaster("Please first select shape");
-    } else if (eventKey === "3" && !selectedMetalId) {
+      return;
+    } else if (eventKey === "3" && !selectedSettingId) {
       ErrorToaster("Please first select setting");
-    } else if (eventKey === "4" && !selectedSizeId) {
+      return;
+    } else if (eventKey === "4" && !selectedMetalId) {
       ErrorToaster("Please first select metal");
+      return;
     }
+    setActiveAccordionKey(eventKey);
   };
 
   return (
     <>
+      <LoginModal openLoginModal={openLoginModal} setOpenLoginModal={setOpenLoginModal} />
       <Topbar />
       <Navbarmid />
       <NavbarBottom />
@@ -98,13 +121,13 @@ const SingleProducts = () => {
         para="Explore our exquisite hoop earrings, climbers and
 fashion earrings to find your perfect pair."
       />
-      <div className="page-nav container px-0">
+      {/* <div className="page-nav container px-0">
         <p>Home</p>
         <FaAngleRight />
         <p>Earrings</p>
         <FaAngleRight />
         <p>Round</p>
-      </div>
+      </div> */}
 
       <section>
         <div className="container">
@@ -126,15 +149,15 @@ fashion earrings to find your perfect pair."
               )}
             </div>
             <div className="col-md-4 product-detail">
-              <p>Item ID #: {product?.Item_id}</p>
-              <h4>{product.Title}</h4>
+              <p>Item ID #: {product?.Product_info?.Item_id}</p>
+              <h4>{product?.Product_info?.Title}</h4>
               <div className="d-flex review-rating">
                 <Rating />
               </div>
-              <p dangerouslySetInnerHTML={{ __html: product.Description }}></p>
+              <p dangerouslySetInnerHTML={{ __html: product?.Product_info?.Description }}></p>
               <h5>Select Other Variation</h5>
               <div className="product-accordion">
-                <Accordion defaultActiveKey="0" onSelect={handleAccordionClick}>
+                <Accordion defaultActiveKey="0" activeKey={activeAccordionKey} onSelect={handleAccordionClick}>
                   <Accordion.Item eventKey="1">
                     <Accordion.Header>Change Shape</Accordion.Header>
                     <Accordion.Body>
@@ -150,7 +173,7 @@ fashion earrings to find your perfect pair."
                                         }`}>
                                       <div
                                         className="product-shape"
-                                        onClick={() => setSelectedShapeId(parseInt(key))}
+                                        onClick={() => { setSelectedShapeId(parseInt(key)); setSelectedSettingId(null); setSelectedMetalId(null); setSelectedSizeId(null) }}
                                         style={{ backgroundColor: "#a0793633" }}
                                       >
                                         {shape.name}
@@ -168,7 +191,7 @@ fashion earrings to find your perfect pair."
                   <Accordion.Item eventKey="2">
                     <Accordion.Header>Change Setting</Accordion.Header>
                     <Accordion.Body>
-                      {All_available_filter?.shape[selectedShapeId]?.settings && <>
+                      {product && All_available_filter?.shape[selectedShapeId]?.settings && <>
                         <div className="d-flex align-items-center gap-2 mb-2">
                           {
                             Object.entries(
@@ -196,7 +219,7 @@ fashion earrings to find your perfect pair."
                     <Accordion.Header>Change Metal</Accordion.Header>
                     <Accordion.Body>
                       {
-                        All_available_filter?.shape[selectedShapeId]?.settings[
+                        product && All_available_filter?.shape[selectedShapeId]?.settings[
                           selectedSettingId
                         ]?.metals && <>
                           <div className="d-flex align-items-center gap-2 mb-2">
@@ -227,7 +250,7 @@ fashion earrings to find your perfect pair."
                     <Accordion.Header>Change Size</Accordion.Header>
                     <Accordion.Body>
                       {
-                        All_available_filter?.shape[selectedShapeId]?.settings[
+                        product && All_available_filter?.shape[selectedShapeId]?.settings[
                           selectedSettingId
                         ]?.metals[selectedMetalId]?.sizes && <>
                           <div className="d-flex align-items-center gap-2">
@@ -262,15 +285,13 @@ fashion earrings to find your perfect pair."
             <div className="col-md-3 price-col">
               <div className="product-pric">
                 <h5>
-                  Sale : <span>${product.Base_price}</span>
+                  Sale : <span>${product?.Product_info?.Base_price}</span>
                 </h5>
-                <h4>Buy Now : ${product.Sale_price}</h4>
+                <h4>Buy Now : ${product?.Product_info?.Sale_price}</h4>
               </div>
               <div className="wishlist-btn">
                 <button className="button-bag" onClick={() => handleAddToCart()}>Add to Bag</button>
-                <a href="wishlist">
-                  <button className="button wishlist">Add to Wishlist</button>
-                </a>
+                {/* <button className="button wishlist" onClick={() => handleAddToWishlist()}>Add to Wishlist</button> */}
               </div>
               <div className="coupon">
                 <p>Coupon Code</p>
@@ -307,11 +328,11 @@ fashion earrings to find your perfect pair."
               <h5>PRODUCT DETAILS</h5>
             </div>
 
-            {product?.Earrings_information && (
+            {product?.Product_info?.Earrings_information && (
               <div className="col-md-6 earing-information">
                 <h6>EARRING INFORMATION</h6>
                 <div className="product-information-main">
-                  {Object.entries(product.Earrings_information || {}).map(
+                  {Object.entries(product?.Product_info?.Earrings_information || {}).map(
                     ([key, value]) => (
                       <div className="product-information" key={key}>
                         <p>{key}:</p>
@@ -322,11 +343,11 @@ fashion earrings to find your perfect pair."
                 </div>
               </div>
             )}
-            {product?.Daimond_information && (
+            {product?.Product_info?.Daimond_information && (
               <div className="col-md-6 earing-information">
                 <h6>DIAMOND INFORMATION</h6>
                 <div className="product-information-main">
-                  {product.Diamond_information.map((info, index) => (
+                  {product?.Product_info?.Daimond_information.map((info, index) => (
                     <div className="product-information" key={index}>
                       <p>{info.label}:</p>
                       <p>{info.value}</p>
@@ -339,7 +360,7 @@ fashion earrings to find your perfect pair."
         </div>
       </section>
 
-      <SingleProductSlider />
+      <SingleProductSlider product={product} />
 
       <div className="container review-main my-5">
         <div className="row">

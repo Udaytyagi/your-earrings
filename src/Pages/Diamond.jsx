@@ -22,8 +22,7 @@ const Diamond = () => {
   const [selectedShapeSlug, setSelectedShapeSlug] = useState("");
   const [selectedSettingSlug, setSelectedSettingSlug] = useState("");
   const [selectedMetalSlug, setSelectedMetalSlug] = useState("");
-  const [selectedMetalId, setSelectedMetalId] = useState("1")
-  const [selectedSize, setSelectedSize] = useState(1);
+  const [selectedSize, setSelectedSize] = useState("");
   const [beautifullProducts, setBeautifullProducts] = useState([]);
   const [brilliantProducts, setBrilliantProducts] = useState([]);
   const [masterpieceProducts, setMasterpieceProducts] = useState([]);
@@ -34,7 +33,6 @@ const Diamond = () => {
   const [selectedSizes, setSelectedSizes] = useState([]);
   const [priceRange, setPriceRange] = useState([0, 0]);
   const [updatePage, setUpdatePage] = useState(false);
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,7 +58,7 @@ const Diamond = () => {
       setMasterpieceProducts(types.Masterpiece);
       setSelectedShapeSlug(selected.shape_id);
       setSelectedSettingSlug(selected.setting_id);
-      setSelectedMetalSlug(selected.metal_id)
+      setSelectedMetalSlug(selected.metal_id);
     };
 
     fetchData();
@@ -121,9 +119,11 @@ const Diamond = () => {
               <h5>Select Your Shapes</h5>
             </div>
             <div className="shapes">
-              {shapes.map(shape => (
+              {shapes?.map(shape => (
                 <div className={`shapes-inner ${shape.slug === selectedShapeSlug ? 'selected' : ''}`} key={shape.id} onClick={() => handleShapeChangeSlug(shape.slug)}>
-                  <img className="img-diamond" src={shape.image} alt={shape.title} />
+                  <div>
+                    <img className="img-diamond" src={shape.image} alt={shape.title} />
+                  </div>
                   <h6>{shape.title}</h6>
                 </div>
               ))}
@@ -135,9 +135,9 @@ const Diamond = () => {
               <h5>Select Your Settings</h5>
             </div>
             <div className="shapes settings justify-content-start">
-              {settings.map(setting => (
+              {settings?.map(setting => (
                 <div className={`shapes-inner ${setting.slug === selectedSettingSlug ? 'selected' : ''}`} key={setting.id} onClick={() => handleSettingChangeSlug(setting.slug)}>
-                  <img className="img-diamond" src={setting.image[selectedMetalId]} alt={setting.title} />
+                  <img className="img-diamond" src={setting.image[selectedMetalSlug]} alt={setting.title} />
                   <h6>{setting.title}</h6>
                 </div>
               ))}
@@ -150,7 +150,7 @@ const Diamond = () => {
             </div>
             <div className="shapes select-btn">
               {Object.entries(metals).map(([key, metal]) => (
-                <div className={`shapes-inner ${metal.slug === selectedMetalSlug ? 'selected' : ""}`} key={metal.id} onClick={() => { handleMetalChangeSlug(metal.slug); setSelectedMetalId(metal.id) }} style={{ backgroundColor: metal.color_code }} >
+                <div className={`shapes-inner ${metal.slug === selectedMetalSlug ? 'selected' : ""}`} key={metal.id} onClick={() => handleMetalChangeSlug(metal.slug)} style={{ backgroundColor: metal.color_code }} >
                   <h6>{metal.title}</h6>
                 </div>
               ))}

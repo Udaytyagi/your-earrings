@@ -16,6 +16,15 @@ const userSlice = createSlice({
         isLoading: false,
         data: null,
         isError: false,
+        isLoginModal: false,
+    },
+    reducers: {
+        openLoginModal: (state) => {
+            state.isLoginModal = true;
+        },
+        closeLoginModal: (state) => {
+            state.isLoginModal = false;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(fetchUser.pending, (state) => {
@@ -32,5 +41,5 @@ const userSlice = createSlice({
     },
 });
 
-
+export const { openLoginModal, closeLoginModal } = userSlice.actions;
 export default userSlice.reducer;

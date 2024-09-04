@@ -6,13 +6,22 @@ import Footer from "../sections/common/Footer";
 import Breadcrumb from "../sections/common/Breadcrumb";
 import "../Styles/dashboard.css";
 import { FaAngleRight } from "react-icons/fa6";
+import { logoutApi } from "../apis/authApis/authApis";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 function Account() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
   const [activeMenu, setActiveMenu] = useState("Dashboard");
 
   const handleMenuClick = (data) => {
     setActiveMenu(data);
   };
+
+  const handleLogout = () => {
+    logoutApi(dispatch, navigate)
+  }
 
   return (
     <>
@@ -71,12 +80,8 @@ function Account() {
                   Wishlist
                 </a>
               </li>
-              <li className="account__menu--list">
-                <a
-                  href="login"
-                >
-                  Log Out
-                </a>
+              <li className="account__menu--list" onClick={() => handleLogout()} style={{ cursor: "pointer" }}>
+                Log Out
               </li>
             </ul>
           </div>

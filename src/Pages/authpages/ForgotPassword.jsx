@@ -19,7 +19,7 @@ const ForgotPassword = () => {
         const data = {
             email: email,
         }
-        forgotPasswordApi(data, setLoading, navigate)
+        await forgotPasswordApi(data, setLoading, navigate)
     }
 
     return (

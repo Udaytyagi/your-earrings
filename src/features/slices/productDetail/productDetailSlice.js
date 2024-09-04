@@ -17,7 +17,7 @@ const productDetailSlice = createSlice({
   name: "productDetail",
   initialState: {
     isLoading: false,
-    data: [],
+    data: null,
     isError: false,
   },
   extraReducers: (builder) => {

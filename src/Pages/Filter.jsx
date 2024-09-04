@@ -37,7 +37,7 @@ function Filter({ sizes, selectedSizes, setSelectedSizes, setPriceRange, priceRa
                 onChange={() => handleSizeChange(size.slug)}
               />
             }
-            label={size.title}
+            label={`${size.title} ct. tw.`}
           />
         ))}
 

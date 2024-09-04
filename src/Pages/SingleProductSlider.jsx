@@ -4,8 +4,10 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Rating } from "react-simple-star-rating";
 import { TbCurrencyPound } from "react-icons/tb";
+import { useNavigate } from "react-router-dom";
 
-const SingleProductSlider = () => {
+const SingleProductSlider = ({ product }) => {
+  const navigate=useNavigate();
   var settings = {
     // dots: true,
     infinite: true,
@@ -43,116 +45,50 @@ const SingleProductSlider = () => {
 
   return (
     <>
-      <section className="featured-product">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <div className="featured-heading text-center">
-                <h2>POPULAR PRODUCTS</h2>
-                <p className="slider-para">Our popular products are so beautiful to see that the shoppers 
-                are easily attracted to them.</p>
+      {
+        product && product.All_collection && <section className="featured-product">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12">
+                <div className="featured-heading text-center">
+                  <h2>POPULAR PRODUCTS</h2>
+                  <p className="slider-para">Our popular products are so beautiful to see that the shoppers
+                    are easily attracted to them.</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="slider-container">
+                <Slider {...settings}>
+                  {
+                    product?.All_collection[1]?.Product_details?.map((product, i) => (
+                      <div className="" key={i} onClick={() => navigate(`/${product.Slug}?vId=${product.Variation_id}`)}>
+                        <div className="new-product-items slide">
+                          <img
+                            className="img-fluid"
+                            src={product?.image || "/images/products-1.png"}
+                            alt="Product Image"
+                          />
+                          <hr />
+                          <p>{product?.Name}</p>
+                          <div className="rating-price d-flex">
+                            <Rating initialValue={product?.Rating || 0} />
+                            <h4>
+                              <TbCurrencyPound />
+                              {product?.Sale_price}
+                            </h4>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  }
+                </Slider>
               </div>
             </div>
           </div>
-
-          <div className="row">
-            <div className="slider-container">
-              <Slider {...settings}>
-                <div className="">
-                  <div className="new-product-items slide">
-                    <img
-                      className="img-fluid"
-                      src="/images/products-1.png"
-                      alt="Product Image"
-                    />
-                    <hr />
-                    <p>Lorem Ipsum is simply</p>
-                    <div className="rating-price d-flex">
-                      <Rating initialValue={4} />
-                      <h4>
-                        <TbCurrencyPound />
-                        100
-                      </h4>
-                    </div>
-                  </div>
-                </div>
-                <div className="">
-                  <div className="new-product-items slide">
-                    <img
-                      className="img-fluid"
-                      src="/images/products-1.png"
-                      alt="Product Image"
-                    />
-                    <hr />
-                    <p>Lorem Ipsum is simply</p>
-                    <div className="rating-price d-flex">
-                      <Rating initialValue={4} />
-                      <h4>
-                        <TbCurrencyPound />
-                        100
-                      </h4>
-                    </div>
-                  </div>
-                </div>
-                <div className="">
-                  <div className="new-product-items slide">
-                    <img
-                      className="img-fluid"
-                      src="/images/products-1.png"
-                      alt="Product Image"
-                    />
-                    <hr />
-                    <p>Lorem Ipsum is simply</p>
-                    <div className="rating-price d-flex">
-                      <Rating initialValue={4} />
-                      <h4>
-                        <TbCurrencyPound />
-                        100
-                      </h4>
-                    </div>
-                  </div>
-                </div>
-                <div className="">
-                  <div className="new-product-items slide">
-                    <img
-                      className="img-fluid"
-                      src="/images/products-1.png"
-                      alt="Product Image"
-                    />
-                    <hr />
-                    <p>Lorem Ipsum is simply</p>
-                    <div className="rating-price d-flex">
-                      <Rating initialValue={4} />
-                      <h4>
-                        <TbCurrencyPound />
-                        100
-                      </h4>
-                    </div>
-                  </div>
-                </div>
-                <div className="">
-                  <div className="new-product-items slide">
-                    <img
-                      className="img-fluid"
-                      src="/images/products-1.png"
-                      alt="Product Image"
-                    />
-                    <hr />
-                    <p>Lorem Ipsum is simply</p>
-                    <div className="rating-price d-flex">
-                      <Rating initialValue={4} />
-                      <h4>
-                        <TbCurrencyPound />
-                        100
-                      </h4>
-                    </div>
-                  </div>
-                </div>
-              </Slider>
-            </div>
-          </div>
-        </div>
-      </section>
+        </section>
+      }
     </>
   );
 };

@@ -4,12 +4,15 @@ import { IoIosHeartEmpty } from "react-icons/io";
 import { HiOutlineUser } from "react-icons/hi2";
 import { AiOutlineLogin } from "react-icons/ai";
 import "../../Styles/navbarmid.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom'
 import { fetchSearchApi } from "../../apis/mainApis/search/searchApis";
 import debounce from 'debounce';
+import { openLoginModal } from "../../features/slices/user/userSlice";
+import LoginModal from "../../components/LoginModal";
 
 const Navbarmid = () => {
+  const dispatch = useDispatch();
   const searchRef = useRef(null);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
@@ -20,7 +23,13 @@ const Navbarmid = () => {
   const [search, setSearch] = useState("")
   const [loading, setLoading] = useState(false)
   const [showDropdown, setShowDropdown] = useState(false);
+  const [openLoginModal, setOpenLoginModal] = useState(false)
+  const [updatePage, setUpdatePage] = useState(false)
 
+
+  useEffect(() => {
+    setUpdatePage(!updatePage)
+  }, [wishlists, carts])
 
   const debouncedSearch = debounce(async (query) => {
     if (query.length >= 1) {
@@ -54,8 +63,25 @@ const Navbarmid = () => {
     };
   }, []);
 
+  const handleWishlist = () => {
+    if (user) {
+      navigate('/wishlist');
+    } else {
+      setOpenLoginModal(true)
+    }
+  }
+
+  const handleCart = () => {
+    if (user) {
+      navigate('/cart')
+    } else {
+      setOpenLoginModal(true)
+    }
+  }
+
   return (
     <>
+      <LoginModal openLoginModal={openLoginModal} setOpenLoginModal={setOpenLoginModal} />
       <section className="navbarmid">
         <div className="container">
           <div className="row d-flex align-items-center">
@@ -79,7 +105,6 @@ const Navbarmid = () => {
                     setShowDropdown(true);
                   }}
                   onFocus={() => setShowDropdown(true)}
-                // onBlur={() => setTimeout(() => setShowDropdown(false), 100)}
                 />
                 <button type="submit" className="searchButton">
                   Search
@@ -101,27 +126,37 @@ const Navbarmid = () => {
 
             <div className="col-md-2">
               <div className="cart d-flex align-items-center justify-content-end">
-                <div onClick={() => navigate('/wishlist')} className="position-relative" style={{ cursor: "pointer" }}>
+                <div onClick={() => handleWishlist()} className="position-relative" style={{ cursor: "pointer" }}>
                   <IoIosHeartEmpty />
                   {
+                    wishlists && wishlists.length>0 && <div className="wishlist-count d-flex justify-content-center align-items-center">
+                      {wishlists.length}
+                    </div>
+                  }
+                  {/* {
                     wishlists && wishlists.length || user?.user_record?.wishlist_count ? <div className="wishlist-count d-flex justify-content-center align-items-center">
                       {wishlists && wishlists.length || user?.user_record?.wishlist_count}
                     </div> : ""
-                  }
+                  } */}
                 </div>
-                <div onClick={() => navigate('/cart')} className="position-relative" style={{ cursor: "pointer" }}>
+                <div onClick={() => handleCart()} className="position-relative" style={{ cursor: "pointer" }}>
                   <PiShoppingCartSimple />
                   {
+                    carts && carts.length>0 && <div className="wishlist-count d-flex justify-content-center align-items-center">
+                      {carts.length}
+                    </div>
+                  }
+                  {/* {
                     carts && carts.length || user?.user_record?.cart_count ? <div className="wishlist-count d-flex justify-content-center align-items-center">
                       {carts && carts.length || user?.user_record?.cart_count}
                     </div> : ""
-                  }
+                  } */}
                 </div>
                 {
                   user ? <div onClick={() => navigate('/dashboard')} style={{ cursor: "pointer" }}>
                     <HiOutlineUser />
                   </div> : <div onClick={() => navigate('/login')}>
-                    <AiOutlineLogin />
+                    <HiOutlineUser />
                   </div>
                 }
               </div>
