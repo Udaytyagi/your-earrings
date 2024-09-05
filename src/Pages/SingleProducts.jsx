@@ -343,16 +343,18 @@ fashion earrings to find your perfect pair."
                 </div>
               </div>
             )}
-            {product?.Product_info?.Daimond_information && (
+            {product?.Product_info?.Diamond_information && (
               <div className="col-md-6 earing-information">
                 <h6>DIAMOND INFORMATION</h6>
                 <div className="product-information-main">
-                  {product?.Product_info?.Daimond_information.map((info, index) => (
-                    <div className="product-information" key={index}>
-                      <p>{info.label}:</p>
-                      <p>{info.value}</p>
-                    </div>
-                  ))}
+                  {Object.entries(product?.Product_info?.Diamond_information || {}).map(
+                    ([key, value]) => (
+                      <div className="product-information" key={key}>
+                        <p>{key}:</p>
+                        <p>{value}</p>
+                      </div>
+                    )
+                  )}
                 </div>
               </div>
             )}

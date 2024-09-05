@@ -48,8 +48,11 @@ const Home = () => {
         allCollection && allCollection.length > 0 && <Popularproducts products={allCollection[0]} handleUpdateWishlist={handleUpdateWishlist} />
       }
       {
-        newArrival && newArrival.length > 0 && <NewProducts products={newArrival} handleUpdateWishlist={handleUpdateWishlist} />
+        allCollection && allCollection.length > 2 && <NewProducts products={allCollection[2]} handleUpdateWishlist={handleUpdateWishlist} />
       }
+      {/* {
+        newArrival && newArrival.length > 0 && <NewProducts products={newArrival} handleUpdateWishlist={handleUpdateWishlist} />
+      } */}
       {
         bannerInfo && <CallToAction products={bannerInfo[0]} />
       }

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 
 const NewProducts = ({ products, handleUpdateWishlist }) => {
+    console.log("products", products)
     const navigate = useNavigate()
     return (
         <>
@@ -20,7 +21,7 @@ const NewProducts = ({ products, handleUpdateWishlist }) => {
 
                     <div className="row gy-4">
                         {
-                            products && products?.length > 0 && products?.map((product, i) => (
+                            products && products?.Product_details && products?.Product_details?.length > 0 && products?.Product_details?.map((product, i) => (
                                 <div className="col-md-6 col-lg-3" key={i}>
                                     <div className="new-product-items">
                                         {
