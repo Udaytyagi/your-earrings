@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 
 const NewProducts = ({ products, handleUpdateWishlist }) => {
-    console.log("products", products)
     const navigate = useNavigate()
     return (
         <>

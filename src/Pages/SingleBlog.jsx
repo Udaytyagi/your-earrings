@@ -10,7 +10,6 @@ import { useParams } from 'react-router-dom';
 
 function SingleBlog() {
     const blog = useSelector(state => state?.blogs?.singleBlog?.blog_info && state?.blogs?.singleBlog?.blog_info[0])
-    console.log("blog", blog)
     const params = useParams();
     const slug = params.blogslug;
     const dispatch = useDispatch();

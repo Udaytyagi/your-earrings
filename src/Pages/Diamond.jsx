@@ -195,25 +195,27 @@ const Diamond = () => {
                         {
                           product?.wishlist === true ? <div className="wishlist-icon-fill d-flex justify-content-end" onClick={() => handleUpdateWishlist(product?.variation_id)}><FaHeart /></div> : <div className="wishlist-icon d-flex justify-content-end" onClick={() => handleUpdateWishlist(product?.variation_id)}><FaRegHeart /></div>
                         }
-                        <img
-                          className="img-fluid"
-                          src={product?.featured_image || "/images/products-1.png"}
-                          alt="Product Image"
-                        />
-                        <hr />
-                        <p>
-                          {product?.title || "Product Name"}
-                        </p>
-                        <div className="rating-price d-flex">
-                          <h4>
-                            <span>${product?.base_price}</span>
+                        <div onClick={() => navigate(`/${product.slug}?vId=${product.variation_id}`)}>
+                          <img
+                            className="img-fluid"
+                            src={product?.featured_image || "/images/products-1.png"}
+                            alt="Product Image"
+                          />
+                          <hr />
+                          <p>
+                            {product?.title || "Product Name"}
+                          </p>
+                          <div className="rating-price d-flex">
+                            <h4>
+                              <span>${product?.base_price}</span>
 
-                            ${product?.sale_price}
-                          </h4>
-                          <Rating initialValue={product?.Rating} readonly />
+                              ${product?.sale_price}
+                            </h4>
+                            <Rating initialValue={product?.Rating} readonly />
+                          </div>
+
+                          <button className="diamond-card-btn">BUY NOW</button>
                         </div>
-
-                        <button className="diamond-card-btn" onClick={() => navigate(`/${product.slug}?vId=${product.variation_id}`)}>BUY NOW</button>
 
                       </div>
                     ))}
@@ -228,24 +230,26 @@ const Diamond = () => {
                         {
                           product?.wishlist === true ? <div className="wishlist-icon-fill d-flex justify-content-end" onClick={() => handleUpdateWishlist(product?.variation_id)}><FaHeart /></div> : <div className="wishlist-icon d-flex justify-content-end" onClick={() => handleUpdateWishlist(product?.variation_id)}><FaRegHeart /></div>
                         }
-                        <img
-                          className="img-fluid"
-                          src={product?.featured_image || "/images/products-1.png"}
-                          alt="Product Image"
-                        />
-                        <hr />
-                        <p>
-                          {product?.title || "Product Name"}
-                        </p>
-                        <div className="rating-price d-flex">
-                          <h4>
-                            <span>${product?.base_price}</span>
+                        <div onClick={() => navigate(`/${product.slug}?vId=${product.variation_id}`)}>
+                          <img
+                            className="img-fluid"
+                            src={product?.featured_image || "/images/products-1.png"}
+                            alt="Product Image"
+                          />
+                          <hr />
+                          <p>
+                            {product?.title || "Product Name"}
+                          </p>
+                          <div className="rating-price d-flex">
+                            <h4>
+                              <span>${product?.base_price}</span>
 
-                            ${product?.sale_price}
-                          </h4>
-                          <Rating initialValue={product?.Rating} readonly />
+                              ${product?.sale_price}
+                            </h4>
+                            <Rating initialValue={product?.Rating} readonly />
+                          </div>
+                          <button className="diamond-card-btn">BUY NOW</button>
                         </div>
-                        <button className="diamond-card-btn" onClick={() => navigate(`/${product.slug}?vId=${product.variation_id}`)}>BUY NOW</button>
                       </div>
                     ))}
                   </div>
@@ -258,24 +262,26 @@ const Diamond = () => {
                         {
                           product?.wishlist === true ? <div className="wishlist-icon-fill d-flex justify-content-end" onClick={() => handleUpdateWishlist(product?.variation_id)}><FaHeart /></div> : <div className="wishlist-icon d-flex justify-content-end" onClick={() => handleUpdateWishlist(product?.variation_id)}><FaRegHeart /></div>
                         }
-                        <img
-                          className="img-fluid"
-                          src={product?.featured_image || "/images/products-1.png"}
-                          alt="Product Image"
-                        />
-                        <hr />
-                        <p>
-                          {product?.title}
-                        </p>
-                        <div className="rating-price d-flex">
-                          <h4>
-                            <span>${product?.base_price}</span>
+                        <div onClick={() => navigate(`/${product.slug}?vId=${product.variation_id}`)}>
+                          <img
+                            className="img-fluid"
+                            src={product?.featured_image || "/images/products-1.png"}
+                            alt="Product Image"
+                          />
+                          <hr />
+                          <p>
+                            {product?.title}
+                          </p>
+                          <div className="rating-price d-flex">
+                            <h4>
+                              <span>${product?.base_price}</span>
 
-                            ${product?.sale_price}
-                          </h4>
-                          <Rating initialValue={product?.Rating} readonly />
+                              ${product?.sale_price}
+                            </h4>
+                            <Rating initialValue={product?.Rating} readonly />
+                          </div>
+                          <button className="diamond-card-btn">BUY NOW</button>
                         </div>
-                        <button className="diamond-card-btn" onClick={() => navigate(`/${product.slug}?vId=${product.variation_id}`)}>BUY NOW</button>
                       </div>
                     ))}
                   </div>
