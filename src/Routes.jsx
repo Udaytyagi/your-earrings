@@ -19,6 +19,7 @@ import SingleBlog from "./Pages/SingleBlog";
 import ForgotPassword from "./Pages/authpages/ForgotPassword";
 import NewPassword from "./Pages/authpages/NewPassword";
 import OtpVerification from "./Pages/authpages/OtpVerification";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -97,7 +98,7 @@ const router = createBrowserRouter([
     path: "/cart",
     element: (
       <ScrollToTop>
-        <Cart />
+        <ProtectedRoute element={Cart} />
       </ScrollToTop>
     ),
   },
@@ -105,7 +106,7 @@ const router = createBrowserRouter([
     path: "/wishlist",
     element: (
       <ScrollToTop>
-        <Wishlist />
+        <ProtectedRoute element={Wishlist} />
       </ScrollToTop>
     ),
   },

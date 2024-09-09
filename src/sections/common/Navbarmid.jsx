@@ -129,7 +129,7 @@ const Navbarmid = () => {
                 <div onClick={() => handleWishlist()} className="position-relative" style={{ cursor: "pointer" }}>
                   <IoIosHeartEmpty />
                   {
-                    wishlists && wishlists.length>0 && <div className="wishlist-count d-flex justify-content-center align-items-center">
+                    wishlists && wishlists.length > 0 && <div className="wishlist-count d-flex justify-content-center align-items-center">
                       {wishlists.length}
                     </div>
                   }
@@ -142,7 +142,7 @@ const Navbarmid = () => {
                 <div onClick={() => handleCart()} className="position-relative" style={{ cursor: "pointer" }}>
                   <PiShoppingCartSimple />
                   {
-                    carts && carts.length>0 && <div className="wishlist-count d-flex justify-content-center align-items-center">
+                    carts && carts.length > 0 && <div className="wishlist-count d-flex justify-content-center align-items-center">
                       {carts.length}
                     </div>
                   }
@@ -153,7 +153,7 @@ const Navbarmid = () => {
                   } */}
                 </div>
                 {
-                  user ? <div onClick={() => navigate('/dashboard')} style={{ cursor: "pointer" }}>
+                  user ? <div onClick={() => navigate('/dashboard/profile')} style={{ cursor: "pointer" }}>
                     <HiOutlineUser />
                   </div> : <div onClick={() => navigate('/login')}>
                     <HiOutlineUser />

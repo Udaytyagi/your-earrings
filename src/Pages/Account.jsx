@@ -53,7 +53,7 @@ fashion earrings to find your perfect pair."
                   onClick={() => handleMenuClick("Dashboard")}
                   className={activeMenu === "Dashboard" ? "active" : ""}
                 >
-                  Dashboard
+                  My Orders
                 </a>
               </li>
               <li className="account__menu--list">

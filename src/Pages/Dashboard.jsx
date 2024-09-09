@@ -10,6 +10,8 @@ import { logoutApi } from "../apis/authApis/authApis";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
+
+
 function Account() {
   const navigate = useNavigate();
   const dispatch = useDispatch()
@@ -52,7 +54,7 @@ function Account() {
                   onClick={() => handleMenuClick("Dashboard")}
                   className={activeMenu === "Dashboard" ? "active" : ""}
                 >
-                  Dashboard
+                  My Orders
                 </a>
               </li>
               <li className="account__menu--list">
