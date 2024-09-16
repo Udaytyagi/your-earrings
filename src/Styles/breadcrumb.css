@@ -1,22 +1,66 @@
-.breadcrumb{
-    background-image: url(../assets/banner-breadrumb.jpg);
-    background-size: cover;
-    padding: 120px 0;
-    background-position: center;
+.breadcrumb {
+  background-image: url(../assets/banner-breadrumb.jpg);
+  background-size: cover;
+  padding: 120px 0;
+  background-position: center;
 }
-.breadcrumb-title h2{
-    font-size: 34px;
-    font-weight: 600;
-    color: white;
+.breadcrumb-title h2 {
+  font-size: 34px;
+  font-weight: 600;
+  color: white;
 }
-.breadcrumb-title p{
-    font-size: 16px;
-    font-weight: 400;
-    color: rgba(255, 255, 255, 0.747);
-    padding: 0px 33%;
+.breadcrumb-title p {
+  font-size: 16px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.747);
+  padding: 0px 33%;
 }
-@media only screen and (min-width: 768px) and (max-width: 991px){
-    .breadcrumb-title p{
-        padding: 0px 16%;
-    }
+@media only screen and (min-width: 1024px) and (max-width: 1440px) {
+  .breadcrumb {
+    background-position: 19%;
+  }
+  .breadcrumb-title h2 {
+    font-size: 32px;
+  }
+  .breadcrumb-title p {
+    font-size: 14px;
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .breadcrumb {
+    background-position: 21%;
+    padding: 72px 0;
+  }
+  .breadcrumb-title h2 {
+    font-size: 30px;
+  }
+  .breadcrumb-title p {
+    font-size: 12px;
+  }
+}
+@media only screen and (min-width: 500px) and (max-width: 768px) {
+  .breadcrumb {
+    background-position: 21%;
+    padding: 72px 0;
+  }
+  .breadcrumb-title h2 {
+    font-size: 30px;
+  }
+  .breadcrumb-title p {
+    font-size: 12px;
+    padding: 0px 25%;
+  }
+}
+@media only screen and (min-width: 0px) and (max-width: 500px) {
+  .breadcrumb {
+    background-position: 21%;
+    padding: 25px 0;
+  }
+  .breadcrumb-title h2 {
+    font-size: 15px;
+  }
+  .breadcrumb-title p {
+    font-size: 9px;
+    padding: 0px 15%;
+  }
 }

@@ -5,7 +5,7 @@ const NavbarBottom = () => {
     const navigate = useNavigate()
     return (
         <>
-            <section className="navbarbottom">
+            <section className="navbarbottom d-md-block d-none">
                 <div className="container">
                     <div className="row">
 

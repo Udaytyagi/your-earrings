@@ -9,17 +9,19 @@ import { FaAngleRight } from "react-icons/fa6";
 import { logoutApi } from "../apis/authApis/authApis";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
+import MyProfile from "../sections/dashboard/MyProfile";
+import MyOrders from "../sections/dashboard/MyOrders";
+import MyAddresses from "../sections/dashboard/MyAddresses";
 
 
-
-function Account() {
+function Dashboard() {
   const navigate = useNavigate();
-  const dispatch = useDispatch()
-  const [activeMenu, setActiveMenu] = useState("Dashboard");
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const dashboardSection = location.pathname.split('/')[2];
+  console.log("location", dashboardSection)
 
-  const handleMenuClick = (data) => {
-    setActiveMenu(data);
-  };
 
   const handleLogout = () => {
     logoutApi(dispatch, navigate)
@@ -30,7 +32,6 @@ function Account() {
       <Topbar />
       <Navbarmid />
       <NavbarBottom />
-
       <Breadcrumb
         heading="Dashboard"
         image="/images/earrings-bg.png"
@@ -45,52 +46,44 @@ function Account() {
 
       <div className="container px-0 py-5">
         <div className="my__account--section__inner border-radius-10 d-flex">
+
           <div className="account__left--sidebar">
             <h2 className="account__content--title h3 mb-20">My Profile</h2>
             <ul className="account__menu">
-              <li className="account__menu--list">
-                <a
-                  href="dashboard"
-                  onClick={() => handleMenuClick("Dashboard")}
-                  className={activeMenu === "Dashboard" ? "active" : ""}
-                >
-                  My Orders
-                </a>
+              <li className={`account__menu--list ${dashboardSection === "profile" ? "active" : ""}`} onClick={() => navigate('/dashboard/profile')}>
+                My Profile
               </li>
-              <li className="account__menu--list">
-                <a
-                  href="profile"
-                  onClick={() => handleMenuClick("Profile")}
-                  className={activeMenu === "Profile" ? "active" : ""}
-                >
-                  My Profile
-                </a>
+              <li className={`account__menu--list ${dashboardSection === "orders" ? "active" : ""}`} onClick={() => navigate('/dashboard/orders')}>
+                My Orders
               </li>
-              <li className="account__menu--list">
-                <a
-                  href="my-account"
-                  onClick={() => handleMenuClick("Addresses")}
-                  className={activeMenu === "Addresses" ? "active" : ""}
-                >
-                  Addresses
-                </a>
+              <li className={`account__menu--list ${dashboardSection === "addresses" ? "active" : ""}`} onClick={() => navigate('/dashboard/addresses')}>
+                My Addresses
               </li>
-              <li className="account__menu--list">
-                <a
-                  href="wishlist"
-                >
-                  Wishlist
-                </a>
+              <li className="account__menu--list" onClick={() => navigate('/wishlist')}>
+                My  Wishlist
               </li>
-              <li className="account__menu--list" onClick={() => handleLogout()} style={{ cursor: "pointer" }}>
+              <li className="account__menu--list" onClick={() => navigate('/wishlist')}>
+                My  Cart
+              </li>
+              <li className="account__menu--list" onClick={() => handleLogout()}>
                 Log Out
               </li>
             </ul>
           </div>
-          <div className="account__wrapper">
+
+
+          {
+            dashboardSection === 'profile' && <MyProfile />
+          }
+          {
+            dashboardSection === 'orders' && <MyOrders />
+          }
+          {
+            dashboardSection === 'addresses' && <MyAddresses />
+          }
+          {/* <div className="account__wrapper">
             <div className="account__content">
               <div className="adreress-right dashboard">
-                {/* Table content remains the same */}
                 <table
                   className="table table-bordered"
                   style={{
@@ -212,296 +205,12 @@ function Account() {
                         $40.00 USD
                       </td>
                     </tr>
-                    <tr>
-                      <td
-                        style={{
-                          borderLeft: "none",
-                          borderRight: "none",
-                          borderBottom: "1px solid #dee2e6",
-                          fontSize: "15px",
-                          padding: "13px 10px",
-                        }}
-                      >
-                        #2024
-                      </td>
-                      <td
-                        style={{
-                          borderLeft: "none",
-                          borderRight: "none",
-                          borderBottom: "1px solid #dee2e6",
-                          fontSize: "15px",
-                          padding: "13px 10px",
-                        }}
-                      >
-                        November 24, 2022
-                      </td>
-                      <td
-                        style={{
-                          borderLeft: "none",
-                          borderRight: "none",
-                          borderBottom: "1px solid #dee2e6",
-                          fontSize: "15px",
-                          padding: "13px 10px",
-                        }}
-                      >
-                        Paid
-                      </td>
-                      <td
-                        style={{
-                          borderLeft: "none",
-                          borderRight: "none",
-                          borderBottom: "1px solid #dee2e6",
-                          fontSize: "15px",
-                          padding: "13px 10px",
-                        }}
-                      >
-                        Fulfilled
-                      </td>
-                      <td
-                        style={{
-                          borderLeft: "none",
-                          borderRight: "none",
-                          borderBottom: "1px solid #dee2e6",
-                          fontSize: "15px",
-                          padding: "13px 10px",
-                        }}
-                      >
-                        $44.00 USD
-                      </td>
-                    </tr>
-                    <tr>
-                      <td
-                        style={{
-                          borderLeft: "none",
-                          borderRight: "none",
-                          borderBottom: "1px solid #dee2e6",
-                          fontSize: "15px",
-                          padding: "13px 10px",
-                        }}
-                      >
-                        #2164
-                      </td>
-                      <td
-                        style={{
-                          borderLeft: "none",
-                          borderRight: "none",
-                          borderBottom: "1px solid #dee2e6",
-                          fontSize: "15px",
-                          padding: "13px 10px",
-                        }}
-                      >
-                        November 24, 2022
-                      </td>
-                      <td
-                        style={{
-                          borderLeft: "none",
-                          borderRight: "none",
-                          borderBottom: "1px solid #dee2e6",
-                          fontSize: "15px",
-                          padding: "13px 10px",
-                        }}
-                      >
-                        Paid
-                      </td>
-                      <td
-                        style={{
-                          borderLeft: "none",
-                          borderRight: "none",
-                          borderBottom: "1px solid #dee2e6",
-                          fontSize: "15px",
-                          padding: "13px 10px",
-                        }}
-                      >
-                        Unfulfilled
-                      </td>
-                      <td
-                        style={{
-                          borderLeft: "none",
-                          borderRight: "none",
-                          borderBottom: "1px solid #dee2e6",
-                          fontSize: "15px",
-                          padding: "13px 10px",
-                        }}
-                      >
-                        $36.00 USD
-                      </td>
-                    </tr>
-                    <tr>
-                      <td
-                        style={{
-                          borderLeft: "none",
-                          borderRight: "none",
-                          borderBottom: "1px solid #dee2e6",
-                          fontSize: "15px",
-                          padding: "13px 10px",
-                        }}
-                      >
-                        #2345
-                      </td>
-                      <td
-                        style={{
-                          borderLeft: "none",
-                          borderRight: "none",
-                          borderBottom: "1px solid #dee2e6",
-                          fontSize: "15px",
-                          padding: "13px 10px",
-                        }}
-                      >
-                        November 24, 2022
-                      </td>
-                      <td
-                        style={{
-                          borderLeft: "none",
-                          borderRight: "none",
-                          borderBottom: "1px solid #dee2e6",
-                          fontSize: "15px",
-                          padding: "13px 10px",
-                        }}
-                      >
-                        Paid
-                      </td>
-                      <td
-                        style={{
-                          borderLeft: "none",
-                          borderRight: "none",
-                          borderBottom: "1px solid #dee2e6",
-                          fontSize: "15px",
-                          padding: "13px 10px",
-                        }}
-                      >
-                        Unfulfilled
-                      </td>
-                      <td
-                        style={{
-                          borderLeft: "none",
-                          borderRight: "none",
-                          borderBottom: "1px solid #dee2e6",
-                          fontSize: "15px",
-                          padding: "13px 10px",
-                        }}
-                      >
-                        $87.00 USD
-                      </td>
-                    </tr>
-                    <tr>
-                      <td
-                        style={{
-                          borderLeft: "none",
-                          borderRight: "none",
-                          borderBottom: "1px solid #dee2e6",
-                          fontSize: "15px",
-                          padding: "13px 10px",
-                        }}
-                      >
-                        #1244
-                      </td>
-                      <td
-                        style={{
-                          borderLeft: "none",
-                          borderRight: "none",
-                          borderBottom: "1px solid #dee2e6",
-                          fontSize: "15px",
-                          padding: "13px 10px",
-                        }}
-                      >
-                        November 24, 2022
-                      </td>
-                      <td
-                        style={{
-                          borderLeft: "none",
-                          borderRight: "none",
-                          borderBottom: "1px solid #dee2e6",
-                          fontSize: "15px",
-                          padding: "13px 10px",
-                        }}
-                      >
-                        Paid
-                      </td>
-                      <td
-                        style={{
-                          borderLeft: "none",
-                          borderRight: "none",
-                          borderBottom: "1px solid #dee2e6",
-                          fontSize: "15px",
-                          padding: "13px 10px",
-                        }}
-                      >
-                        Fulfilled
-                      </td>
-                      <td
-                        style={{
-                          borderLeft: "none",
-                          borderRight: "none",
-                          borderBottom: "1px solid #dee2e6",
-                          fontSize: "15px",
-                          padding: "13px 10px",
-                        }}
-                      >
-                        $66.00 USD
-                      </td>
-                    </tr>
-                    <tr>
-                      <td
-                        style={{
-                          borderLeft: "none",
-                          borderRight: "none",
-                          borderBottom: "1px solid #dee2e6",
-                          fontSize: "15px",
-                          padding: "13px 10px",
-                        }}
-                      >
-                        #3455
-                      </td>
-                      <td
-                        style={{
-                          borderLeft: "none",
-                          borderRight: "none",
-                          borderBottom: "1px solid #dee2e6",
-                          fontSize: "15px",
-                          padding: "13px 10px",
-                        }}
-                      >
-                        November 24, 2022
-                      </td>
-                      <td
-                        style={{
-                          borderLeft: "none",
-                          borderRight: "none",
-                          borderBottom: "1px solid #dee2e6",
-                          fontSize: "15px",
-                          padding: "13px 10px",
-                        }}
-                      >
-                        Paid
-                      </td>
-                      <td
-                        style={{
-                          borderLeft: "none",
-                          borderRight: "none",
-                          borderBottom: "1px solid #dee2e6",
-                          fontSize: "15px",
-                          padding: "13px 10px",
-                        }}
-                      >
-                        Fulfilled
-                      </td>
-                      <td
-                        style={{
-                          borderLeft: "none",
-                          borderRight: "none",
-                          borderBottom: "1px solid #dee2e6",
-                          fontSize: "15px",
-                          padding: "13px 10px",
-                        }}
-                      >
-                        $55.00 USD
-                      </td>
-                    </tr>
                   </tbody>
                 </table>
               </div>
             </div>
-          </div>
+          </div> */}
+
         </div>
       </div>
 
@@ -510,4 +219,4 @@ function Account() {
   );
 }
 
-export default Account;
+export default Dashboard;

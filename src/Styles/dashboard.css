@@ -1,6 +1,8 @@
-.account__menu--list a.active {
-    color: #a07936;
-    font-weight: 600;
-    font-size: 18px;
-  }
-  
+.account__menu--list.active {
+  color: #a07936;
+  font-weight: 600;
+  font-size: 18px;
+}
+.account__menu--list {
+  cursor: pointer;
+}

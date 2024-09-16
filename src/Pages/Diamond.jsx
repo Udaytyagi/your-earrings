@@ -23,9 +23,7 @@ const Diamond = () => {
   const [selectedSettingSlug, setSelectedSettingSlug] = useState("");
   const [selectedMetalSlug, setSelectedMetalSlug] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
-  const [beautifullProducts, setBeautifullProducts] = useState([]);
-  const [brilliantProducts, setBrilliantProducts] = useState([]);
-  const [masterpieceProducts, setMasterpieceProducts] = useState([]);
+  const [types, setTypes] = useState(null)
   const [shapes, setShapes] = useState([]);
   const [settings, setSettings] = useState([]);
   const [metals, setMetals] = useState([]);
@@ -47,15 +45,14 @@ const Diamond = () => {
 
       const response = await fetchFilterApi(data)
       const { Shape_list, Size_list, types, selected } = response.data.data;
+      console.log("types", types)
       setShapes(Shape_list);
       const selectedShape = Shape_list.find(shape => shape.slug === selected.shape_id);
       setSettings(selectedShape?.settings || []);
       const selectedSetting = selectedShape?.settings.find(setting => setting.slug === selected.setting_id);
       setMetals(selectedSetting?.metal || []);
       setSizes(Size_list);
-      setBeautifullProducts(types.Beautiful);
-      setBrilliantProducts(types.Brilliant);
-      setMasterpieceProducts(types.Masterpiece);
+      setTypes(types)
       setSelectedShapeSlug(selected.shape_id);
       setSelectedSettingSlug(selected.setting_id);
       setSelectedMetalSlug(selected.metal_id);
@@ -87,8 +84,6 @@ const Diamond = () => {
     dispatch(updateWishlist(data))
     setUpdatePage(!updatePage);
   }
-
-
 
   return (
     <>
@@ -134,7 +129,7 @@ const Diamond = () => {
             <div className="col-md-12 diamond-head">
               <h5>Select Your Settings</h5>
             </div>
-            <div className="shapes settings justify-content-start">
+            <div className="shapes settings justify-content-md-start justify-content-center">
               {settings?.map(setting => (
                 <div className={`shapes-inner ${setting.slug === selectedSettingSlug ? 'selected' : ''}`} key={setting.id} onClick={() => handleSettingChangeSlug(setting.slug)}>
                   <img className="img-diamond" src={setting.image[selectedMetalSlug]} alt={setting.title} />
@@ -165,131 +160,71 @@ const Diamond = () => {
             <div className="col-md-12 diamond-head">
               <h5>Select the Size, Lab Diamond Quality & Prices</h5>
             </div>
-            <div className="col-md-12 col-lg-3  filter-main">
+            {/* <div className="col-md-12 col-lg-3  filter-main">
               <Filter sizes={sizes} selectedSizes={selectedSizes} setSelectedSizes={setSelectedSizes} setPriceRange={setPriceRange} priceRange={priceRange} />
-            </div>
-            <div className="col-md-12 col-lg-9 diamond-card-col">
+            </div> */}
+            <div className="col-md-12 diamond-card-col">
               <div className="row">
                 {
-                  beautifullProducts && <div className="col-md-4 new-product-items-button">
+                  <div className="col-md-3 new-product-items-button">
+                    <button>Diamond Sizes</button>
+                  </div>
+                }
+                {
+                  <div className="col-md-3 new-product-items-button">
                     <button>Beautiful (VS2+)</button>
                   </div>
                 }
                 {
-                  brilliantProducts && <div className="col-md-4 new-product-items-button">
+                  <div className="col-md-3 new-product-items-button">
                     <button>Brilliant (VS1+)</button>
                   </div>
                 }
                 {
-                  masterpieceProducts && <div className="col-md-4 new-product-items-button">
+                  <div className="col-md-3 new-product-items-button">
                     <button>Masterpiece (VVS2+)</button>
                   </div>
                 }
               </div>
-              <div className="row">
-
-                {
-                  beautifullProducts && <div className="col-md-4 mb-4" >
-                    {beautifullProducts && beautifullProducts?.map((product, i) => (
-                      <div className="new-product-items mt-3" key={i}>
-                        {
-                          product?.wishlist === true ? <div className="wishlist-icon-fill d-flex justify-content-end" onClick={() => handleUpdateWishlist(product?.variation_id)}><FaHeart /></div> : <div className="wishlist-icon d-flex justify-content-end" onClick={() => handleUpdateWishlist(product?.variation_id)}><FaRegHeart /></div>
-                        }
-                        <div onClick={() => navigate(`/${product.slug}?vId=${product.variation_id}`)}>
-                          <img
-                            className="img-fluid"
-                            src={product?.featured_image || "/images/products-1.png"}
-                            alt="Product Image"
-                          />
-                          <hr />
-                          <p>
-                            {product?.title || "Product Name"}
-                          </p>
-                          <div className="rating-price d-flex">
-                            <h4>
-                              <span>${product?.base_price}</span>
-
-                              ${product?.sale_price}
-                            </h4>
-                            <Rating initialValue={product?.Rating} readonly />
-                          </div>
-
-                          <button className="diamond-card-btn">BUY NOW</button>
-                        </div>
-
-                      </div>
-                    ))}
+              {types && Object.entries(types).map(([size, categories]) => (
+                <div className="row daimond-row-size" key={size}>
+                  <div className="col-md-3 mb-4 d-flex flex-column align-items-center justify-content-center">
+                    <p className='daimond-p-size'>{size}</p>
                   </div>
-                }
-
-
-                {
-                  brilliantProducts && <div className="col-md-4 mb-4" >
-                    {brilliantProducts && brilliantProducts?.map((product, i) => (
-                      <div className="new-product-items mt-3" key={i}>
-                        {
-                          product?.wishlist === true ? <div className="wishlist-icon-fill d-flex justify-content-end" onClick={() => handleUpdateWishlist(product?.variation_id)}><FaHeart /></div> : <div className="wishlist-icon d-flex justify-content-end" onClick={() => handleUpdateWishlist(product?.variation_id)}><FaRegHeart /></div>
-                        }
-                        <div onClick={() => navigate(`/${product.slug}?vId=${product.variation_id}`)}>
-                          <img
-                            className="img-fluid"
-                            src={product?.featured_image || "/images/products-1.png"}
-                            alt="Product Image"
-                          />
-                          <hr />
-                          <p>
-                            {product?.title || "Product Name"}
-                          </p>
-                          <div className="rating-price d-flex">
-                            <h4>
-                              <span>${product?.base_price}</span>
-
-                              ${product?.sale_price}
-                            </h4>
-                            <Rating initialValue={product?.Rating} readonly />
-                          </div>
-                          <button className="diamond-card-btn">BUY NOW</button>
-                        </div>
+                  {categories?.map((category, i) => (
+                    <div className="col-md-3 mb-4" key={i}>
+                      <div className="new-product-items mt-3">
+                        {/* <h5>{Object.keys(category)[0]}</h5> */}
+                        {Object.values(category)[0]?.length > 0 ? <>
+                          {
+                            Object.values(category)[0].map(product => (
+                              <div key={product.variation_id}>
+                                <div className="wishlist-icon-fill d-flex justify-content-end">
+                                  <FaHeart />
+                                </div>
+                                <img
+                                  className="img-fluid"
+                                  src={product.featured_image}
+                                  alt="Product Image"
+                                />
+                                <hr />
+                                <p>{product.title}</p>
+                                <div className="rating-price d-flex">
+                                  <h4>
+                                    <span>${product.sale_price}</span> ${product.base_price}
+                                  </h4>
+                                  <Rating initialValue={0} readonly />
+                                </div>
+                                <button className="diamond-card-btn">BUY NOW</button>
+                              </div>
+                            ))
+                          }
+                        </> : "No product available"}
                       </div>
-                    ))}
-                  </div>
-                }
-
-                {
-                  masterpieceProducts && <div className="col-md-4 mb-4" >
-                    {masterpieceProducts && masterpieceProducts?.map((product, i) => (
-                      <div className="new-product-items mt-3" key={i}>
-                        {
-                          product?.wishlist === true ? <div className="wishlist-icon-fill d-flex justify-content-end" onClick={() => handleUpdateWishlist(product?.variation_id)}><FaHeart /></div> : <div className="wishlist-icon d-flex justify-content-end" onClick={() => handleUpdateWishlist(product?.variation_id)}><FaRegHeart /></div>
-                        }
-                        <div onClick={() => navigate(`/${product.slug}?vId=${product.variation_id}`)}>
-                          <img
-                            className="img-fluid"
-                            src={product?.featured_image || "/images/products-1.png"}
-                            alt="Product Image"
-                          />
-                          <hr />
-                          <p>
-                            {product?.title}
-                          </p>
-                          <div className="rating-price d-flex">
-                            <h4>
-                              <span>${product?.base_price}</span>
-
-                              ${product?.sale_price}
-                            </h4>
-                            <Rating initialValue={product?.Rating} readonly />
-                          </div>
-                          <button className="diamond-card-btn">BUY NOW</button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                }
-                {
-                  !beautifullProducts && !brilliantProducts && !masterpieceProducts && <div className='d-flex justify-content-center fw-bold'>No Products to show</div>
-                }
-              </div>
+                    </div>
+                  ))}
+                </div>
+              ))}
             </div>
           </div>
           {/* <nav>

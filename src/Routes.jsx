@@ -9,11 +9,8 @@ import Diamond from "./Pages/Diamond";
 import SingleProducts from "./Pages/SingleProducts";
 import Cart from "./Pages/Cart";
 import Wishlist from "./Pages/Wishlist";
-import Profile from "./Pages/Profile";
-import Orders from "./Pages/Orders";
 import Blog from "./sections/home/Blog";
 import Checkout from "./Pages/Checkout";
-import Account from "./Pages/Account";
 import Dashboard from "./Pages/Dashboard";
 import SingleBlog from "./Pages/SingleBlog";
 import ForgotPassword from "./Pages/authpages/ForgotPassword";
@@ -111,22 +108,6 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/profile",
-    element: (
-      <ScrollToTop>
-        <Profile />
-      </ScrollToTop>
-    ),
-  },
-  {
-    path: "/my-orders",
-    element: (
-      <ScrollToTop>
-        <Orders />
-      </ScrollToTop>
-    ),
-  },
-  {
     path: "/blogs",
     element: (
       <ScrollToTop>
@@ -143,15 +124,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/my-account",
-    element: (
-      <ScrollToTop>
-        <Account />
-      </ScrollToTop>
-    ),
-  },
-  {
-    path: "/dashboard",
+    path: "/dashboard/:dashboardSlug",
     element: (
       <ScrollToTop>
         <Dashboard />

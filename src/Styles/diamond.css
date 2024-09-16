@@ -49,7 +49,7 @@
   display: flex;
   justify-content: center;
   font-size: 13px;
-  padding: 6px;
+  padding: 3px;
   border-radius: 3px;
   margin-top: 10px;
 }
@@ -64,6 +64,18 @@
 
 .range-contain {
   background-color: #a079361a;
+}
+
+.daimond-row-size {
+  border-bottom: 0.5px solid #cbcbcb;
+}
+
+.daimond-p-size {
+  font-size: 25px;
+  font-weight: normal;
+  display: inline-block;
+  color: #000000;
+  border-bottom: 0.5px solid #cbcbcb;
 }
 
 .range {
@@ -96,7 +108,7 @@
   background-color: transparent;
   color: #a07936;
   font-weight: 600;
-  font-size: 20px;
+  font-size: 16px;
   padding: 13px 0px;
   width: 100%;
 }
@@ -165,10 +177,22 @@
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .diamond-card-col {
-    padding: 0px 25px;
+    padding: 35px 25px;
   }
   .new-product-items-button button {
     padding: 6px 0px;
-    font-size: 17px;
+    font-size: 13px;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .page-nav p {
+    font-size: 15px;
+  }
+  .diamond-main-heading {
+    font-size: 20px;
+  }
+  .shapes h6 {
+    font-size: 11px;
   }
 }
