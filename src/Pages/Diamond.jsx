@@ -45,7 +45,6 @@ const Diamond = () => {
 
       const response = await fetchFilterApi(data)
       const { Shape_list, Size_list, types, selected } = response.data.data;
-      console.log("types", types)
       setShapes(Shape_list);
       const selectedShape = Shape_list.find(shape => shape.slug === selected.shape_id);
       setSettings(selectedShape?.settings || []);
@@ -154,7 +153,7 @@ const Diamond = () => {
         </div>
       </section>
 
-      <section className="range">
+      <section className="range d-md-block d-none">
         <div className="container range-contain">
           <div className="row">
             <div className="col-md-12 diamond-head">
@@ -194,32 +193,33 @@ const Diamond = () => {
                   {categories?.map((category, i) => (
                     <div className="col-md-3 mb-4" key={i}>
                       <div className="new-product-items mt-3">
-                        {/* <h5>{Object.keys(category)[0]}</h5> */}
-                        {Object.values(category)[0]?.length > 0 ? <>
-                          {
-                            Object.values(category)[0].map(product => (
-                              <div key={product.variation_id}>
-                                <div className="wishlist-icon-fill d-flex justify-content-end">
-                                  <FaHeart />
+                        <h5>{Object.keys(category)[0]}</h5>
+                        {
+                          Object.values(category)[0]?.length > 0 ? <>
+                            {
+                              Object.values(category)[0].map(product => (
+                                <div key={product.variation_id}>
+                                  <div className="wishlist-icon-fill d-flex justify-content-end">
+                                    <FaHeart />
+                                  </div>
+                                  <img
+                                    className="img-fluid"
+                                    src={product.featured_image}
+                                    alt="Product Image"
+                                  />
+                                  <hr />
+                                  <p>{product.title}</p>
+                                  <div className="rating-price d-flex">
+                                    <h4>
+                                      <span>${product.sale_price}</span> ${product.base_price}
+                                    </h4>
+                                    <Rating initialValue={0} readonly />
+                                  </div>
+                                  <button className="diamond-card-btn" onClick={() => navigate(`/${product.slug}?vId=${product.variation_id}`)}>BUY NOW</button>
                                 </div>
-                                <img
-                                  className="img-fluid"
-                                  src={product.featured_image}
-                                  alt="Product Image"
-                                />
-                                <hr />
-                                <p>{product.title}</p>
-                                <div className="rating-price d-flex">
-                                  <h4>
-                                    <span>${product.sale_price}</span> ${product.base_price}
-                                  </h4>
-                                  <Rating initialValue={0} readonly />
-                                </div>
-                                <button className="diamond-card-btn">BUY NOW</button>
-                              </div>
-                            ))
-                          }
-                        </> : "No product available"}
+                              ))
+                            }
+                          </> : "No product available"}
                       </div>
                     </div>
                   ))}
@@ -246,6 +246,95 @@ const Diamond = () => {
               </li>
             </ul>
           </nav> */}
+        </div>
+      </section>
+
+
+      <section className='range-mobile d-md-none d-block'>
+        <div className='container'>
+          <div className='row'>
+            <h6>Select the size and Lab Diamond Quality</h6>
+
+            {types && Object.entries(types).map(([size, categories]) => (
+              <div className='range-mobile-main-div mt-3' key={size}>
+                <div className='row'>
+                  <div className='col-6 d-flex align-items-start justify-content-start'>
+                    <div className='range-mobile-border'>
+                      <img
+                        className="img-fluid"
+                        src="/public/images/products-1.png"
+                        alt="Product Image"
+                      />
+                    </div>
+                  </div>
+                  <div className='col-6'>
+                    <p className='m-0 range-mobile-weight'>{size} cwc</p>
+                    {shapes?.map(shape => (
+                      <p className='m-0'>{shape.slug === selectedShapeSlug && shape.title}</p>
+                    ))}
+                    {settings?.map(setting => (
+                      <p className='m-0'>{setting.slug === selectedSettingSlug && setting.title}</p>
+                    ))}
+                    {Object.entries(metals).map(([key, metal]) => (
+                      <p className='m-0'>{metal.slug === selectedMetalSlug && metal.title}</p>
+                    ))}
+                  </div>
+                </div>
+
+                <div className='row mt-3'>
+                  <div className='col-3 d-flex align-items-center justify-content-center'>
+                    <h6 className='m-0'>Quality</h6>
+                  </div>
+                  <div className='col-3 d-flex align-items-center justify-content-center'>
+                    <h6 className='m-0'>Color</h6>
+                  </div>
+                  <div className='col-3 d-flex align-items-center justify-content-center'>
+                    <h6 className='m-0'>Clarity</h6>
+                  </div>
+                  <div className='col-3 d-flex align-items-center justify-content-center'>
+                    <h6 className='m-0'>Price</h6>
+                  </div>
+                </div>
+
+                {categories?.map((category, i) => (
+                  <div className='row range-mobile-inner-div mt-3' key={i} onClick={() => {
+                    const firstProduct = Object.values(category)[0][0];
+                    navigate(`/${firstProduct.slug}?vId=${firstProduct.variation_id}`);
+                  }}>
+                    <div className='col-3 d-flex align-items-center justify-content-center'>
+                      <h6 className='m-0'>{Object.keys(category)[0]}</h6>
+                    </div>
+                    {
+                      Object.values(category)[0].map(product => (
+                        <div className='col-3 d-flex align-items-center justify-content-center' key={product.variation_id}>
+                          <h6 className='m-0'>H-1</h6>
+                        </div>
+                      ))
+                    }
+                    {
+                      Object.values(category)[0].map(product => (
+                        <div className='col-3 d-flex align-items-center justify-content-center' key={product.variation_id}>
+                          <h6 className='m-0'>Vs</h6>
+                          {/* <button className='range-mobile-buy'>Vs</button> */}
+                        </div>
+                      ))
+                    }
+                    {
+                      Object.values(category)[0].map(product => (
+                        <div className='col-3 d-flex align-items-center justify-content-center pe-0' key={product.variation_id}>
+                          <div className='d-flex flex-column align-items-center justiy-content-center'>
+                            <p className='m-0 range-mobile-base-price'>${product.base_price}</p>
+                            <p className='m-0 range-mobile-sale-price'>${product.sale_price}</p>
+                          </div>
+                        </div>
+                      ))
+                    }
+                  </div>
+                ))}
+
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

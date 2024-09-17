@@ -7,6 +7,7 @@
 .diamond-head {
   background-color: #a07936;
   padding: 13px 20px;
+  border-radius: 8px 8px 0px 0px;
 }
 
 .diamond-head {
@@ -29,6 +30,7 @@
   align-items: center;
   background-color: #a079361a;
   padding: 20px 30px;
+  border-radius: 0px 0px 8px 8px;
 }
 
 .shapes h6 {
@@ -175,6 +177,80 @@
   background-color: #e9f1f4;
 }
 
+.range-mobile {
+  padding: 35px 0px;
+}
+
+.range-mobile-main-div {
+  background: rgba(245, 241, 235, 1);
+  border-radius: 10px;
+  padding: 22px;
+}
+
+.range-mobile h6 {
+  font-weight: 700;
+  color: rgba(0, 0, 0, 1);
+  font-size: 12px;
+}
+
+.range-mobile p {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 1);
+  font-weight: 700;
+}
+
+.range-mobile-border {
+  border: 0.5px solid #a07936;
+  -webkit-box-shadow: inset 0 0 9px -2px #c97f00;
+  box-shadow: inset 0 0 9px -2px #c97f00;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 10px 5px;
+  border-radius: 8px;
+  margin-right: 3px;
+}
+
+.range-mobile-inner-div {
+  border: 1px solid rgba(160, 121, 54, 0.3);
+  border-radius: 10px;
+  padding: 10px 15px;
+}
+
+.range-mobile-weight {
+  color: rgba(160, 121, 54, 1) !important;
+  font-weight: 700;
+  font-size: 18px !important;
+}
+
+.range-mobile-base-price {
+  text-decoration: line-through;
+  font-size: 16px;
+  padding-right: 6px;
+  margin-right: 8px;
+  color: #1c1b1f66;
+  margin: 0px;
+}
+
+.range-mobile-sale-price {
+  font-size: 16px;
+  padding-right: 6px;
+  margin-right: 8px;
+  color: rgba(160, 121, 54, 1) !important;
+  margin: 0px;
+}
+
+.range-mobile-buy {
+  background-color: #a07936;
+  color: white;
+  border: none;
+  width: -webkit-fill-available;
+  display: flex;
+  justify-content: center;
+  font-size: 13px;
+  padding: 3px;
+  border-radius: 3px;
+}
+
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .diamond-card-col {
     padding: 35px 25px;
@@ -193,6 +269,12 @@
     font-size: 20px;
   }
   .shapes h6 {
-    font-size: 11px;
+    font-size: 10px !important;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .shapes h6 {
+    font-size: 12px;
   }
 }
