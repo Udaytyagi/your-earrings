@@ -94,16 +94,19 @@ const Navbarmid = () => {
               <MdDehaze style={{ fontSize: "25px" }} />
             </div>
 
-            <div className="col-5" onClick={() => navigate('/')}>
+            <div className="col-1">
+            </div>
+
+            <div className="col-6" onClick={() => navigate('/')}>
               <div className="logo" style={{ cursor: "pointer" }}>
                 <img className="img-fluid" src="/images/logo.png" alt="Logo" />
               </div>
             </div>
 
-            <div className="col-4">
+            <div className="col-3">
             </div>
 
-            <div className="col-2">
+            <div className="col-1">
               <div className="cart d-flex align-items-center justify-content-end">
                 <div onClick={() => handleWishlist()} className="position-relative" style={{ cursor: "pointer" }}>
                   <IoIosHeartEmpty />

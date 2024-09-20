@@ -96,7 +96,7 @@ const Diamond = () => {
               fashion earrings to find your perfect pair."
       />
 
-      <div className="page-nav container px-0">
+      <div className="page-nav container px-lg-0">
         <p>Home</p>
         <FaAngleRight />
         <p>Earrings</p>
@@ -106,7 +106,7 @@ const Diamond = () => {
         Find The Perfect Diamond Studs
       </h3>
 
-      <section className="diamond">
+      <section className="diamond" style={{ padding: "0px 25px" }}>
         <div className="container">
           <div className="row diamond-row">
             <div className="col-md-12 diamond-head">
@@ -128,9 +128,9 @@ const Diamond = () => {
             <div className="col-md-12 diamond-head">
               <h5>Select Your Settings</h5>
             </div>
-            <div className="shapes settings justify-content-md-start justify-content-center">
+            <div className="shapes settings slt justify-content-md-start justify-content-center">
               {settings?.map(setting => (
-                <div className={`shapes-inner ${setting.slug === selectedSettingSlug ? 'selected' : ''}`} key={setting.id} onClick={() => handleSettingChangeSlug(setting.slug)}>
+                <div className={`shapes-inner shapes-inner-slt ${setting.slug === selectedSettingSlug ? 'selected' : ''}`} key={setting.id} onClick={() => handleSettingChangeSlug(setting.slug)}>
                   <img className="img-diamond" src={setting.image[selectedMetalSlug]} alt={setting.title} />
                   <h6>{setting.title}</h6>
                 </div>
@@ -144,7 +144,7 @@ const Diamond = () => {
             </div>
             <div className="shapes select-btn">
               {Object.entries(metals).map(([key, metal]) => (
-                <div className={`shapes-inner ${metal.slug === selectedMetalSlug ? 'selected' : ""}`} key={metal.id} onClick={() => handleMetalChangeSlug(metal.slug)} style={{ backgroundColor: metal.color_code }} >
+                <div className={`shapes-inner shapes-inner-btn  ${metal.slug === selectedMetalSlug ? 'selected' : ""}`} key={metal.id} onClick={() => handleMetalChangeSlug(metal.slug)} style={{ backgroundColor: metal.color_code }} >
                   <h6>{metal.title}</h6>
                 </div>
               ))}
@@ -190,39 +190,44 @@ const Diamond = () => {
                   <div className="col-md-3 mb-4 d-flex flex-column align-items-center justify-content-center">
                     <p className='daimond-p-size'>{size}</p>
                   </div>
-                  {categories?.map((category, i) => (
-                    <div className="col-md-3 mb-4" key={i}>
-                      <div className="new-product-items mt-3">
-                        <h5>{Object.keys(category)[0]}</h5>
-                        {
-                          Object.values(category)[0]?.length > 0 ? <>
+                  {categories?.map((category, i) => {
+                    const categoryName = Object.keys(category)[0];
+                    if (["Beautiful", "Brilliant", "Masterpiece"].includes(categoryName)) {
+                      return (
+                        <div className="col-md-3 mb-4" key={i}>
+                          <div className="new-product-items mt-3">
+                            {/* <h5>{categoryName}</h5> */}
                             {
-                              Object.values(category)[0].map(product => (
-                                <div key={product.variation_id}>
-                                  <div className="wishlist-icon-fill d-flex justify-content-end">
-                                    <FaHeart />
+                              Object.values(category)[0]?.length > 0 ? (
+                                Object.values(category)[0].map(product => (
+                                  <div key={product.variation_id}>
+                                    <div className="wishlist-icon-fill d-flex justify-content-end">
+                                      <FaHeart />
+                                    </div>
+                                    <img
+                                      className="img-fluid"
+                                      src={product.featured_image}
+                                      alt="Product Image"
+                                    />
+                                    <hr />
+                                    <p>{product.title}</p>
+                                    <div className="rating-price d-flex">
+                                      <h4>
+                                        <span>${product.sale_price}</span> ${product.base_price}
+                                      </h4>
+                                      <Rating initialValue={0} readonly />
+                                    </div>
+                                    <button className="diamond-card-btn" onClick={() => navigate(`/${product.slug}?vId=${product.variation_id}`)}>BUY NOW</button>
                                   </div>
-                                  <img
-                                    className="img-fluid"
-                                    src={product.featured_image}
-                                    alt="Product Image"
-                                  />
-                                  <hr />
-                                  <p>{product.title}</p>
-                                  <div className="rating-price d-flex">
-                                    <h4>
-                                      <span>${product.sale_price}</span> ${product.base_price}
-                                    </h4>
-                                    <Rating initialValue={0} readonly />
-                                  </div>
-                                  <button className="diamond-card-btn" onClick={() => navigate(`/${product.slug}?vId=${product.variation_id}`)}>BUY NOW</button>
-                                </div>
-                              ))
+                                ))
+                              ) : "No product available"
                             }
-                          </> : "No product available"}
-                      </div>
-                    </div>
-                  ))}
+                          </div>
+                        </div>
+                      );
+                    }
+                    return null; // Return null for other categories
+                  })}
                 </div>
               ))}
             </div>
@@ -249,8 +254,7 @@ const Diamond = () => {
         </div>
       </section>
 
-
-      <section className='range-mobile d-md-none d-block'>
+      <section className='range-mobile d-md-none d-block' style={{ padding: "25px 25px" }}>
         <div className='container'>
           <div className='row'>
             <h6>Select the size and Lab Diamond Quality</h6>
@@ -262,81 +266,95 @@ const Diamond = () => {
                     <div className='range-mobile-border'>
                       <img
                         className="img-fluid"
-                        src="/public/images/products-1.png"
+                        src={categories[0]?.one_featured_image}
                         alt="Product Image"
                       />
                     </div>
                   </div>
                   <div className='col-6'>
                     <p className='m-0 range-mobile-weight'>{size} cwc</p>
-                    {shapes?.map(shape => (
-                      <p className='m-0'>{shape.slug === selectedShapeSlug && shape.title}</p>
+                    {shapes?.map((shape, i) => (
+                      <p className='m-0' key={i}>{shape.slug === selectedShapeSlug && shape.title}</p>
                     ))}
-                    {settings?.map(setting => (
-                      <p className='m-0'>{setting.slug === selectedSettingSlug && setting.title}</p>
+                    {settings?.map((setting, i) => (
+                      <p className='m-0' key={i}>{setting.slug === selectedSettingSlug && setting.title}</p>
                     ))}
-                    {Object.entries(metals).map(([key, metal]) => (
-                      <p className='m-0'>{metal.slug === selectedMetalSlug && metal.title}</p>
+                    {Object?.entries(metals).map(([key, metal]) => (
+                      <p className='m-0' key={key}>{metal.slug === selectedMetalSlug && metal.title}</p>
                     ))}
                   </div>
                 </div>
 
                 <div className='row mt-3'>
-                  <div className='col-3 d-flex align-items-center justify-content-center'>
+                  <div className='col-4 d-flex align-items-center justify-content-center'>
                     <h6 className='m-0'>Quality</h6>
                   </div>
-                  <div className='col-3 d-flex align-items-center justify-content-center'>
+                  {/* <div className='col-3 d-flex align-items-center justify-content-center'>
                     <h6 className='m-0'>Color</h6>
-                  </div>
-                  <div className='col-3 d-flex align-items-center justify-content-center'>
+                  </div> */}
+                  <div className='col-4 d-flex align-items-center justify-content-center'>
                     <h6 className='m-0'>Clarity</h6>
                   </div>
-                  <div className='col-3 d-flex align-items-center justify-content-center'>
+                  <div className='col-4 d-flex align-items-center justify-content-center'>
                     <h6 className='m-0'>Price</h6>
                   </div>
                 </div>
 
-                {categories?.map((category, i) => (
-                  <div className='row range-mobile-inner-div mt-3' key={i} onClick={() => {
-                    const firstProduct = Object.values(category)[0][0];
-                    navigate(`/${firstProduct.slug}?vId=${firstProduct.variation_id}`);
-                  }}>
-                    <div className='col-3 d-flex align-items-center justify-content-center'>
-                      <h6 className='m-0'>{Object.keys(category)[0]}</h6>
+                {['Beautiful', 'Brilliant', 'Masterpiece'].map((type, i) => {
+                  const category = categories.find(cat => Object.keys(cat)[0] === type);
+                  const products = category ? Object.values(category)[0] : [];
+                  const clarityOptions = ['VS2+', 'VS1+', 'VVS2+'];
+                  const clarity = clarityOptions[i % clarityOptions.length];
+
+                  return (
+                    <div className='row range-mobile-inner-div mt-3' key={i} onClick={() => {
+                      if (products.length > 0) {
+                        const firstProduct = products[0];
+                        navigate(`/${firstProduct.slug}?vId=${firstProduct.variation_id}`);
+                      }
+                    }}>
+                      <div className='col-4 d-flex align-items-center justify-content-center'>
+                        <h6 className='m-0'>{type}</h6>
+                      </div>
+
+                      {products.length > 0 ? (
+                        products.map((product, index) => {
+
+                          // Cycle through clarity options
+                          return (
+                            <React.Fragment key={product.variation_id}>
+                              {/* <div className='col-3 d-flex align-items-center justify-content-center'>
+          <h6 className='m-0'>Color</h6>
+        </div> */}
+                              <div className='col-4 d-flex align-items-center justify-content-center'>
+                                <h6 className='m-0'>{clarity}</h6>
+                              </div>
+                              <div className='col-4 d-flex align-items-center justify-content-center pe-0'>
+                                <div className='d-flex flex-column align-items-center'>
+                                  <p className='m-0 range-mobile-base-price pe-0'>${product.base_price}</p>
+                                  <p className='m-0 range-mobile-sale-price pe-0'>${product.sale_price}</p>
+                                </div>
+                              </div>
+                            </React.Fragment>
+                          );
+                        })
+                      ) : (
+                        <div className='col-12 d-flex align-items-center justify-content-end'>
+                          <p className='m-0'>No Product Available</p>
+                        </div>
+                      )}
                     </div>
-                    {
-                      Object.values(category)[0].map(product => (
-                        <div className='col-3 d-flex align-items-center justify-content-center' key={product.variation_id}>
-                          <h6 className='m-0'>H-1</h6>
-                        </div>
-                      ))
-                    }
-                    {
-                      Object.values(category)[0].map(product => (
-                        <div className='col-3 d-flex align-items-center justify-content-center' key={product.variation_id}>
-                          <h6 className='m-0'>Vs</h6>
-                          {/* <button className='range-mobile-buy'>Vs</button> */}
-                        </div>
-                      ))
-                    }
-                    {
-                      Object.values(category)[0].map(product => (
-                        <div className='col-3 d-flex align-items-center justify-content-center pe-0' key={product.variation_id}>
-                          <div className='d-flex flex-column align-items-center justiy-content-center'>
-                            <p className='m-0 range-mobile-base-price'>${product.base_price}</p>
-                            <p className='m-0 range-mobile-sale-price'>${product.sale_price}</p>
-                          </div>
-                        </div>
-                      ))
-                    }
-                  </div>
-                ))}
+                  );
+                })}
 
               </div>
             ))}
           </div>
         </div>
       </section>
+
+
+
 
       <Footer />
     </>

@@ -118,7 +118,7 @@
   gap: 26px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 }
 
 .product-pric h5 {
@@ -474,6 +474,7 @@
 .review-images {
   margin-top: 10px;
   display: flex;
+  flex-wrap: wrap;
 }
 .review-images img {
   width: 70px;
@@ -485,6 +486,7 @@
   margin-right: 0;
 }
 
-.products-col .image-gallery-left-nav .image-gallery-svg, .image-gallery-right-nav .image-gallery-svg{
+.products-col .image-gallery-left-nav .image-gallery-svg,
+.image-gallery-right-nav .image-gallery-svg {
   height: 60px !important;
 }

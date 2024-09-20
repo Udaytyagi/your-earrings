@@ -130,9 +130,9 @@ fashion earrings to find your perfect pair."
       </div> */}
 
       <section>
-        <div className="container">
-          <div className="row pt-5 justify-content-between">
-            <div className="col-md-4 products-col">
+        <div className="container" style={{ padding: "0px 40px" }}>
+          <div className="row pt-3 justify-content-between">
+            <div className="col-lg-4 products-col">
               {images ? (
                 <ImageGallery
                   ref={fullScreenRef}
@@ -148,7 +148,7 @@ fashion earrings to find your perfect pair."
                 <p>Loading images...</p>
               )}
             </div>
-            <div className="col-md-4 product-detail">
+            <div className="col-lg-4 mt-3 mt-lg-0 product-detail">
               <p>Item ID #: {product?.Product_info?.Item_id}</p>
               <h4>{product?.Product_info?.Title}</h4>
               <div className="d-flex review-rating">
@@ -282,7 +282,7 @@ fashion earrings to find your perfect pair."
               </div>
             </div>
 
-            <div className="col-md-3 price-col">
+            <div className="col-lg-3 mt-3 mt-lg-0 price-col">
               <div className="product-pric">
                 <h5>
                   Sale : <span>${product?.Product_info?.Base_price}</span>
@@ -301,7 +301,7 @@ fashion earrings to find your perfect pair."
                 ></input>
                 <p className="applied">Applied</p>
               </div>
-              <div className="order-main">
+              {/* <div className="order-main">
                 <h6>FREE 2 DAY SHIPPING ON ALL US ORDERS:</h6>
                 <div className="order-details">
                   <div className="order-by">
@@ -315,14 +315,14 @@ fashion earrings to find your perfect pair."
                     <p>Day Air Shipping</p>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
       </section>
 
-      <section className="pt-md-5">
-        <div className="container">
+      <section className="pt-5">
+        <div className="container" style={{ padding: "0px 40px" }}>
           <div className="row detail-row">
             <div className="col-md-12 product-head">
               <h5>PRODUCT DETAILS</h5>
@@ -364,7 +364,7 @@ fashion earrings to find your perfect pair."
 
       <SingleProductSlider product={product} />
 
-      <div className="container review-main my-5">
+      <div className="container review-main my-5" style={{ padding: "0px 40px" }}>
         <div className="row">
           <div className="col-12 pb-1">
             <h4>Reviews</h4>
@@ -465,7 +465,7 @@ fashion earrings to find your perfect pair."
           <div className="row">
             <div className="col-12 pt-1 pb-1 review-rating">
               <h5>Write your Reviews</h5>
-              <div className="d-flex">
+              <div className="d-flex flex-wrap">
                 <h5>Ratings</h5>
                 <Rating initialValue={4} />
               </div>

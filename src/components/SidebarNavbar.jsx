@@ -3,10 +3,17 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import "../Styles/SidebarNavbar.css"
 import { useNavigate } from "react-router-dom";
 import { BiCategory } from "react-icons/bi";
-import { IoHomeOutline } from "react-icons/io5";
+import { IoHomeOutline, IoDiamondOutline } from "react-icons/io5";
+import { FiUsers } from "react-icons/fi";
+
 import { SlUser } from "react-icons/sl";
 import { CiHeart } from "react-icons/ci";
 import { CiShoppingCart } from "react-icons/ci";
+import { LuPhoneCall } from "react-icons/lu";
+
+import { FiBookOpen } from "react-icons/fi";
+
+
 
 function SidebarNavbar({ show, setShow }) {
     const navigation = useNavigate()
@@ -51,39 +58,39 @@ function SidebarNavbar({ show, setShow }) {
                             <li className="sidebar-nav-item" onClick={() => { navigation("/"); setShow(false) }}>
                                 <p className="sidebar-nav-link d-flex align-items-center"><IoHomeOutline
                                     style={{
-                                        marginRight: "5px",
+                                        marginRight: "7px",
                                         cursor: "pointer",
                                     }}
                                 />HOME</p>
                             </li>
                             <li className="sidebar-nav-item" onClick={() => { navigation("/diamond"); setShow(false) }}>
-                                <p className="sidebar-nav-link d-flex align-items-center"><IoHomeOutline
+                                <p className="sidebar-nav-link d-flex align-items-center"><IoDiamondOutline
                                     style={{
-                                        marginRight: "5px",
+                                        marginRight: "7px",
                                         cursor: "pointer",
                                     }}
                                 />Diamond Earrings</p>
                             </li>
                             <li className="sidebar-nav-item" onClick={() => { navigation("/"); setShow(false) }}>
-                                <p className="sidebar-nav-link d-flex align-items-center"><IoHomeOutline
+                                <p className="sidebar-nav-link d-flex align-items-center"><FiUsers
                                     style={{
-                                        marginRight: "5px",
+                                        marginRight: "7px",
                                         cursor: "pointer",
                                     }}
                                 />About Us</p>
                             </li>
                             <li className="sidebar-nav-item" onClick={() => { navigation("/"); setShow(false) }}>
-                                <p className="sidebar-nav-link d-flex align-items-center"><IoHomeOutline
+                                <p className="sidebar-nav-link d-flex align-items-center"><LuPhoneCall
                                     style={{
-                                        marginRight: "5px",
+                                        marginRight: "7px",
                                         cursor: "pointer",
                                     }}
                                 />Contact Us</p>
                             </li>
                             <li className="sidebar-nav-item" onClick={() => { navigation("/"); setShow(false) }}>
-                                <p className="sidebar-nav-link d-flex align-items-center"><IoHomeOutline
+                                <p className="sidebar-nav-link d-flex align-items-center"><FiBookOpen
                                     style={{
-                                        marginRight: "5px",
+                                        marginRight: "7px",
                                         cursor: "pointer",
                                     }}
                                 />Blogs</p>

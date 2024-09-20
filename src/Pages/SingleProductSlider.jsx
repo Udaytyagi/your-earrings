@@ -7,7 +7,7 @@ import { TbCurrencyPound } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 
 const SingleProductSlider = ({ product }) => {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   var settings = {
     // dots: true,
     infinite: true,
@@ -47,7 +47,7 @@ const SingleProductSlider = ({ product }) => {
     <>
       {
         product && product.All_collection && <section className="featured-product">
-          <div className="container">
+          <div className="container" style={{ padding: "0px 40px" }}>
             <div className="row">
               <div className="col-md-12">
                 <div className="featured-heading text-center">
