@@ -1,90 +1,118 @@
-.banner{
+.banner {
   background-image: url(../assets/banner.png);
   padding: 200px 0;
   background-size: cover;
   background-repeat: no-repeat;
   /* min-height: 650px; */
-
-  
-
 }
-.banner-text h2{
-    color: #1c1b1f;
-    text-transform: uppercase;
-    font-size: 42px;
-    font-weight: 600;
-    letter-spacing: 1px;
+.banner-text h2 {
+  color: #1c1b1f;
+  text-transform: uppercase;
+  font-size: 42px;
+  font-weight: 600;
+  letter-spacing: 1px;
 }
-.banner-text h3{
-    color: #a07936;
-    text-transform: uppercase;
-    font-size: 42px;
-    font-weight: 600;
-    letter-spacing: 1px;
+.banner-text h3 {
+  color: #a07936;
+  text-transform: uppercase;
+  font-size: 42px;
+  font-weight: 600;
+  letter-spacing: 1px;
 }
-
 
 .banner-text button {
   background-color: #a07936;
-   padding: 10px 20px;
-   letter-spacing: 1px;
-   border: none;
-   margin-top: 20px;
+  padding: 10px 20px;
+  letter-spacing: 1px;
+  border: none;
+  margin-top: 20px;
+  color: white;
 }
-
 
 .banner-text button a {
-   color: #fff;
-    font-size: 16px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-   
+  color: #fff;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-
-
-@media only screen and (min-width: 768px) and (max-width: 991px){
-.banner{
-  padding: 108px 0px;
-}
-.banner-text h2{
-  font-size: 28px;
-}
-.banner-text h3{
-  font-size: 28px;
-}
-.banner-text button{
-  margin-top: 10px;
-}
-.banner-text button a{
-  font-size: 14px;
-}
-.banner-text button{
-  padding: 8px 16px;
-}
-
-}
-
-
-@media only screen and (min-width: 992px) and (max-width: 1199px){
+@media only screen and (min-width: 992px) and (max-width: 1440px) {
   .banner {
     padding: 120px 0px;
   }
-  .banner-text h2{
-    font-size: 38px;
+  .banner-text h2 {
+    font-size: 30px;
   }
-  .banner-text h3{
-    font-size: 38px;
+  .banner-text h3 {
+    font-size: 30px;
   }
-  
 }
 
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .banner {
+    padding: 90px 0px;
+  }
+  .banner-text h2 {
+    font-size: 23px;
+  }
+  .banner-text h3 {
+    font-size: 23px;
+  }
+  .banner-text button {
+    margin-top: 10px;
+  }
+  .banner-text button a {
+    font-size: 14px;
+  }
+  .banner-text button {
+    padding: 7px 14px;
+  }
+}
 
-@media only screen and (min-width: 1200px) and (max-width: 1440px){
+@media only screen and (min-width: 500px) and (max-width: 768px) {
   .banner {
     padding: 120px 0px;
+    background-position: 100%;
   }
- 
-  
+  .banner-text h2 {
+    font-size: 25px;
+  }
+  .banner-text h3 {
+    font-size: 25px;
+  }
+  .banner-text button {
+    padding: 6px 15px;
+  }
 }
 
+@media only screen and (min-width: 400px) and (max-width: 500px) {
+  .banner {
+    padding: 55px 0px;
+    background-position: 90%;
+  }
+  .banner-text h2 {
+    font-size: 25px;
+  }
+  .banner-text h3 {
+    font-size: 25px;
+  }
+  .banner-text button {
+    padding: 7px 12px;
+  }
+}
+
+@media only screen and (min-width: 0px) and (max-width: 400px) {
+  .banner {
+    padding: 55px 0px;
+    background-position: 84%;
+  }
+  .banner-text h2 {
+    font-size: 20px;
+  }
+  .banner-text h3 {
+    font-size: 20px;
+  }
+  .banner-text button {
+    padding: 5px 10px;
+  }
+}

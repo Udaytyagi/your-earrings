@@ -30,6 +30,11 @@
   cursor: pointer;
 }
 
+.popular-product-main-div{
+  display: flex;
+  flex-direction: column;
+}
+
 .popularproducts-items h3 {
   font-size: 15px;
   display: -webkit-box;
@@ -41,7 +46,7 @@
 }
 
 .rating-pricepopopular {
-  justify-content: space-between;
+  justify-content: space-between !important;
 }
 
 .rating-pricepopopular svg {

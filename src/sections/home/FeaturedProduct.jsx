@@ -16,6 +16,7 @@ const FeaturedProduct = ({ products }) => {
     slidesToShow: 4,
     slidesToScroll: 1,
     initialSlide: 0,
+    arrows: true,
     responsive: [
       {
         breakpoint: 1024,
@@ -48,7 +49,7 @@ const FeaturedProduct = ({ products }) => {
   return (
     <>
       <section className="featured-product">
-        <div className="container">
+        <div className="container" style={{ padding: "0px 47px" }}>
           <div className="row">
             <div className="col-md-12">
               <div className="featured-heading text-center">
@@ -64,7 +65,7 @@ const FeaturedProduct = ({ products }) => {
                 <Slider {...settings}>
                   {
                     products && products?.Product_details && products?.Product_details?.length > 0 && products.Product_details.map((product, i) => (
-                      <div className="featuredpdt-items text-center" key={i} onClick={() => navigate(`/${product.Slug}?vId=${product.Variation_id}`)}>
+                      <div className="featuredpdt-items text-center d-flex" key={i} onClick={() => navigate(`/${product.Slug}?vId=${product.Variation_id}`)}>
                         <div className='featuredpdt-round'>
                           <img className='img-fluid' src={product.image || "/images/products-1.png"} alt="" />
                         </div>

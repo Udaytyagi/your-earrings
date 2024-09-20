@@ -1,8 +1,8 @@
 function Coupon({ carts, navigate }) {
   return (
     <div className="summary">
-      <h5>Coupon</h5>
-      <p className="m-0">Enter your coupon code if you have one.</p>
+      <h5>Summary</h5>
+      {/* <p className="m-0">Enter your coupon code if you have one.</p>
       <div className="coupn">
         <input type="text" placeholder="coupon code" />
         <button className="apply-btn">Apply Coupon</button>
@@ -14,7 +14,7 @@ function Coupon({ carts, navigate }) {
           placeholder="Add special instructions for your seller..."
           defaultValue={""}
         />
-      </div>
+      </div> */}
       <div className="totals">
         {/* <h6 className="sub-total">
           SUBTOTAL <span>$860.00</span>

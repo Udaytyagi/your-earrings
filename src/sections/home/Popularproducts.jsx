@@ -47,7 +47,7 @@ const Popularproducts = ({ products, handleUpdateWishlist }) => {
                           <FaRegHeart />
                         </div>
                       )}
-                      <div onClick={() => navigate(`/${product.Slug}?vId=${product.Variation_id}`)}>
+                      <div onClick={() => navigate(`/${product.Slug}?vId=${product.Variation_id}`)} className="popular-product-main-div">
                         <img
                           className="img-fluid"
                           src={product.image || "/images/products-1.png"}

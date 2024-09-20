@@ -53,7 +53,7 @@ function Cart() {
             {carts && carts?.product_info && carts?.product_info?.length > 0 ? <h2 className="pb-5">Shopping Cart</h2> : <h2 className="pb-5 d-flex justify-content-center">Your cart is empty</h2>}
             {
               carts && carts?.product_info && carts?.product_info?.length > 0 ? <>
-                <div className="col-md-12 col-xl-8 main-col-1">
+                <div className="col-md-12 main-col-1">
                   <div className="row  pb-3 cart-table">
                     <div className="col-md-6">
                       <h5>Product</h5>
@@ -130,7 +130,7 @@ function Cart() {
                     ))
                   }
                 </div>
-                <div className="col-md-12 col-xl-4 pt-md-3 main-col-2">
+                <div className="col-md-6 pt-md-3 main-col-2">
                   <Coupon carts={carts} navigate={navigate} />
                 </div>
               </> : <div className="d-flex justify-content-center"><img src='/images/wishlist_empty.png' alt='cart-empty'></img></div>

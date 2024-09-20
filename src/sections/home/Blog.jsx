@@ -46,7 +46,7 @@ const Blog = () => {
                     <div className="row">
                         {
                             blogs?.map((blog, i) => (
-                                <div className="col-md-4" key={blog.Slug}>
+                                <div className="col-md-4 mt-3 mt-md-0" key={blog.Slug}>
                                     {/* onClick={() => navigate(`/blog/${blog.Slug}`)} */}
                                     <div className="blog-post">
                                         <h5>{blog?.Created_at}</h5>

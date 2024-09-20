@@ -35,7 +35,7 @@ const Login = () => {
       <section className="loginpage">
         <div className="container">
           <div className="row">
-            <div className="col-xl-6">
+            <div className="col-lg-6">
               <div className="account_login">
                 <div className="account_login-text mb-25">
                   <h2>Login</h2>
@@ -79,7 +79,7 @@ const Login = () => {
               </div>
             </div>
 
-            <div className="col-xl-6">
+            <div className="col-lg-6 d-flex align-items-center justify-content-center">
               <div className="login-img">
                 <img className='img-fluid' src="/images/login.png" alt="" />
               </div>

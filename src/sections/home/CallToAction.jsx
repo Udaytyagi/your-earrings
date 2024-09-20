@@ -1,6 +1,8 @@
 import '../../Styles/calltoaction.css'
 
+
 const CallToAction = ({ products }) => {
+
   return (
     <>
       <section className="calltoaction" style={{ backgroundImage: `url(${products?.banner_image})` }}>

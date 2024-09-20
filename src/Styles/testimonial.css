@@ -27,7 +27,8 @@
 .testimonial-review p {
   margin-top: 20px;
   padding: 5px 20px 1 px 1px;
-  height: 6rem;
+  height: 7rem;
+  font-size: 15px;
 }
 
 .slick-slider .slick-track,
@@ -36,15 +37,37 @@
   gap: 20px !important;
 }
 
+@media only screen and (min-width: 0px) and (max-width: 500px) {
+  .testimonial-review p {
+    font-size: 12px;
+    height: 13rem;
+  }
+  .testimonial-heading h2 {
+    font-size: 20px;
+  }
+  .slider-para {
+    padding: 0% 11% !important;
+  }
+}
+
+@media only screen and (min-width: 500px) and (max-width: 768px) {
+  .testimonial-review p {
+    font-size: 14px;
+    height: 8rem;
+  }
+}
+
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .testimonial-review p {
     font-size: 14px;
     margin-top: 10px;
+    height: 12rem;
   }
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .testimonial-review p {
     font-size: 14px;
+    height: 8rem;
   }
 }
