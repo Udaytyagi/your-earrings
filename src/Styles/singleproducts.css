@@ -168,6 +168,12 @@
   color: #a07936;
   font-weight: 500;
   width: 100%;
+  cursor: pointer;
+}
+
+.discount-field.selected {
+  background-color: #a07936;
+  color: #fff;
 }
 
 .coupon p {

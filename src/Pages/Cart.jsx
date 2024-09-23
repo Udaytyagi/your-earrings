@@ -130,8 +130,15 @@ function Cart() {
                     ))
                   }
                 </div>
-                <div className="col-md-6 pt-md-3 main-col-2">
-                  <Coupon carts={carts} navigate={navigate} />
+                <div className="col-md-12">
+                  <div className="row">
+                    <div className="col-md-6">
+
+                    </div>
+                    <div className="col-md-6">
+                      <Coupon carts={carts} navigate={navigate} />
+                    </div>
+                  </div>
                 </div>
               </> : <div className="d-flex justify-content-center"><img src='/images/wishlist_empty.png' alt='cart-empty'></img></div>
             }

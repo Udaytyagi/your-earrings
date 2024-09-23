@@ -19,6 +19,8 @@ import { updateCart } from "../features/slices/cart/cartSlice";
 import { ErrorToaster } from "../components/Toaster";
 import FeaturedProduct from "../sections/home/FeaturedProduct";
 import LoginModal from "../components/LoginModal";
+import { fetchCouponApi } from "../apis/mainApis/productDetail/productDetailApis";
+import { RxCross2 } from "react-icons/rx";
 
 const SingleProducts = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -33,6 +35,8 @@ const SingleProducts = () => {
   const [selectedSettingId, setSelectedSettingId] = useState(null);
   const [selectedMetalId, setSelectedMetalId] = useState(null);
   const [selectedSizeId, setSelectedSizeId] = useState(null);
+  const [selectedCouponId, setSelectedCouponId] = useState("")
+  const [discountPrice, setDiscountPrice] = useState("")
   const [activeAccordionKey, setActiveAccordionKey] = useState("0");
   const [openLoginModal, setOpenLoginModal] = useState(false);
 
@@ -73,7 +77,7 @@ const SingleProducts = () => {
   const handleAddToCart = () => {
     if (user) {
       const data = {
-        coupon_id: "",
+        coupon_id: selectedCouponId,
         action: "add"
       }
       dispatch(updateCart({ data: data, variationId: variationId }))
@@ -108,6 +112,19 @@ const SingleProducts = () => {
     }
     setActiveAccordionKey(eventKey);
   };
+
+  const handleAddCoupon = async (couponId) => {
+    if (couponId !== selectedCouponId) {
+      setSelectedCouponId(couponId);
+      const response = await fetchCouponApi(variationId, couponId)
+      setDiscountPrice(response.data.data.Sale_price.After_discount_price)
+    }
+  }
+
+  const handleRemoveCoupon = async () => {
+    setSelectedCouponId(0);
+    setDiscountPrice("")
+  }
 
   return (
     <>
@@ -288,19 +305,36 @@ fashion earrings to find your perfect pair."
                   Sale : <span>${product?.Product_info?.Base_price}</span>
                 </h5>
                 <h4>Buy Now : ${product?.Product_info?.Sale_price}</h4>
+                {discountPrice && <h4>Discounted Price : ${discountPrice}</h4>}
               </div>
               <div className="wishlist-btn">
                 <button className="button-bag" onClick={() => handleAddToCart()}>Add to Bag</button>
                 {/* <button className="button wishlist" onClick={() => handleAddToWishlist()}>Add to Wishlist</button> */}
               </div>
               <div className="coupon">
-                <p>Coupon Code</p>
-                <input
-                  className="discount-field"
-                  placeholder="SUMMER40"
-                ></input>
-                <p className="applied">Applied</p>
+                <p>Coupon Available</p>
+                {
+                  product?.Product_info && product?.Product_info?.Discount?.length > 0 && product?.Product_info?.Discount?.map((discount, i) => (
+                    <div
+                      className={`discount-field ${discount.coupon_id === selectedCouponId ? "selected" : ""}`}
+                      key={i}
+
+                    >
+                      <div className="d-flex align-items-center justify-content-between">
+                        <div onClick={() => handleAddCoupon(discount?.coupon_id)}>
+                          <span > {discount?.name}</span><br></br>
+                          <span>Discount Amount : </span>
+                          <span>{discount?.discount_amount}</span>
+                        </div>
+                        {discountPrice && <RxCross2 onClick={() => handleRemoveCoupon(0)} />}
+                      </div>
+
+                    </div>
+                  ))
+                }
               </div>
+
+
               {/* <div className="order-main">
                 <h6>FREE 2 DAY SHIPPING ON ALL US ORDERS:</h6>
                 <div className="order-details">

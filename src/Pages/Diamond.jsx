@@ -213,7 +213,7 @@ const Diamond = () => {
                                     <p>{product.title}</p>
                                     <div className="rating-price d-flex">
                                       <h4>
-                                        <span>${product.sale_price}</span> ${product.base_price}
+                                        <span>${product.base_price}</span>${product.sale_price}
                                       </h4>
                                       <Rating initialValue={0} readonly />
                                     </div>
