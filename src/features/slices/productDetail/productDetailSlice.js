@@ -3,9 +3,9 @@ import { fetchProductDetailApi } from "../../../apis/mainApis/productDetail/prod
 
 export const fetchProductDetail = createAsyncThunk(
   "fetchProductDetail",
-  async (variationId) => {
+  async ({ data, variationId }) => {
     try {
-      const response = await fetchProductDetailApi(variationId);
+      const response = await fetchProductDetailApi(data, variationId);
       return response?.data?.product;
     } catch (error) {
       return null;

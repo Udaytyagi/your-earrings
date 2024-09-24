@@ -44,41 +44,44 @@ function Checkout() {
                   Add a new address
                 </button>
                 <div className="d-flex justify-content-between align-iteam-center adreress-right-heading">
-                  <h6>Home</h6>
                 </div>
                 <div className="row pb-md-0 pb-2">
                   <div className="col-md-12 col-lg-6">
                     <div className="add-right-check-box">
-                      <div className="right-address-border">
-                        <div className="form-check">
-                          <input
-                            className="form-check-input formcheckinput-right"
-                            type="radio"
-                            name="DelvieryAddress"
-                            id="DelvieryAddress1"
-                          />
-                          <div className="ms-3 address-right-iteam">
-                            <div>
-                              <span>Vishal Bhardwaj</span>
-                              <span> (Home)</span>
-                            </div>
-                            <div>
-                              <span>+91</span>
-                              <span>8888888888</span>
-                            </div>
-                            <div>
-                              <span>Ballabgarh </span>
-                              <span>Faridabad </span>
-                              <span>Haryana </span>
-                            </div>
-                            <div>
-                              <span>Pin Code: </span>
-                              <span>121004</span>
-                            </div>
+                      {
+                        carts && carts?.shipping_details?.map((ship, i) => (
+                          <div className="right-address-border" key={i}>
+                            <div className="form-check">
+                              <input
+                                className="form-check-input formcheckinput-right"
+                                type="radio"
+                                name="DelvieryAddress"
+                                id="DelvieryAddress1"
+                              />
+                              <div className="ms-3 address-right-iteam">
+                                <div>
+                                  <span>{ship.name}</span>
+                                  <span>{ship.address_type === 1 ? "(Home)" : ship.address_type === 2 ? "(Office)" : "(Other)"}</span>
+                                </div>
+                                <div>
+                                  <span>+91</span>
+                                  <span>8888888888</span>
+                                </div>
+                                <div>
+                                  <span>Ballabgarh </span>
+                                  <span>Faridabad </span>
+                                  <span>Haryana </span>
+                                </div>
+                                <div>
+                                  <span>Pin Code: </span>
+                                  <span>121004</span>
+                                </div>
 
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                      </div>
+                        ))
+                      }
                       {/* Repeat the above block for each address */}
                     </div>
                   </div>

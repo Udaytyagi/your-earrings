@@ -1,0 +1,72 @@
+.filter-section {
+    background-color: #fff;
+  }
+  
+  .filter-section .filter-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .filter-section .filter-options {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .filter-section .form-check {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .filter-section .form-check-input {
+    margin-top: 0px !important;
+  }
+  
+  .filter-section .form-check-label {
+    margin-left: 5px;
+    font-size: 14px;
+  }
+  
+  .filter-section .price-input {
+    width: 80px;
+    margin-right: 5px;
+  }
+ 
+  @keyframes slideIn {
+    from {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideOut {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+  }
+  
+  .offcanvas-enter {
+    animation: slideIn 0.6s ease-out forwards;
+  }
+  
+  .offcanvas-exit {
+    animation: slideOut 0.6s ease-in forwards;
+  }
+  
+  @media only screen and (max-width: 500px) {
+    .filter-button {
+      padding: 5px 10px;
+      font-size: 14px;
+    }
+  }
+  

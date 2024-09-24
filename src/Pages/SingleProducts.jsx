@@ -21,6 +21,8 @@ import FeaturedProduct from "../sections/home/FeaturedProduct";
 import LoginModal from "../components/LoginModal";
 import { fetchCouponApi } from "../apis/mainApis/productDetail/productDetailApis";
 import { RxCross2 } from "react-icons/rx";
+import Dropdown from 'react-bootstrap/Dropdown';
+import { KEY_PREFIX } from "redux-persist/lib/constants";
 
 const SingleProducts = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -35,22 +37,42 @@ const SingleProducts = () => {
   const [selectedSettingId, setSelectedSettingId] = useState(null);
   const [selectedMetalId, setSelectedMetalId] = useState(null);
   const [selectedSizeId, setSelectedSizeId] = useState(null);
+  const [selectedTypeId, setSelectedTypeId] = useState(null);
   const [selectedCouponId, setSelectedCouponId] = useState("")
   const [discountPrice, setDiscountPrice] = useState("")
+  const [selectedShape, setSelectedShape] = useState("")
+  const [selectedSetting, setSelectedSetting] = useState("")
+  const [selectedMetal, setSelectedMetal] = useState("")
+  const [selectedSize, setSelectedSize] = useState("")
+  const [selectedType, setSelectedType] = useState("")
+  const [updatePage, setUpdatePage] = useState(false)
   const [activeAccordionKey, setActiveAccordionKey] = useState("0");
   const [openLoginModal, setOpenLoginModal] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchProductDetail(variationId));
-  }, [variationId, dispatch]);
+    const data = {
+      shape: selectedShape,
+      setting: selectedSetting,
+      metal: selectedMetal,
+      size: selectedSize,
+      type: selectedType
+    }
+    dispatch(fetchProductDetail({ data: data, variationId: variationId }));
+  }, [variationId, dispatch, updatePage]);
 
   useEffect(() => {
     if (product && product?.Product_info) {
       const { Already_selected_filter } = product.Product_info;
-      setSelectedShapeId(Already_selected_filter?.shape?.id || null);
-      setSelectedSettingId(Already_selected_filter?.setting?.id || null);
-      setSelectedMetalId(Already_selected_filter?.metal?.id || null);
-      setSelectedSizeId(Already_selected_filter?.size?.id || null);
+      setSelectedShapeId(Already_selected_filter?.SelectedIdShape || null);
+      setSelectedSettingId(Already_selected_filter?.SelectedIdSetting || null);
+      setSelectedMetalId(Already_selected_filter?.SelectedIdMetal || null);
+      setSelectedSizeId(Already_selected_filter?.SelectedIdSize || null);
+      setSelectedTypeId(Already_selected_filter?.v_Id || null);
+      setSelectedShape(Already_selected_filter?.shape);
+      setSelectedSetting(Already_selected_filter?.setting);
+      setSelectedMetal(Already_selected_filter?.metal);
+      setSelectedSize(Already_selected_filter?.size);
+      setSelectedType(Already_selected_filter?.type);
     }
   }, [product]);
 
@@ -80,7 +102,7 @@ const SingleProducts = () => {
         coupon_id: selectedCouponId,
         action: "add"
       }
-      dispatch(updateCart({ data: data, variationId: variationId }))
+      dispatch(updateCart({ data: data, variationId: selectedTypeId ? selectedTypeId : variationId }))
     } else {
       setOpenLoginModal(true)
     }
@@ -100,28 +122,18 @@ const SingleProducts = () => {
 
 
   const handleAccordionClick = (eventKey) => {
-    if (eventKey === "2" && !selectedShapeId) {
-      ErrorToaster("Please first select shape");
-      return;
-    } else if (eventKey === "3" && !selectedSettingId) {
-      ErrorToaster("Please first select setting");
-      return;
-    } else if (eventKey === "4" && !selectedMetalId) {
-      ErrorToaster("Please first select metal");
-      return;
-    }
     setActiveAccordionKey(eventKey);
   };
 
   const handleAddCoupon = async (couponId) => {
     if (couponId !== selectedCouponId) {
       setSelectedCouponId(couponId);
-      const response = await fetchCouponApi(variationId, couponId)
+      const response = await fetchCouponApi(selectedTypeId ? selectedTypeId : variationId, couponId)
       setDiscountPrice(response.data.data.Sale_price.After_discount_price)
     }
   }
 
-  const handleRemoveCoupon = async () => {
+  const handleRemoveCoupon = () => {
     setSelectedCouponId(0);
     setDiscountPrice("")
   }
@@ -169,13 +181,13 @@ fashion earrings to find your perfect pair."
               <p>Item ID #: {product?.Product_info?.Item_id}</p>
               <h4>{product?.Product_info?.Title}</h4>
               <div className="d-flex review-rating">
-                <Rating />
+                <Rating readonly />
               </div>
               <p dangerouslySetInnerHTML={{ __html: product?.Product_info?.Description }}></p>
               <h5>Select Other Variation</h5>
               <div className="product-accordion">
                 <Accordion defaultActiveKey="0" activeKey={activeAccordionKey} onSelect={handleAccordionClick}>
-                  <Accordion.Item eventKey="1">
+                  {/* <Accordion.Item eventKey="1">
                     <Accordion.Header>Change Shape</Accordion.Header>
                     <Accordion.Body>
                       {All_available_filter?.shape &&
@@ -204,8 +216,26 @@ fashion earrings to find your perfect pair."
                         </>
                       }
                     </Accordion.Body>
-                  </Accordion.Item>
-                  <Accordion.Item eventKey="2">
+                  </Accordion.Item> */}
+                  <Dropdown>
+                    <Dropdown.Toggle variant="success" id="dropdown-basic" className="singleproduct-dropdown-toggle">
+                      Change Setting
+                    </Dropdown.Toggle>
+                    {product && All_available_filter?.shape[selectedShapeId]?.settings &&
+                      <Dropdown.Menu style={{ width: "100%"}}>
+                        {
+                          Object.entries(
+                            All_available_filter.shape[selectedShapeId].settings
+                          ).map(([key, setting]) => {
+                            return <Dropdown.Item key={KEY_PREFIX} className={`product-shape ${key == selectedSettingId ? "selected" : ""
+                              }`} onClick={() => { setSelectedSettingId(key); setSelectedSetting(setting.name); setUpdatePage(!updatePage); handleRemoveCoupon() }}> {setting.name}</Dropdown.Item>
+                          }
+                          )}
+                      </Dropdown.Menu>
+                    }
+                  </Dropdown>
+
+                  {/* <Accordion.Item eventKey="1">
                     <Accordion.Header>Change Setting</Accordion.Header>
                     <Accordion.Body>
                       {product && All_available_filter?.shape[selectedShapeId]?.settings && <>
@@ -214,11 +244,12 @@ fashion earrings to find your perfect pair."
                             Object.entries(
                               All_available_filter.shape[selectedShapeId].settings
                             ).map(([key, setting]) => {
+
                               return <div key={key} className={`product-shape ${key == selectedSettingId ? "selected" : ""
                                 }`}>
                                 <div
                                   className="product-shape"
-                                  onClick={() => { setSelectedSettingId(key); setSelectedMetalId(null); setSelectedSizeId(null) }}
+                                  onClick={() => { setSelectedSettingId(key); setSelectedSetting(setting.name); setUpdatePage(!updatePage); handleRemoveCoupon() }}
                                   style={{ backgroundColor: "#a0793633" }}
                                 >
                                   {setting.name}
@@ -231,8 +262,30 @@ fashion earrings to find your perfect pair."
                       </>
                       }
                     </Accordion.Body>
-                  </Accordion.Item>
-                  <Accordion.Item eventKey="3">
+                  </Accordion.Item> */}
+
+                  <Dropdown>
+                    <Dropdown.Toggle variant="success" id="dropdown-basic" className="singleproduct-dropdown-toggle">
+                      Change Metal
+                    </Dropdown.Toggle>
+                    {product && All_available_filter?.shape[selectedShapeId]?.settings[
+                      selectedSettingId
+                    ]?.metals &&
+                      <Dropdown.Menu style={{ width: "100%"}}>
+                        {Object.entries(
+                          All_available_filter?.shape[selectedShapeId]?.settings[
+                            selectedSettingId
+                          ]?.metals || {}
+                        ).map(([key, metal]) => {
+                          return <Dropdown.Item key={KEY_PREFIX} className={`product-shape ${key == selectedMetalId ? "selected" : ""
+                            }`} onClick={() => { setSelectedMetalId(key); setSelectedMetal(metal.name); setUpdatePage(!updatePage); handleRemoveCoupon() }}>{metal.name}</Dropdown.Item>
+                        }
+                        )}
+                      </Dropdown.Menu>
+                    }
+                  </Dropdown>
+
+                  {/* <Accordion.Item eventKey="2">
                     <Accordion.Header>Change Metal</Accordion.Header>
                     <Accordion.Body>
                       {
@@ -249,7 +302,7 @@ fashion earrings to find your perfect pair."
                                 }`} key={key}>
                                 <div
                                   className="product-metal"
-                                  onClick={() => { setSelectedMetalId(key); setSelectedSizeId(null) }}
+                                  onClick={() => { setSelectedMetalId(key); setSelectedMetal(metal.name); setUpdatePage(!updatePage); handleRemoveCoupon() }}
                                   style={{ backgroundColor: `${metal.color_code}` }}
                                 >
                                   {metal.name}
@@ -262,8 +315,33 @@ fashion earrings to find your perfect pair."
                         </>
                       }
                     </Accordion.Body>
-                  </Accordion.Item>
-                  <Accordion.Item eventKey="4">
+                  </Accordion.Item> */}
+
+
+                  <Dropdown>
+                    <Dropdown.Toggle variant="success" id="dropdown-basic" className="singleproduct-dropdown-toggle">
+                      Change Size
+                    </Dropdown.Toggle>
+                    {
+                      product && All_available_filter?.shape[selectedShapeId]?.settings[
+                        selectedSettingId
+                      ]?.metals[selectedMetalId]?.sizes &&
+                      <Dropdown.Menu style={{ width: "100%"}}>
+                        {Object.entries(
+                          All_available_filter?.shape[selectedShapeId]?.settings[
+                            selectedSettingId
+                          ]?.metals[selectedMetalId]?.sizes || {}
+                        ).map(([key, size]) => {
+                          return <Dropdown.Item key={KEY_PREFIX} className={`product-shape ${key == selectedSizeId ? "selected" : ""
+                            }`} onClick={() => { setSelectedSizeId(key); setSelectedSize(size.name); setUpdatePage(!updatePage); handleRemoveCoupon() }}> {size.name}</Dropdown.Item>
+                        }
+                        )}
+                      </Dropdown.Menu>
+                    }
+                  </Dropdown>
+
+
+                  {/* <Accordion.Item eventKey="3">
                     <Accordion.Header>Change Size</Accordion.Header>
                     <Accordion.Body>
                       {
@@ -281,7 +359,7 @@ fashion earrings to find your perfect pair."
                                   }`}>
                                 <div
                                   className="product-shape"
-                                  onClick={() => handleSelectSize(key, size.variation_ids)}
+                                  onClick={() => { setSelectedSizeId(key); setSelectedSize(size.name); setUpdatePage(!updatePage); handleRemoveCoupon() }}
                                   style={{ backgroundColor: "#a0793633" }}
                                 >
                                   {size.name}
@@ -294,7 +372,63 @@ fashion earrings to find your perfect pair."
                         </>
                       }
                     </Accordion.Body>
-                  </Accordion.Item>
+                  </Accordion.Item> */}
+
+                  <Dropdown>
+                    <Dropdown.Toggle variant="success" id="dropdown-basic" className="singleproduct-dropdown-toggle">
+                      Change Type
+                    </Dropdown.Toggle>
+                    {
+                      product && All_available_filter?.shape[selectedShapeId]?.settings[
+                        selectedSettingId
+                      ]?.metals[selectedMetalId]?.sizes[selectedSizeId]?.types &&
+                      <Dropdown.Menu style={{ width: "100%"}}>
+                        {Object.entries(
+                          All_available_filter?.shape[selectedShapeId]?.settings[
+                            selectedSettingId
+                          ]?.metals[selectedMetalId]?.sizes[selectedSizeId].types || {}
+                        ).map(([key, metal]) => {
+                          return <Dropdown.Item key={KEY_PREFIX} className={`product-shape ${metal.variation_ids == selectedTypeId ? "selected" : ""
+                            }`} onClick={() => { setSelectedTypeId(metal.variation_ids); setSelectedType(metal.name); setUpdatePage(!updatePage); handleRemoveCoupon() }}>{metal.name}</Dropdown.Item>
+                        }
+                        )}
+                      </Dropdown.Menu>
+                    }
+                  </Dropdown>
+
+
+                  {/* <Accordion.Item eventKey="4">
+                    <Accordion.Header>Change Type</Accordion.Header>
+                    <Accordion.Body>
+                      {
+                        product && All_available_filter?.shape[selectedShapeId]?.settings[
+                          selectedSettingId
+                        ]?.metals[selectedMetalId]?.sizes[selectedSizeId]?.types && <>
+                          <div className="d-flex align-items-center gap-2">
+                            {Object.entries(
+                              All_available_filter?.shape[selectedShapeId]?.settings[
+                                selectedSettingId
+                              ]?.metals[selectedMetalId]?.sizes[selectedSizeId].types || {}
+                            ).map(([key, metal]) => {
+                              return <div key={key}
+                                className={`product-shape ${metal.variation_ids == selectedTypeId ? "selected" : ""
+                                  }`}>
+                                <div
+                                  className="product-shape"
+                                  onClick={() => { setSelectedTypeId(metal.variation_ids); setSelectedType(metal.name); setUpdatePage(!updatePage); handleRemoveCoupon() }}
+                                  style={{ backgroundColor: "#a0793633" }}
+                                >
+                                  {metal.name}
+                                </div>
+                              </div>
+                            }
+
+                            )}
+                          </div>
+                        </>
+                      }
+                    </Accordion.Body>
+                  </Accordion.Item> */}
                 </Accordion>
               </div>
             </div>
@@ -311,28 +445,38 @@ fashion earrings to find your perfect pair."
                 <button className="button-bag" onClick={() => handleAddToCart()}>Add to Bag</button>
                 {/* <button className="button wishlist" onClick={() => handleAddToWishlist()}>Add to Wishlist</button> */}
               </div>
-              <div className="coupon">
-                <p>Coupon Available</p>
-                {
-                  product?.Product_info && product?.Product_info?.Discount?.length > 0 && product?.Product_info?.Discount?.map((discount, i) => (
-                    <div
-                      className={`discount-field ${discount.coupon_id === selectedCouponId ? "selected" : ""}`}
-                      key={i}
+              {
+                product?.Product_info && product?.Product_info?.Discount?.length > 0 &&
+                <div className="coupon">
+                  <p>Coupon Available</p>
+                  {
+                    product?.Product_info?.Discount?.map((discount, i) => (
+                      <div
+                        className={`discount-field ${discount.coupon_id === selectedCouponId ? "selected" : ""}`}
+                        key={i}
 
-                    >
-                      <div className="d-flex align-items-center justify-content-between">
-                        <div onClick={() => handleAddCoupon(discount?.coupon_id)}>
-                          <span > {discount?.name}</span><br></br>
-                          <span>Discount Amount : </span>
-                          <span>{discount?.discount_amount}</span>
+                      >
+                        <div className="d-flex align-items-center justify-content-between">
+                          <div onClick={() => handleAddCoupon(discount?.coupon_id)}>
+                            <span > {discount?.name}</span><br></br>
+                            {
+                              discount?.type === "fixed" ? <>
+                                <span>Discount Amount : </span>
+                                <span>{discount?.discount_amount}</span>
+                              </> : <>
+                                <span>Discount Percentage : </span>
+                                <span>{discount?.discount_percent}%</span>
+                              </>
+                            }
+                          </div>
+                          {discountPrice && <RxCross2 onClick={() => handleRemoveCoupon(0)} />}
                         </div>
-                        {discountPrice && <RxCross2 onClick={() => handleRemoveCoupon(0)} />}
-                      </div>
 
-                    </div>
-                  ))
-                }
-              </div>
+                      </div>
+                    ))
+                  }
+                </div>
+              }
 
 
               {/* <div className="order-main">

@@ -43,6 +43,8 @@ const SingleProductSlider = ({ product }) => {
     ],
   };
 
+
+
   return (
     <>
       {
