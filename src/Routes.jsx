@@ -119,7 +119,7 @@ const router = createBrowserRouter([
     path: "/checkout",
     element: (
       <ScrollToTop>
-        <Checkout />
+        <ProtectedRoute element={Checkout} />
       </ScrollToTop>
     ),
   },
@@ -127,7 +127,7 @@ const router = createBrowserRouter([
     path: "/dashboard/:dashboardSlug",
     element: (
       <ScrollToTop>
-        <Dashboard />
+        <ProtectedRoute element={Dashboard} />
       </ScrollToTop>
     ),
   },

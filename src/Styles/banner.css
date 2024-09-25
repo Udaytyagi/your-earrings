@@ -1,9 +1,8 @@
 .banner {
-  background-image: url(../assets/banner.png);
+  background-image: url(../assets/banner.jpg);
   padding: 200px 0;
   background-size: cover;
   background-repeat: no-repeat;
-  /* min-height: 650px; */
 }
 .banner-text h2 {
   color: #1c1b1f;
@@ -36,9 +35,30 @@
   letter-spacing: 1px;
 }
 
-@media only screen and (min-width: 992px) and (max-width: 1440px) {
+@media only screen and (min-width: 0px) and (max-width: 768px) {
   .banner {
-    padding: 120px 0px;
+    background-image: url(../assets/bannerMobile.jpg);
+    padding: 200px 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+  .banner {
+    padding: 130px 0px;
+  }
+  .banner-text h2 {
+    font-size: 30px;
+  }
+  .banner-text h3 {
+    font-size: 30px;
+  }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1440px) {
+  .banner {
+    padding: 170px 0px;
   }
   .banner-text h2 {
     font-size: 30px;
@@ -71,7 +91,7 @@
 
 @media only screen and (min-width: 500px) and (max-width: 768px) {
   .banner {
-    padding: 120px 0px;
+    padding: 120px 0px 350px 0px;
     background-position: 100%;
   }
   .banner-text h2 {
@@ -87,7 +107,7 @@
 
 @media only screen and (min-width: 400px) and (max-width: 500px) {
   .banner {
-    padding: 55px 0px;
+    padding: 40px 0px 190px 0px;
     background-position: 90%;
   }
   .banner-text h2 {
@@ -101,9 +121,24 @@
   }
 }
 
-@media only screen and (min-width: 0px) and (max-width: 400px) {
+@media only screen and (min-width: 0px) and (max-width: 350px) {
   .banner {
-    padding: 55px 0px;
+    padding: 20px 0px 150px 0px;
+    background-position: 84%;
+  }
+  .banner-text h2 {
+    font-size: 20px;
+  }
+  .banner-text h3 {
+    font-size: 20px;
+  }
+  .banner-text button {
+    padding: 5px 10px;
+  }
+}
+@media only screen and (min-width: 350px) and (max-width: 400px) {
+  .banner {
+    padding: 20px 0px 190px 0px;
     background-position: 84%;
   }
   .banner-text h2 {

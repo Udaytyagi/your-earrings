@@ -20,8 +20,6 @@ function Dashboard() {
   const dispatch = useDispatch();
   const location = useLocation();
   const dashboardSection = location.pathname.split('/')[2];
-  console.log("location", dashboardSection)
-
 
   const handleLogout = () => {
     logoutApi(dispatch, navigate)

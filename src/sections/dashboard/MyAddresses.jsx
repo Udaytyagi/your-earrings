@@ -17,8 +17,6 @@ function MyAddresses() {
         <>
             <div className="account__wrapper">
                 <div className="account__content">
-
-
                     <div className="adreress-right dashboard">
                         <h2 className="account__content--title h3 mb-20">Addresses</h2>
                         <button className="new__address--btn primary__btn mb-25" type="button" onClick={openPopup}>

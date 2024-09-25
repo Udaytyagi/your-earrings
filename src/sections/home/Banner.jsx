@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 const Banner = () => {
   const navigate = useNavigate()
+
   return (
     <>
       <section className="banner">

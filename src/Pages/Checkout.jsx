@@ -1,18 +1,33 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Topbar from "../sections/common/Topbar";
 import Navbarmid from "../sections/common/Navbarmid";
 import NavbarBottom from "../sections/common/NavbarBottom";
 import Footer from "../sections/common/Footer";
 import Breadcrumb from "../sections/common/Breadcrumb";
-import { IoClose } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import "../Styles/Checkout.css";
+import { useDispatch } from "react-redux";
+import { addAddress, fetchAddress } from "../features/slices/addresses/addressSlice";
+import { Loader } from "../components/Loader";
+import { ErrorToaster } from "../components/Toaster";
+import { createOrderApi } from "../apis/mainApis/order/orderApis";
+import { useNavigate } from "react-router-dom";
+import AddAddressModal from "../components/AddAddressModal";
+import EditAddressModal from "../components/EditAddressModal";
+import { deleteAddress } from "../features/slices/addresses/addressSlice";
+import { FaDiaspora } from "react-icons/fa6";
 
 
 function Checkout() {
   const carts = useSelector(state => state?.cart?.data?.Cart_info);
-
+  const address = useSelector(state => state?.address?.data?.user_record);
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isEditPopupOpen, setIsEditPopupOpen] = useState(false);
+  const [selectedAddressId, setSelectedAddressId] = useState("");
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("")
+  const [loading, setLoading] = useState(false);
 
   const openPopup = () => {
     setIsPopupOpen(true);
@@ -22,9 +37,56 @@ function Checkout() {
     setIsPopupOpen(false);
   };
 
+  const openEditPopup = () => {
+    setIsEditPopupOpen(true);
+  };
+
+  const closeEditPopup = () => {
+    setIsEditPopupOpen(false);
+  };
+
+  useEffect(() => {
+    dispatch(fetchAddress())
+  }, [])
+
+  const handleCheckout = async () => {
+    if (!address || address.length === 0) {
+      ErrorToaster("Please add address")
+      return;
+    } else if (!selectedAddressId) {
+      ErrorToaster("Please select address")
+      return;
+    } else if (!selectedPaymentMethod) {
+      ErrorToaster("Please select payment method")
+      return;
+    }
+    const data = {
+      addressId: selectedAddressId,
+      payment_method: selectedPaymentMethod
+    }
+    await createOrderApi(data, setLoading, navigate)
+  }
+
+  const handleEditAddress = () => {
+    if (!selectedAddressId) {
+      ErrorToaster("Please select address you want to edit");
+      return;
+    }
+    openEditPopup()
+  }
+
+  const handleDeleteAddress = () => {
+    if (!selectedAddressId) {
+      ErrorToaster("Please select address you want to delete");
+      return;
+    }
+    dispatch(deleteAddress({ selectedAddressId: selectedAddressId, setSelectedAddressId: setSelectedAddressId }))
+  }
 
   return (
     <>
+      <EditAddressModal isEditPopupOpen={isEditPopupOpen} closeEditPopup={closeEditPopup} selectedAddressId={selectedAddressId} />
+      <AddAddressModal isPopupOpen={isPopupOpen} closePopup={closePopup} />
       <Topbar />
       <Navbarmid />
       <NavbarBottom />
@@ -46,60 +108,70 @@ function Checkout() {
                 <div className="d-flex justify-content-between align-iteam-center adreress-right-heading">
                 </div>
                 <div className="row pb-md-0 pb-2">
-                  <div className="col-md-12 col-lg-6">
+                  <div className="col-md-12">
                     <div className="add-right-check-box">
                       {
-                        carts && carts?.shipping_details?.map((ship, i) => (
-                          <div className="right-address-border" key={i}>
-                            <div className="form-check">
-                              <input
-                                className="form-check-input formcheckinput-right"
-                                type="radio"
-                                name="DelvieryAddress"
-                                id="DelvieryAddress1"
-                              />
-                              <div className="ms-3 address-right-iteam">
-                                <div>
-                                  <span>{ship.name}</span>
-                                  <span>{ship.address_type === 1 ? "(Home)" : ship.address_type === 2 ? "(Office)" : "(Other)"}</span>
-                                </div>
-                                <div>
-                                  <span>+91</span>
-                                  <span>8888888888</span>
-                                </div>
-                                <div>
-                                  <span>Ballabgarh </span>
-                                  <span>Faridabad </span>
-                                  <span>Haryana </span>
-                                </div>
-                                <div>
-                                  <span>Pin Code: </span>
-                                  <span>121004</span>
-                                </div>
+                        address && address.length > 0 ? <>
+                          {
+                            address?.map((ship, i) => (
+                              <div className="right-address-border" key={i}>
+                                <div className="form-check">
+                                  <input
+                                    className="form-check-input formcheckinput-right"
+                                    type="radio"
+                                    name="DelvieryAddress"
+                                    id="DelvieryAddress1"
+                                    onClick={() => setSelectedAddressId(ship.id)}
+                                  />
+                                  <div className="ms-3 address-right-iteam">
+                                    <div>
+                                      <span>{ship.name}{" "}</span>
+                                      <span>{ship.address_type === "1" ? "(Home)" : ship.address_type === "2" ? "(Office)" : "(Other)"}</span>
+                                    </div>
+                                    <div>
+                                      <span>+91</span>
+                                      <span>{ship.mobile}</span>
+                                    </div>
+                                    <div>
+                                      <span>{ship.street}{" "}</span>
+                                      <span>{ship.landmark}{" "}</span>
+                                      <span>{ship.city}{" "}</span>
+                                      <span>{ship.state}</span>
 
+                                    </div>
+                                    <div>
+                                      <span>Pin Code: </span>
+                                      <span>{ship.pin_code}</span>
+                                    </div>
+
+                                  </div>
+                                </div>
                               </div>
-                            </div>
-                          </div>
-                        ))
+                            ))
+                          }
+                        </> : <div className="d-flex justify-content-center align-items-center flex-column"><img src='/images/wishlist_empty.png' alt='wishlist-empty'></img><h6>No address found</h6></div>
                       }
-                      {/* Repeat the above block for each address */}
                     </div>
                   </div>
                 </div>
                 {/* <a className="account__details--link" href="">
                             View Addresses (1)
-                        </a> */}
+                    </a> */}
 
-                <div className="account__details--footer d-flex mt-3">
-                  <button className="account__details--footer__btn" type="button">
-                    Edit
-                  </button>
-                  <button className="account__details--footer__btn" type="button">
-                    Delete
-                  </button>
-                </div>
+
+                {
+                  address && address.length > 0 &&
+                  <div className="account__details--footer d-flex mt-3">
+                    <button className="account__details--footer__btn" type="button" onClick={() => handleEditAddress()}>
+                      Edit
+                    </button>
+                    <button className="account__details--footer__btn" type="button" onClick={() => handleDeleteAddress()}>
+                      Delete
+                    </button>
+                  </div>
+                }
               </div>
-              {isPopupOpen ? (
+              {/* {isPopupOpen ? (
                 <div className="popup">
                   <div className="popup-content">
                     <button className="close-popup" onClick={closePopup}>
@@ -261,7 +333,7 @@ function Checkout() {
                 </div>
               ) : (
                 ""
-              )}
+              )} */}
               {/* <form action="#">
                   <div className="checkout__content--step section__contact--information">
                     <div className="checkout__section--header d-flex align-items-center justify-content-between pb-4 mb-25 flex-column flex-lg-row">
@@ -653,23 +725,25 @@ function Checkout() {
             <div className="col-lg-5 col-md-6">
               <div className="order-summary">
                 <h5>Your Order Summary</h5>
-                {
-                  carts && carts?.product_info && carts?.product_info?.length > 0 && carts?.product_info?.map((product, i) => (
-                    <div className="order-item" key={i}>
-                      <img src={product?.image || "images/product2.webp"} alt="Item 1" />
-                      <div className="order-item-details">
-                        <span>{product?.title}</span>
-                        {product?.selected_names?.shape && <small>SHAPE: {product?.selected_names?.shape}</small>}
-                        {product?.selected_names?.setting && <small>SETTING: {product?.selected_names?.setting}</small>}
-                        {product?.selected_names?.metal && <small>METAL: {product?.selected_names?.metal}</small>}
-                        {product?.selected_names?.size && <small>SIZE: {product?.selected_names?.size}</small>}
-                        {<small>QUANTITY: {product?.quantity}</small>}
-                        {<small>TOTAL: ${product?.total_current_price}</small>}
+                <div style={{ maxHeight: "240px", overflowY: "scroll", scrollbarWidth: "none" }}>
+                  {
+                    carts && carts?.product_info && carts?.product_info?.length > 0 && carts?.product_info?.map((product, i) => (
+                      <div className="order-item px-3" key={i}>
+                        <img src={product?.image || "images/product2.webp"} alt="Item 1" />
+                        <div className="order-item-details">
+                          <span>{product?.title}</span>
+                          {product?.selected_names?.shape && <small>SHAPE: {product?.selected_names?.shape}</small>}
+                          {product?.selected_names?.setting && <small>SETTING: {product?.selected_names?.setting}</small>}
+                          {product?.selected_names?.metal && <small>METAL: {product?.selected_names?.metal}</small>}
+                          {product?.selected_names?.size && <small>SIZE: {product?.selected_names?.size}</small>}
+                          {<small>QUANTITY: {product?.quantity}</small>}
+                          {<small>TOTAL: ${product?.total_current_price}</small>}
+                        </div>
+                        <span>${product?.after_discount_price}</span>
                       </div>
-                      <span>${product?.after_discount_price}</span>
-                    </div>
-                  ))
-                }
+                    ))
+                  }
+                </div>
 
                 {/* <div className="my-3 discount-main">
                   <input
@@ -694,14 +768,17 @@ function Checkout() {
                   </div>
                 </div>
                 <div className="payment-main py-3">
-                  <h5>Payment</h5>
+                  <h5>Payment Method</h5>
                   <div className="payment-methods">
-                    <button className="btn btn-outline-secondary">COD</button>
+                    <button className={`btn btn-outline-secondary ${selectedPaymentMethod === "cod" ? "selected" : ""}`} onClick={() => setSelectedPaymentMethod("cod")}>COD</button>
+                    <button className={`btn btn-outline-secondary ${selectedPaymentMethod === "worldpay" ? "selected" : ""}`} onClick={() => setSelectedPaymentMethod("worldpay")}>World Pay</button>
                     {/* <button className="btn btn-outline-secondary">Bank Transfer</button>
                     <button className="btn btn-outline-secondary">Paypal</button> */}
                   </div>
                 </div>
-                <button className="btn btn-lg mt-3 w-100">Checkout Now</button>
+                <button className="btn btn-lg mt-3 w-100" onClick={() => handleCheckout()} disabled={loading}>{loading ? <Loader height="22"
+                  width="22"
+                  color="white" /> : 'Checkout Now'}</button>
               </div>
 
             </div>
