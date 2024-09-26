@@ -57,7 +57,7 @@ const SidebarFilters = ({ showFilters, setShowFilters, sizes, selectedSizes, set
                                         variant=""
                                         id="dropdown-basic"
                                     >
-                                        ₹ {minPrice}
+                                        $ {minPrice}
                                     </Dropdown.Toggle>
 
                                     <Dropdown.Menu>
@@ -66,7 +66,7 @@ const SidebarFilters = ({ showFilters, setShowFilters, sizes, selectedSizes, set
                                                 key={option}
                                                 onClick={() => setMinPrice(option)}
                                             >
-                                                ₹ {option}
+                                                $ {option}
                                             </Dropdown.Item>
                                         ))}
                                     </Dropdown.Menu>
@@ -78,7 +78,7 @@ const SidebarFilters = ({ showFilters, setShowFilters, sizes, selectedSizes, set
                                         variant=""
                                         id="dropdown-basic"
                                     >
-                                        ₹ {maxPrice}
+                                        $ {maxPrice}
                                     </Dropdown.Toggle>
 
                                     <Dropdown.Menu>
@@ -87,7 +87,7 @@ const SidebarFilters = ({ showFilters, setShowFilters, sizes, selectedSizes, set
                                                 key={option}
                                                 onClick={() => setMaxPrice(option)}
                                             >
-                                                ₹ {option}
+                                                $ {option}
                                             </Dropdown.Item>
                                         ))}
                                     </Dropdown.Menu>

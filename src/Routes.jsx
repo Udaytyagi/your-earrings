@@ -17,6 +17,8 @@ import ForgotPassword from "./Pages/authpages/ForgotPassword";
 import NewPassword from "./Pages/authpages/NewPassword";
 import OtpVerification from "./Pages/authpages/OtpVerification";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ReturnPolicy from "./Pages/ReturnPolicy";
+import CheckoutIntegrationSample from "./Pages/CheckoutIntegrationSample";
 
 const router = createBrowserRouter([
   {
@@ -92,6 +94,14 @@ const router = createBrowserRouter([
     ),
   },
   {
+    path: "/return-policy",
+    element: (
+      <ScrollToTop>
+        <ReturnPolicy />
+      </ScrollToTop>
+    ),
+  },
+  {
     path: "/cart",
     element: (
       <ScrollToTop>
@@ -144,6 +154,14 @@ const router = createBrowserRouter([
     element: (
       <ScrollToTop>
         <SingleBlog />
+      </ScrollToTop>
+    ),
+  },
+  {
+    path: "/payment/worldpay",
+    element: (
+      <ScrollToTop>
+        <CheckoutIntegrationSample />
       </ScrollToTop>
     ),
   },

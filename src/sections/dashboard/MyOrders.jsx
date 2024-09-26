@@ -17,6 +17,7 @@ function MyOrders() {
     const order = useSelector((state) => state?.order?.data?.order_list)
     const [loading, setLoading] = useState(false)
     const [orderDetail, setOrderDetail] = useState([])
+    const [orderAddress, setOrderAddress] = useState({})
 
 
     const handleViewOrder = (orderId) => {
@@ -28,7 +29,7 @@ function MyOrders() {
             const data = {
                 order_id: orderId
             }
-            await fetchOrderDetailApi(data, setLoading, setOrderDetail);
+            await fetchOrderDetailApi(data, setLoading, setOrderDetail, setOrderAddress);
         }
     }
 
@@ -53,47 +54,49 @@ function MyOrders() {
                         <div className="account__wrapper">
                             <div className="account__content">
                                 <div className="adreress-right dashboard">
-                                    <div className="table-responsive">
-                                        <table className="table align-middle">
-                                            <thead className="table-light">
-                                                <tr style={{ fontSize: 14, textAlign: "center" }}>
-                                                    <th scope="col">SNo</th>
-                                                    <th scope="col">OrderIdMy</th>
-                                                    <th scope="col">TotalAmount</th>
-                                                    <th scope="col">Quantity</th>
-                                                    <th scope="col">Status</th>
-                                                    <th scope="col">Date</th>
-                                                    <th scope="col">Actions</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {
-                                                    order && order.length > 0 ? <>
-                                                        {
-                                                            order.map((item, i) => (
-                                                                <tr style={{ fontSize: 13, textAlign: "center" }} key={i}>
-                                                                    <th scope="row">{item.serial_no}</th>
-                                                                    <td>{item.order_number}</td>
-                                                                    <td>${item.pay_amount}</td>
-                                                                    <td>{item.total_product}</td>
-                                                                    <td>
-                                                                        <p className="d-flex justify-content-center mt-3 order-table-status">
-                                                                            <button>{item.payment_type}</button>
-                                                                        </p>
-                                                                    </td>
-                                                                    <td>{item.date}</td>
-                                                                    <td>
-                                                                        <button className="view-btn" onClick={() => handleViewOrder(item.order_id)}>View</button>
-                                                                    </td>
-                                                                </tr>
-                                                            ))
-                                                        }
-                                                    </> : ""
-                                                }
-                                            </tbody>
+                                    {
+                                        order ? <div className="table-responsive">
+                                            <table className="table align-middle">
+                                                <thead className="table-light">
+                                                    <tr style={{ fontSize: 14, textAlign: "center" }}>
+                                                        <th scope="col">SNo</th>
+                                                        <th scope="col">OrderIdMy</th>
+                                                        <th scope="col">TotalAmount</th>
+                                                        <th scope="col">Quantity</th>
+                                                        <th scope="col">Status</th>
+                                                        <th scope="col">Date</th>
+                                                        <th scope="col">Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {
+                                                        order && order.length > 0 ? <>
+                                                            {
+                                                                order.map((item, i) => (
+                                                                    <tr style={{ fontSize: 13, textAlign: "center" }} key={i}>
+                                                                        <th scope="row">{item.serial_no}</th>
+                                                                        <td>{item.order_number}</td>
+                                                                        <td>${item.pay_amount}</td>
+                                                                        <td>{item.total_product}</td>
+                                                                        <td>
+                                                                            <p className="d-flex justify-content-center mt-3 order-table-status">
+                                                                                <button>{item.payment_type}</button>
+                                                                            </p>
+                                                                        </td>
+                                                                        <td>{item.date}</td>
+                                                                        <td>
+                                                                            <button className="view-btn" onClick={() => handleViewOrder(item.order_id)}>View</button>
+                                                                        </td>
+                                                                    </tr>
+                                                                ))
+                                                            }
+                                                        </> : <div className="d-flex justify-content-center align-items-center flex-column"><img src='/images/wishlist_empty.png' alt='wishlist-empty'></img><h6>No address found</h6></div>
+                                                    }
+                                                </tbody>
 
-                                        </table>
-                                    </div>
+                                            </table>
+                                        </div> : ""
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -106,29 +109,29 @@ function MyOrders() {
                                     <div className="orderheading">
                                         <div className="order-adders">
                                             <h4 className="fw-bold">Delivery Address</h4>
-                                            <h6 className="fw-bold">Roshan</h6>
+                                            <h6 className="fw-bold">{orderAddress?.name}</h6>
                                             <div className="d-flex flex-wrap">
                                                 <span className="fw-bold">
                                                     Address Type(Home)
                                                 </span>
                                                 <span className="fw-bold ms-2 me-2">:</span>
                                                 <span className="">
-                                                    <p className="mb-0">Kingston</p>
+                                                    <p className="mb-0">{orderAddress?.street}</p>
                                                     <span className="d-inline block d-block">
-                                                        Metro Station
+                                                        {orderAddress?.landmark}
                                                     </span>
-                                                    <span className="">Meerut</span>
+                                                    <span className="">{orderAddress?.city}</span>
                                                     <span className="d-inline block d-block">
-                                                        Uttar Pradesh
+                                                        {orderAddress?.state}
                                                     </span>
-                                                    <span className="">246701</span>
+                                                    <span className="">{orderAddress?.pin_code}</span>
                                                 </span>{" "}
                                             </div>
                                             <div className="d-flex flex-wrap">
                                                 <h6 className="fw-bold mb-0">Phone Number</h6>
                                                 <span className="fw-bold ms-2 me-2">:</span>
                                                 <p className="mb-0">
-                                                    <span>7689856665</span>
+                                                    <span>{orderAddress?.mobile}</span>
                                                 </p>
                                             </div>
                                         </div>
@@ -138,7 +141,7 @@ function MyOrders() {
                                                     <div className="row d-flex align-items-start py-3" key={i}>
                                                         <div className="col-sm-3 col-12">
                                                             <div className="order-adders-image">
-                                                                <img src={order.img} alt="pro" className="img-fluid"/>
+                                                                <img src={order.img} alt="pro" className="img-fluid" />
                                                             </div>
                                                         </div>
                                                         <div className="col-sm-9 col-12 mt-sm-0 mt-3">

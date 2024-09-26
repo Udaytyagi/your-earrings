@@ -60,7 +60,7 @@ function Dashboard() {
               <li className="account__menu--list" onClick={() => navigate('/wishlist')}>
                 My  Wishlist
               </li>
-              <li className="account__menu--list" onClick={() => navigate('/wishlist')}>
+              <li className="account__menu--list" onClick={() => navigate('/cart')}>
                 My  Cart
               </li>
               <li className="account__menu--list" onClick={() => handleLogout()}>

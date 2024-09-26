@@ -102,11 +102,9 @@ function Checkout() {
 
               <div className="adreress-right dashboard" style={{ borderLeft: "0px" }}>
                 <h2 className="account__content--title h3 mb-20">Addresses</h2>
-                <button className="new__address--btn primary__btn mb-25" type="button" onClick={openPopup}>
+                <button className="new__address--btn primary__btn mb-25 mb-3" type="button" onClick={openPopup}>
                   Add a new address
                 </button>
-                <div className="d-flex justify-content-between align-iteam-center adreress-right-heading">
-                </div>
                 <div className="row pb-md-0 pb-2">
                   <div className="col-md-12">
                     <div className="add-right-check-box">

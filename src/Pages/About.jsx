@@ -1,4 +1,4 @@
-
+import { useEffect, useState } from "react";
 import Topbar from "../sections/common/Topbar";
 import Navbarmid from "../sections/common/Navbarmid";
 import NavbarBottom from "../sections/common/NavbarBottom";
@@ -6,14 +6,31 @@ import Footer from "../sections/common/Footer";
 import { FaAngleRight } from "react-icons/fa6";
 import '../Styles/breadcrumb.css'
 import '../Styles/contact.css'
-
 import { AiOutlineAntDesign } from "react-icons/ai";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
 import { MdSupportAgent } from "react-icons/md";
-
 import Breadcrumb from '../sections/common/Breadcrumb';
+import { fetchPagesApi } from "../apis/mainApis/footer/footerApis";
 
 const About = () => {
+
+    const [aboutUs, setAboutUs] = useState("")
+    const [loading, setLoading] = useState(false)
+
+
+    const fetchPagesData = async () => {
+        const response = await fetchPagesApi(setLoading);
+        const about = response.find(item => item.Slug === "about-us");
+        if (about) {
+            setAboutUs(about.Description);
+        }
+    }
+
+
+    useEffect(() => {
+        fetchPagesData()
+    }, []);
+
     return (
         <>
             <Topbar />
@@ -35,10 +52,12 @@ const About = () => {
 
             <section className="about-us">
                 <div className="container">
-                    <h3>About Us</h3>
                     <div className="row about-main">
+                        {
+                            loading ? <div className="d-flex align-items-center justify-content-center">Loading....</div> : <div dangerouslySetInnerHTML={{ __html: aboutUs }}></div>
+                        }
 
-                        <div className="col-md-12 col-lg-6">
+                        {/* <div className="col-md-12 col-lg-6">
                             <div className="about-test">
 
 
@@ -63,7 +82,7 @@ const About = () => {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
 
 
                     </div>
@@ -71,7 +90,7 @@ const About = () => {
             </section>
 
 
-            <section className="whychooseus">
+            {/* <section className="whychooseus">
                 <div className="container">
 
                     <div className="row">
@@ -116,7 +135,7 @@ const About = () => {
 
                     </div>
                 </div>
-            </section>
+            </section> */}
 
 
 

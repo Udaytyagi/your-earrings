@@ -1,10 +1,28 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { fetchUserApi } from '../../../apis/mainApis/user/userApis';
+import { fetchUserApi, updateUserProfileApi, updateUserProfilePicApi } from '../../../apis/mainApis/user/userApis';
 
 export const fetchUser = createAsyncThunk("fetchUser", async () => {
     try {
         const response = await fetchUserApi();
         return response?.data?.data;
+    } catch (error) {
+        return null;
+    }
+});
+
+export const updateUserProfile = createAsyncThunk("updateUserProfile", async (data, { dispatch }) => {
+    try {
+        await updateUserProfileApi(data);
+        dispatch(fetchUser())
+    } catch (error) {
+        return null;
+    }
+});
+
+export const updateUserProfilePic = createAsyncThunk("updateUserProfilePic", async (data, { dispatch }) => {
+    try {
+        await updateUserProfilePicApi(data);
+        dispatch(fetchUser())
     } catch (error) {
         return null;
     }

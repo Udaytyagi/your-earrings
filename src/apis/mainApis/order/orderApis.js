@@ -11,7 +11,12 @@ export const createOrderApi = async (data, setLoading, navigate) => {
         };
         const response = await axios.post(`${baseUrl}order/create`, data, { headers });
         SuccessToaster(response.data.message)
-        navigate("/")
+        if (data.payment_method === "cod") {
+            navigate("/")
+        } else {
+            navigate("/payment/worldpay")
+        }
+
         setLoading(false)
         return response;
     } catch (error) {
@@ -37,7 +42,7 @@ export const fetchOrderApi = async (setLoading) => {
     }
 };
 
-export const fetchOrderDetailApi = async (data, setLoading, setOrderDetail) => {
+export const fetchOrderDetailApi = async (data, setLoading, setOrderDetail, setOrderAddress) => {
     setLoading(true)
     try {
         const token = localStorage.getItem('earringsToken')
@@ -47,6 +52,7 @@ export const fetchOrderDetailApi = async (data, setLoading, setOrderDetail) => {
         const response = await axios.post(`${baseUrl}order-items-fetch`, data, { headers });
         setLoading(false)
         setOrderDetail(response.data.data.item_info)
+        setOrderAddress(response.data.data.shipping_details)
     } catch (error) {
         setLoading(false)
         return null;

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { CiUser } from "react-icons/ci";
 import { FaAngleRight } from "react-icons/fa6";
 import Topbar from "../common/Topbar";
@@ -13,11 +13,12 @@ import { useNavigate } from "react-router-dom";
 
 const Blog = () => {
     const blogs = useSelector(state => state?.blogs?.data?.blog_list)
+    const [loading, setLoading] = useState(false)
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
-        dispatch(fetchBlog())
+        dispatch(fetchBlog(setLoading))
     }, [dispatch])
 
 
@@ -45,22 +46,25 @@ const Blog = () => {
 
                     <div className="row">
                         {
-                            blogs?.map((blog, i) => (
-                                <div className="col-md-4 mt-3 mt-md-0" key={blog.Slug}>
-                                    {/* onClick={() => navigate(`/blog/${blog.Slug}`)} */}
-                                    <div className="blog-post">
-                                        <h5>{blog?.Created_at}</h5>
-                                        <img className='img-fluid' src={blog?.Images || "/images/blog-1.png"} alt="" />
-                                        <h3>{blog.Title}</h3>
-                                        <div className="admin-info">
-                                            <span className="d-flex align-items-center"><CiUser className="me-1" /> admin</span>
-                                            <span className="ms-2">{blog?.Category_name} </span>
+                            loading ? <div className="d-flex align-items-center justify-content-center">Loading....</div> : <>
+                                {
+                                    blogs?.map((blog, i) => (
+                                        <div className="col-md-4 mt-3 mt-md-0" key={blog.Slug} onClick={() => navigate(`/blog/${blog.Slug}`)}>
+                                            <div className="blog-post">
+                                                <h5>{blog?.Created_at}</h5>
+                                                <img className='img-fluid' src={blog?.Images || "/images/blog-1.png"} alt="" />
+                                                <h3>{blog.Title}</h3>
+                                                <div className="admin-info">
+                                                    <span className="d-flex align-items-center"><CiUser className="me-1" /> admin</span>
+                                                    <span className="ms-2">{blog?.Category_name} </span>
+                                                </div>
+                                                <p dangerouslySetInnerHTML={{ __html: blog?.Description }}></p>
+                                                <span>Read More <FaAngleRight /></span>
+                                            </div>
                                         </div>
-                                        <p dangerouslySetInnerHTML={{ __html: blog?.Description }}></p>
-                                        <span>Read More <FaAngleRight /></span>
-                                    </div>
-                                </div>
-                            ))
+                                    ))
+                                }
+                            </>
                         }
                     </div>
                 </div>

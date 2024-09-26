@@ -3,9 +3,9 @@ import { fetchBlogApi, fetchSingleBlogApi } from "../../../apis/mainApis/blog/bl
 
 export const fetchBlog = createAsyncThunk(
     "fetchBlog",
-    async () => {
+    async (setLoading) => {
         try {
-            const response = await fetchBlogApi();
+            const response = await fetchBlogApi(setLoading);
             return response?.data?.data;
         } catch (error) {
             return null;
@@ -15,9 +15,9 @@ export const fetchBlog = createAsyncThunk(
 
 export const fetchSingleBlog = createAsyncThunk(
     "fetchSingleBlog",
-    async (slug) => {
+    async ({ slug, setLoading }) => {
         try {
-            const response = await fetchSingleBlogApi(slug);
+            const response = await fetchSingleBlogApi(slug, setLoading);
             return response?.data?.data;
         } catch (error) {
             return null;

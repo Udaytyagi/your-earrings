@@ -8,7 +8,7 @@ import "../Styles/singleproducts.css";
 import Accordion from "react-bootstrap/Accordion";
 import { Rating } from "react-simple-star-rating";
 import SingleProductSlider from "../Pages/SingleProductSlider";
-import { RiUploadCloud2Line } from "react-icons/ri";
+import { RiUploadCloud2Line, RiDeleteBin6Line } from "react-icons/ri";
 import { FaAngleRight } from "react-icons/fa6";
 import { useSearchParams } from "react-router-dom";
 import { fetchProductDetail } from "../features/slices/productDetail/productDetailSlice";
@@ -22,6 +22,8 @@ import LoginModal from "../components/LoginModal";
 import { fetchCouponApi } from "../apis/mainApis/productDetail/productDetailApis";
 import { RxCross2 } from "react-icons/rx";
 import Dropdown from 'react-bootstrap/Dropdown';
+import { updateWishlist } from "../features/slices/wishlist/wishlistSlice";
+import { addReviewApi } from "../apis/mainApis/productDetail/productDetailApis";
 import { KEY_PREFIX } from "redux-persist/lib/constants";
 
 const SingleProducts = () => {
@@ -48,6 +50,10 @@ const SingleProducts = () => {
   const [updatePage, setUpdatePage] = useState(false)
   const [activeAccordionKey, setActiveAccordionKey] = useState("0");
   const [openLoginModal, setOpenLoginModal] = useState(false);
+  const [rating, setRating] = useState(0)
+  const [description, setDescription] = useState("")
+  const [reviewImages, setReviewImages] = useState([])
+
 
   useEffect(() => {
     const data = {
@@ -75,6 +81,7 @@ const SingleProducts = () => {
       setSelectedType(Already_selected_filter?.type);
     }
   }, [product]);
+
 
   const images =
     product && product?.Product_info &&
@@ -108,13 +115,13 @@ const SingleProducts = () => {
     }
   }
 
-  const handleAddToWishlist = () => {
+  const handleUpdateWishlist = async () => {
     if (user) {
       const data = {
-        coupon_id: "",
-        action: "add"
+        variation_id: selectedTypeId ? selectedTypeId : variationId
       }
-      dispatch(updateCart({ data: data, variationId: variationId }))
+      await dispatch(updateWishlist(data))
+      setUpdatePage(!updatePage)
     } else {
       setOpenLoginModal(true)
     }
@@ -138,6 +145,53 @@ const SingleProducts = () => {
     setDiscountPrice("")
   }
 
+  const handleAddReview = async () => {
+
+    const base64Images = await Promise.all(reviewImages.map(convertToBase64));
+
+    const data = {
+      productId: product?.Product_info?.Id,
+      rating: rating,
+      description: description,
+      images: base64Images
+    }
+
+    if (!rating) {
+      ErrorToaster("Please give rating");
+      return;
+    }
+    await addReviewApi(data, setRating, setDescription, setReviewImages)
+  }
+
+  const handleImageChange = (event) => {
+    const files = Array.from(event.target.files);
+
+    if (reviewImages.length + files.length > 4) {
+      ErrorToaster("You can upload a maximum of 4 images.");
+      return;
+    }
+
+
+    const newImages = files.slice(0, 4 - reviewImages.length);
+
+    if (newImages.length + reviewImages.length <= 4) {
+      setReviewImages(prevImages => [...prevImages, ...newImages]);
+    }
+  };
+
+  const handleRemoveImage = (index) => {
+    setReviewImages(prevImages => prevImages.filter((_, i) => i !== index));
+  };
+
+  const convertToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  };
+
   return (
     <>
       <LoginModal openLoginModal={openLoginModal} setOpenLoginModal={setOpenLoginModal} />
@@ -157,7 +211,6 @@ fashion earrings to find your perfect pair."
         <FaAngleRight />
         <p>Round</p>
       </div> */}
-
       <section>
         <div className="container" style={{ padding: "0px 40px" }}>
           <div className="row pt-3 justify-content-between">
@@ -222,7 +275,7 @@ fashion earrings to find your perfect pair."
                       Change Setting
                     </Dropdown.Toggle>
                     {product && All_available_filter?.shape[selectedShapeId]?.settings &&
-                      <Dropdown.Menu style={{ width: "100%"}}>
+                      <Dropdown.Menu style={{ width: "100%" }}>
                         {
                           Object.entries(
                             All_available_filter.shape[selectedShapeId].settings
@@ -271,7 +324,7 @@ fashion earrings to find your perfect pair."
                     {product && All_available_filter?.shape[selectedShapeId]?.settings[
                       selectedSettingId
                     ]?.metals &&
-                      <Dropdown.Menu style={{ width: "100%"}}>
+                      <Dropdown.Menu style={{ width: "100%" }}>
                         {Object.entries(
                           All_available_filter?.shape[selectedShapeId]?.settings[
                             selectedSettingId
@@ -326,7 +379,7 @@ fashion earrings to find your perfect pair."
                       product && All_available_filter?.shape[selectedShapeId]?.settings[
                         selectedSettingId
                       ]?.metals[selectedMetalId]?.sizes &&
-                      <Dropdown.Menu style={{ width: "100%"}}>
+                      <Dropdown.Menu style={{ width: "100%" }}>
                         {Object.entries(
                           All_available_filter?.shape[selectedShapeId]?.settings[
                             selectedSettingId
@@ -382,7 +435,7 @@ fashion earrings to find your perfect pair."
                       product && All_available_filter?.shape[selectedShapeId]?.settings[
                         selectedSettingId
                       ]?.metals[selectedMetalId]?.sizes[selectedSizeId]?.types &&
-                      <Dropdown.Menu style={{ width: "100%"}}>
+                      <Dropdown.Menu style={{ width: "100%" }}>
                         {Object.entries(
                           All_available_filter?.shape[selectedShapeId]?.settings[
                             selectedSettingId
@@ -443,7 +496,7 @@ fashion earrings to find your perfect pair."
               </div>
               <div className="wishlist-btn">
                 <button className="button-bag" onClick={() => handleAddToCart()}>Add to Bag</button>
-                {/* <button className="button wishlist" onClick={() => handleAddToWishlist()}>Add to Wishlist</button> */}
+                <button className="button wishlist" onClick={() => handleUpdateWishlist()}>{product?.Product_info?.Wishlist === true ? "Remove from wishlist" : "Add to wishlist"}</button>
               </div>
               {
                 product?.Product_info && product?.Product_info?.Discount?.length > 0 &&
@@ -540,11 +593,11 @@ fashion earrings to find your perfect pair."
         </div>
       </section>
 
-      <SingleProductSlider product={product} />
 
+      <SingleProductSlider product={product} />
       <div className="container review-main my-5" style={{ padding: "0px 40px" }}>
         <div className="row">
-          <div className="col-12 pb-1">
+          <div className="col-12 pb-1 mt-3">
             <h4>Reviews</h4>
           </div>
         </div>
@@ -556,11 +609,11 @@ fashion earrings to find your perfect pair."
                   <div>
                     <h5>Rating</h5>
                   </div>
-                  <div className="rating-value">4.5/5</div>
+                  <div className="rating-value">{product?.Review_section?.avg_review || 0}/5</div>
                   <div className="rating-text">
-                    601 Ratings
+                    {product?.Review_section?.total_rating_count || 0} Ratings
                     <br />
-                    206 Reviews
+                    {product?.Review_section?.total_review_count || 0} Reviews
                   </div>
                 </div>
               </div>
@@ -571,13 +624,13 @@ fashion earrings to find your perfect pair."
                     <div
                       className="progress-bar bg-success"
                       role="progressbar"
-                      style={{ width: "80%" }}
+                      style={{ width: product?.Review_section?.fiveRatingPercentage || 0 }}
                       aria-valuenow={70}
                       aria-valuemin={0}
                       aria-valuemax={100}
                     />
                   </div>
-                  <span className="count">425</span>
+                  <span className="count">{product?.Review_section?.five_rating_count || 0}</span>
                 </div>
                 <div className="progress-container">
                   <span className="star">4 ★</span>
@@ -585,13 +638,13 @@ fashion earrings to find your perfect pair."
                     <div
                       className="progress-bar bg-success"
                       role="progressbar"
-                      style={{ width: "50%" }}
+                      style={{ width: product?.Review_section?.fourRatingPercentage || 0 }}
                       aria-valuenow={50}
                       aria-valuemin={0}
                       aria-valuemax={100}
                     />
                   </div>
-                  <span className="count">123</span>
+                  <span className="count">{product?.Review_section?.four_rating_count || 0}</span>
                 </div>
                 <div className="progress-container">
                   <span className="star">3 ★</span>
@@ -599,13 +652,13 @@ fashion earrings to find your perfect pair."
                     <div
                       className="progress-bar bg-warning"
                       role="progressbar"
-                      style={{ width: "30%" }}
+                      style={{ width: product?.Review_section?.threeRatingPercentage || 0 }}
                       aria-valuenow={30}
                       aria-valuemin={0}
                       aria-valuemax={100}
                     />
                   </div>
-                  <span className="count">27</span>
+                  <span className="count">{product?.Review_section?.three_rating_count || 0}</span>
                 </div>
                 <div className="progress-container">
                   <span className="star">2 ★</span>
@@ -613,13 +666,13 @@ fashion earrings to find your perfect pair."
                     <div
                       className="progress-bar bg-warning"
                       role="progressbar"
-                      style={{ width: "10%" }}
+                      style={{ width: product?.Review_section?.twoRatingPercentage || 0 }}
                       aria-valuenow={10}
                       aria-valuemin={0}
                       aria-valuemax={100}
                     />
                   </div>
-                  <span className="count">8</span>
+                  <span className="count">{product?.Review_section?.two_rating_count || 0}</span>
                 </div>
                 <div className="progress-container">
                   <span className="star">1 ★</span>
@@ -627,13 +680,13 @@ fashion earrings to find your perfect pair."
                     <div
                       className="progress-bar bg-danger"
                       role="progressbar"
-                      style={{ width: "15%" }}
+                      style={{ width: product?.Review_section?.twoRatingPercentage || 0 }}
                       aria-valuenow={15}
                       aria-valuemin={0}
                       aria-valuemax={100}
                     />
                   </div>
-                  <span className="count">18</span>
+                  <span className="count">{product?.Review_section?.one_rating_count || 0}</span>
                 </div>
               </div>
             </div>
@@ -645,7 +698,7 @@ fashion earrings to find your perfect pair."
               <h5>Write your Reviews</h5>
               <div className="d-flex flex-wrap">
                 <h5>Ratings</h5>
-                <Rating initialValue={4} />
+                <Rating onClick={setRating} ratingValue={rating} />
               </div>
             </div>
             <div className="col-md-12 review-img">
@@ -653,7 +706,8 @@ fashion earrings to find your perfect pair."
                 className="form-control frm"
                 placeholder="Would you like to write anything about this Product?"
                 rows={4}
-                defaultValue={""}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
               />
 
               <div className="file-upload">
@@ -661,53 +715,92 @@ fashion earrings to find your perfect pair."
                   type="file"
                   ref={fileInputRef}
                   style={{ display: "none" }}
+                  multiple
+                  onChange={handleImageChange}
                 />
-                <div className="upload-icon" onClick={handleIconClick}>
-                  <RiUploadCloud2Line />
-                </div>
-                <div className="upload-icon" onClick={handleIconClick}>
-                  <RiUploadCloud2Line />
-                </div>
-                <div className="upload-icon" onClick={handleIconClick}>
-                  <RiUploadCloud2Line />
-                </div>
-                <div className="upload-icon" onClick={handleIconClick}>
-                  <RiUploadCloud2Line />
-                </div>
+
+                {reviewImages?.map((image, index) => (
+                  <div key={index} className="uploaded-image">
+                    <img src={URL.createObjectURL(image)} alt={`Review Image ${index + 1}`} width={"80px"} height={"80px"} />
+                    <RiDeleteBin6Line
+                      style={{
+                        cursor: "pointer",
+                        color: "red",
+                        width: "20px",
+                        height: "20px"
+                      }}
+                      onClick={() => handleRemoveImage(index)}
+                    />
+                  </div>
+                ))}
               </div>
-              <button className="submit-btn mt-3">Submit Review</button>
+              <div className="upload-icon" onClick={handleIconClick}>
+                <RiUploadCloud2Line />
+              </div>
+              <button className="submit-btn mt-3" onClick={() => handleAddReview()}>Submit Review</button>
             </div>
           </div>
         </div>
 
-        <div className="container p-0 mt-4">
-          <div className="review-box">
-            <div className="review-header">
-              <img src="https://via.placeholder.com/40" alt="User Avatar" />
-              <div className="user-info">
-                <h6>
-                  Random Person <span>(Stayed 24 Nov, 2023)</span>
-                </h6>
-                <p>Customer | 1 Review Written</p>
+        {/* <div className="container p-0 mt-4">
+          {
+            product && product?.Review_section?.user_review &&
+            <div className="review-box">
+              <div className="review-header">
+                <img src="https://via.placeholder.com/40" alt="User Avatar" />
+                <div className="user-info">
+                  <h6>
+                    {product?.Review_section?.user_review.createdBy} <span>({product?.Review_section?.user_review.createdAt})</span>
+                  </h6>
+                  <p>Customer</p>
+                </div>
+              </div>
+              <div className="review-content">
+                {product?.Review_section?.user_review.description}
+              </div>
+              <div className="review-images">
+                {
+                  product?.Review_section?.user_review.images.map((image, j) => (
+                    <img src={image} alt={`Review Image ${j + 1}`} key={j} />
+                  ))
+                }
               </div>
             </div>
-            <div className="review-content">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industrys standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, but also the leap into
-              electronic typesetting.
-            </div>
-            <div className="review-images">
-              <img src="images\review-img.png" alt="Review Image 1" />
-              <img src="images\review-img.png" alt="Review Image 2" />
-              <img src="images\review-img.png" alt="Review Image 3" />
-              <img src="images\review-img.png" alt="Review Image 4" />
-            </div>
-          </div>
+          }
+        </div> */}
+
+        <div className="container p-0 mt-4">
+          {
+            product && product?.Review_section?.all_review && product?.Review_section?.all_review?.length > 0 && product?.Review_section?.all_review?.map((item, i) => (
+              <div className="review-box" key={i}>
+                <div className="review-header">
+                  <img src="https://via.placeholder.com/40" alt="User Avatar" />
+                  <div className="user-info">
+                    <h6>
+                      {item.createdBy} <span>({item.createdAt})</span>
+                    </h6>
+                    <p>Customer</p>
+                  </div>
+                </div>
+                <div className="review-content">
+                  {item.description}
+                </div>
+                <div className="review-images">
+                  {
+                    item.images.map((image, j) => (
+                      <img src={image} alt={`Review Image ${j + 1}`} key={j} />
+                    ))
+                  }
+                </div>
+              </div>
+            ))
+
+          }
+
         </div>
       </div>
+
+
 
       <Footer />
     </>

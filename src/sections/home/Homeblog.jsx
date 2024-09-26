@@ -1,9 +1,10 @@
 import { CiUser } from "react-icons/ci";
 import { FaAngleRight } from "react-icons/fa6";
-
 import '../../Styles/blog.css'
+import { useNavigate } from "react-router-dom";
 
 const Blog = ({ blogs }) => {
+    const navigate = useNavigate()
     return (
 
         <>
@@ -20,7 +21,7 @@ const Blog = ({ blogs }) => {
                     <div className="row">
                         {
                             blogs && blogs.length > 0 && blogs?.map((blog, i) => (
-                                <div className="col-md-4 mt-3 mt-md-0" key={i}>
+                                <div className="col-md-4 mt-3 mt-md-0" key={i} onClick={() => navigate(`/blog/${blog.Slug}`)}>
                                     <div className="blog-post">
                                         <h5>{blog?.Created_at}</h5>
                                         <img className='img-fluid' src={blog?.Images || "/images/blog-1.png"} alt="" />

@@ -1,12 +1,21 @@
+import { useState } from "react";
 import { FaFacebookF } from "react-icons/fa";
 import { FaLinkedinIn } from "react-icons/fa6";
 import { FaInstagram } from "react-icons/fa";
-
-
-
 import "../../Styles/footer.css";
+import { newsLetterApi } from "../../apis/mainApis/footer/footerApis";
 
 const Footer = () => {
+  const [email, setEmail] = useState("")
+
+  const handleNewsLetter = async (e) => {
+    e.preventDefault()
+    const data = {
+      email: email
+    }
+    await newsLetterApi(data, setEmail)
+  }
+
   return (
     <>
       <section className="footer">
@@ -15,11 +24,11 @@ const Footer = () => {
             <div className="col-lg-3 col-md-4">
               <div className="footer-logo">
                 <a href="/">
-                <img
-                  className="img-fluid"
-                  src="/images/logo-footer.png"
-                  alt=""
-                />
+                  <img
+                    className="img-fluid"
+                    src="/images/logo-footer.png"
+                    alt=""
+                  />
                 </a>
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit.
@@ -33,20 +42,29 @@ const Footer = () => {
                 <h4>Company Info</h4>
 
                 <ul className="usefull-info">
-                  <li>
-                    <a href="#">Delivery Information</a>
+                  <li onClick={() => {
+                    window.open("/about-us", "_blank");
+                  }}>
+                    About Us
+                  </li>
+                  <li onClick={() => {
+                    window.open("/return-policy", "_blank");
+                  }}>
+                    Return Policy
+                  </li>
+                  <li onClick={() => {
+                    window.open("/contact-us", "_blank");
+                  }}>
+                    Contact Us
                   </li>
                   <li>
-                    <a href="#">International Shipping</a>
+                    Payment Options
                   </li>
                   <li>
-                    <a href="#">Payment Options</a>
+                    Track your Order
                   </li>
                   <li>
-                    <a href="#">Track your Order</a>
-                  </li>
-                  <li>
-                    <a href="#">Returns</a>
+                    Returns
                   </li>
                 </ul>
               </div>
@@ -58,19 +76,19 @@ const Footer = () => {
 
                 <ul className="usefull-info">
                   <li>
-                    <a href="#">Delivery Information</a>
+                    Delivery Information
                   </li>
                   <li>
-                    <a href="#">International Shipping</a>
+                    International Shipping
                   </li>
                   <li>
-                    <a href="#">Payment Options</a>
+                    Payment Options
                   </li>
                   <li>
-                    <a href="#">Track your Order</a>
+                    Track your Order
                   </li>
                   <li>
-                    <a href="#">Returns</a>
+                    Returns
                   </li>
                 </ul>
               </div>
@@ -82,19 +100,19 @@ const Footer = () => {
 
                 <ul className="usefull-info">
                   <li>
-                    <a href="#">Delivery Information</a>
+                    Delivery Information
                   </li>
                   <li>
-                    <a href="#">International Shipping</a>
+                    International Shipping
                   </li>
                   <li>
-                    <a href="#">Payment Options</a>
+                    Payment Options
                   </li>
                   <li>
-                    <a href="#">Track your Order</a>
+                    Track your Order
                   </li>
                   <li>
-                    <a href="#">Returns</a>
+                    Returns
                   </li>
                 </ul>
               </div>
@@ -105,11 +123,14 @@ const Footer = () => {
                 <h4>join Our Email List</h4>
 
                 <div className="email-subs-form">
-                  <form>
+                  <form onSubmit={handleNewsLetter}>
                     <input
                       type="email"
                       placeholder="Enter Your Email"
                       name="emails"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
                     />
                     <button
                       type="submit"
@@ -124,11 +145,11 @@ const Footer = () => {
                 <h5>Join Us</h5>
 
                 <div className="social-share">
-                    <a href="#"><FaFacebookF /></a>
+                  <a href="#"><FaFacebookF /></a>
 
-                    <a href="#"><FaLinkedinIn /></a>
+                  <a href="#"><FaLinkedinIn /></a>
 
-                    <a href="#"><FaInstagram /></a>
+                  <a href="#"><FaInstagram /></a>
                 </div>
 
               </div>
@@ -147,7 +168,7 @@ const Footer = () => {
                 <img
                   className="img-fluid"
                   src="/images/payment-method.svg"
-                  alt="" 
+                  alt=""
                 />
               </div>
             </div>
