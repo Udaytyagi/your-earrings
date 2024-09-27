@@ -13,9 +13,11 @@ import { useLocation } from "react-router-dom";
 import MyProfile from "../sections/dashboard/MyProfile";
 import MyOrders from "../sections/dashboard/MyOrders";
 import MyAddresses from "../sections/dashboard/MyAddresses";
-
+import { MdDehaze } from "react-icons/md";
+import SidebarProfile from "../components/SidebarProfile";
 
 function Dashboard() {
+  const [show, setShow] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -27,6 +29,7 @@ function Dashboard() {
 
   return (
     <>
+      <SidebarProfile show={show} setShow={setShow} />
       <Topbar />
       <Navbarmid />
       <NavbarBottom />
@@ -42,10 +45,12 @@ function Dashboard() {
         <p>Dashboard</p>
       </div>
 
-      <div className="container px-0 py-5">
+      <div className="container px-md-0 py-5">
+        <div className="col-1 d-md-none d-block mb-3" onClick={() => setShow(true)}>
+          <MdDehaze style={{ fontSize: "25px" }} />
+        </div>
         <div className="my__account--section__inner border-radius-10 d-flex">
-
-          <div className="account__left--sidebar">
+          <div className="account__left--sidebar  d-md-block d-none">
             <h2 className="account__content--title h3 mb-20">My Profile</h2>
             <ul className="account__menu">
               <li className={`account__menu--list ${dashboardSection === "profile" ? "active" : ""}`} onClick={() => navigate('/dashboard/profile')}>

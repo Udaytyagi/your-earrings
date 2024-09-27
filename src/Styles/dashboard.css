@@ -6,3 +6,14 @@
 .account__menu--list {
   cursor: pointer;
 }
+
+@media only screen and (max-width: 768px) {
+  .dashboard {
+    padding: 0px !important;
+    border-left: none !important;
+    background-color: none !important;
+  }
+  .my__account--section__inner {
+    padding: 0px !important;
+  }
+}

@@ -287,7 +287,7 @@
   font-size: 14px;
   font-weight: 500;
   margin: 2px 0px;
-  width: 30%;
+  width: 100%;
 }
 
 .detail-row {
@@ -344,6 +344,7 @@
   border: 1px solid #0000001a;
   border-radius: 10px;
   padding: 30px;
+  margin-bottom: 20px;
 }
 
 .rating-box {
@@ -437,6 +438,7 @@
 .review-rating {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .review-rating svg {
@@ -529,8 +531,84 @@
   height: 60px !important;
 }
 
+.shadow-mobile {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+  margin: 10px 0;
+  padding: 10px 0;
+  border-radius: 10px;
+}
+
+.shadow-mobile p {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.cart-mobile {
+  display: none;
+}
+
+@media only screen and (max-width: 992px) {
+  .cart-product-desktop {
+    display: none;
+  }
+  .cart-mobile {
+    display: block;
+  }
+  .cart-container {
+    padding: 0px !important;
+  }
+  .quickview__value--quantity {
+    height: 2rem !important;
+    width: 2rem !important;
+  }
+  .quantity__number {
+    height: 2rem !important;
+    width: 2rem !important;
+  }
+  .remove-btn svg {
+    font-size: 18px !important;
+  }
+  .remove-btn {
+    padding: 3px !important;
+  }
+  .summary {
+    margin-bottom: 20px !important;
+  }
+  .wishlist-table-desktop {
+    display: none !important;
+  }
+  .round-black-btn {
+    padding: 4px 15px !important;
+    font-size: 12px !important;
+  }
+  .main-heading{
+    font-weight: 600 !important;
+  }
+}
+
+@media only screen and (min-width: 0px) and (max-width: 375px) {
+  .shadow-mobile p {
+    font-size: 11px !important;
+  }
+  .round-black-btn {
+    padding: 2px 13px !important;
+    font-size: 11px !important;
+  }
+  .in-stock-box {
+    font-size: 11px !important;
+    padding: 2px 13px !important;
+  }
+}
+
 @media only screen and (min-width: 0px) and (max-width: 576px) {
   .single-product-filter-container {
     padding: 33px;
+  }
+  .shadow-mobile p {
+    font-size: 12px !important;
+  }
+  .update-cart,
+  .checkout {
+    padding: 5px 15px !important;
   }
 }

@@ -595,154 +595,156 @@ fashion earrings to find your perfect pair."
 
 
       <SingleProductSlider product={product} />
-      <div className="container review-main my-5" style={{ padding: "0px 40px" }}>
-        <div className="row">
-          <div className="col-12 pb-1 mt-3">
-            <h4>Reviews</h4>
-          </div>
-        </div>
-        <div className="row progress-row">
-          <div className="col-md-5">
+      <section className="pt-5">
+        <div className="container" style={{ padding: "0px 25px" }}>
+          <div className="review-main">
             <div className="row">
-              <div className="col-md-4">
-                <div className="rating-box">
-                  <div>
-                    <h5>Rating</h5>
-                  </div>
-                  <div className="rating-value">{product?.Review_section?.avg_review || 0}/5</div>
-                  <div className="rating-text">
-                    {product?.Review_section?.total_rating_count || 0} Ratings
-                    <br />
-                    {product?.Review_section?.total_review_count || 0} Reviews
-                  </div>
-                </div>
+              <div className="col-12 pb-1 mt-3">
+                <h4>Reviews</h4>
               </div>
-              <div className="col-md-8">
-                <div className="progress-container">
-                  <span className="star">5 ★</span>
-                  <div className="progress">
-                    <div
-                      className="progress-bar bg-success"
-                      role="progressbar"
-                      style={{ width: product?.Review_section?.fiveRatingPercentage || 0 }}
-                      aria-valuenow={70}
-                      aria-valuemin={0}
-                      aria-valuemax={100}
-                    />
+            </div>
+            <div className="row progress-row">
+              <div className="col-lg-10">
+                <div className="row">
+                  <div className="col-lg-5">
+                    <div className="rating-box">
+                      <div>
+                        <h5>Rating</h5>
+                      </div>
+                      <div className="rating-value">{product?.Review_section?.avg_review || 0}/5</div>
+                      <div className="rating-text">
+                        {product?.Review_section?.total_rating_count || 0} Ratings
+                        <br />
+                        {product?.Review_section?.total_review_count || 0} Reviews
+                      </div>
+                    </div>
                   </div>
-                  <span className="count">{product?.Review_section?.five_rating_count || 0}</span>
-                </div>
-                <div className="progress-container">
-                  <span className="star">4 ★</span>
-                  <div className="progress">
-                    <div
-                      className="progress-bar bg-success"
-                      role="progressbar"
-                      style={{ width: product?.Review_section?.fourRatingPercentage || 0 }}
-                      aria-valuenow={50}
-                      aria-valuemin={0}
-                      aria-valuemax={100}
-                    />
+                  <div className="col-lg-7 mt-3 mt-lg-0">
+                    <div className="progress-container">
+                      <span className="star">5★</span>
+                      <div className="progress">
+                        <div
+                          className="progress-bar bg-success"
+                          role="progressbar"
+                          style={{ width: product?.Review_section?.fiveRatingPercentage || 0 }}
+                          aria-valuenow={70}
+                          aria-valuemin={0}
+                          aria-valuemax={100}
+                        />
+                      </div>
+                      <span className="count">{product?.Review_section?.five_rating_count || 0}</span>
+                    </div>
+                    <div className="progress-container">
+                      <span className="star">4★</span>
+                      <div className="progress">
+                        <div
+                          className="progress-bar bg-success"
+                          role="progressbar"
+                          style={{ width: product?.Review_section?.fourRatingPercentage || 0 }}
+                          aria-valuenow={50}
+                          aria-valuemin={0}
+                          aria-valuemax={100}
+                        />
+                      </div>
+                      <span className="count">{product?.Review_section?.four_rating_count || 0}</span>
+                    </div>
+                    <div className="progress-container">
+                      <span className="star">3★</span>
+                      <div className="progress">
+                        <div
+                          className="progress-bar bg-warning"
+                          role="progressbar"
+                          style={{ width: product?.Review_section?.threeRatingPercentage || 0 }}
+                          aria-valuenow={30}
+                          aria-valuemin={0}
+                          aria-valuemax={100}
+                        />
+                      </div>
+                      <span className="count">{product?.Review_section?.three_rating_count || 0}</span>
+                    </div>
+                    <div className="progress-container">
+                      <span className="star">2★</span>
+                      <div className="progress">
+                        <div
+                          className="progress-bar bg-warning"
+                          role="progressbar"
+                          style={{ width: product?.Review_section?.twoRatingPercentage || 0 }}
+                          aria-valuenow={10}
+                          aria-valuemin={0}
+                          aria-valuemax={100}
+                        />
+                      </div>
+                      <span className="count">{product?.Review_section?.two_rating_count || 0}</span>
+                    </div>
+                    <div className="progress-container">
+                      <span className="star">1★</span>
+                      <div className="progress">
+                        <div
+                          className="progress-bar bg-danger"
+                          role="progressbar"
+                          style={{ width: product?.Review_section?.twoRatingPercentage || 0 }}
+                          aria-valuenow={15}
+                          aria-valuemin={0}
+                          aria-valuemax={100}
+                        />
+                      </div>
+                      <span className="count">{product?.Review_section?.one_rating_count || 0}</span>
+                    </div>
                   </div>
-                  <span className="count">{product?.Review_section?.four_rating_count || 0}</span>
-                </div>
-                <div className="progress-container">
-                  <span className="star">3 ★</span>
-                  <div className="progress">
-                    <div
-                      className="progress-bar bg-warning"
-                      role="progressbar"
-                      style={{ width: product?.Review_section?.threeRatingPercentage || 0 }}
-                      aria-valuenow={30}
-                      aria-valuemin={0}
-                      aria-valuemax={100}
-                    />
-                  </div>
-                  <span className="count">{product?.Review_section?.three_rating_count || 0}</span>
-                </div>
-                <div className="progress-container">
-                  <span className="star">2 ★</span>
-                  <div className="progress">
-                    <div
-                      className="progress-bar bg-warning"
-                      role="progressbar"
-                      style={{ width: product?.Review_section?.twoRatingPercentage || 0 }}
-                      aria-valuenow={10}
-                      aria-valuemin={0}
-                      aria-valuemax={100}
-                    />
-                  </div>
-                  <span className="count">{product?.Review_section?.two_rating_count || 0}</span>
-                </div>
-                <div className="progress-container">
-                  <span className="star">1 ★</span>
-                  <div className="progress">
-                    <div
-                      className="progress-bar bg-danger"
-                      role="progressbar"
-                      style={{ width: product?.Review_section?.twoRatingPercentage || 0 }}
-                      aria-valuenow={15}
-                      aria-valuemin={0}
-                      aria-valuemax={100}
-                    />
-                  </div>
-                  <span className="count">{product?.Review_section?.one_rating_count || 0}</span>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div className="review-section">
-          <div className="row">
-            <div className="col-12 pt-1 pb-1 review-rating">
-              <h5>Write your Reviews</h5>
-              <div className="d-flex flex-wrap">
-                <h5>Ratings</h5>
-                <Rating onClick={setRating} ratingValue={rating} />
-              </div>
-            </div>
-            <div className="col-md-12 review-img">
-              <textarea
-                className="form-control frm"
-                placeholder="Would you like to write anything about this Product?"
-                rows={4}
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-
-              <div className="file-upload">
-                <input
-                  type="file"
-                  ref={fileInputRef}
-                  style={{ display: "none" }}
-                  multiple
-                  onChange={handleImageChange}
-                />
-
-                {reviewImages?.map((image, index) => (
-                  <div key={index} className="uploaded-image">
-                    <img src={URL.createObjectURL(image)} alt={`Review Image ${index + 1}`} width={"80px"} height={"80px"} />
-                    <RiDeleteBin6Line
-                      style={{
-                        cursor: "pointer",
-                        color: "red",
-                        width: "20px",
-                        height: "20px"
-                      }}
-                      onClick={() => handleRemoveImage(index)}
-                    />
+            <div className="review-section">
+              <div className="row">
+                <div className="col-12 pt-1 pb-1 review-rating">
+                  <h5>Write your Reviews</h5>
+                  <div className="d-flex flex-wrap">
+                    <h5>Ratings</h5>
+                    <Rating onClick={setRating} ratingValue={rating} />
                   </div>
-                ))}
-              </div>
-              <div className="upload-icon" onClick={handleIconClick}>
-                <RiUploadCloud2Line />
-              </div>
-              <button className="submit-btn mt-3" onClick={() => handleAddReview()}>Submit Review</button>
-            </div>
-          </div>
-        </div>
+                </div>
+                <div className="col-md-12 review-img">
+                  <textarea
+                    className="form-control frm"
+                    placeholder="Would you like to write anything about this Product?"
+                    rows={4}
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                  />
 
-        {/* <div className="container p-0 mt-4">
+                  <div className="file-upload">
+                    <input
+                      type="file"
+                      ref={fileInputRef}
+                      style={{ display: "none" }}
+                      multiple
+                      onChange={handleImageChange}
+                    />
+
+                    {reviewImages?.map((image, index) => (
+                      <div key={index} className="uploaded-image">
+                        <img src={URL.createObjectURL(image)} alt={`Review Image ${index + 1}`} width={"80px"} height={"80px"} />
+                        <RiDeleteBin6Line
+                          style={{
+                            cursor: "pointer",
+                            color: "red",
+                            width: "20px",
+                            height: "20px"
+                          }}
+                          onClick={() => handleRemoveImage(index)}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                  <div className="upload-icon" onClick={handleIconClick}>
+                    <RiUploadCloud2Line />
+                  </div>
+                  <button className="submit-btn mt-3" onClick={() => handleAddReview()}>Submit Review</button>
+                </div>
+              </div>
+            </div>
+
+            {/* <div className="container p-0 mt-4">
           {
             product && product?.Review_section?.user_review &&
             <div className="review-box">
@@ -769,36 +771,38 @@ fashion earrings to find your perfect pair."
           }
         </div> */}
 
-        <div className="container p-0 mt-4">
-          {
-            product && product?.Review_section?.all_review && product?.Review_section?.all_review?.length > 0 && product?.Review_section?.all_review?.map((item, i) => (
-              <div className="review-box" key={i}>
-                <div className="review-header">
-                  <img src="https://via.placeholder.com/40" alt="User Avatar" />
-                  <div className="user-info">
-                    <h6>
-                      {item.createdBy} <span>({item.createdAt})</span>
-                    </h6>
-                    <p>Customer</p>
+            <div className="container p-0 mt-4">
+              {
+                product && product?.Review_section?.all_review && product?.Review_section?.all_review?.length > 0 && product?.Review_section?.all_review?.map((item, i) => (
+                  <div className="review-box" key={i}>
+                    <div className="review-header">
+                      <img src="https://via.placeholder.com/40" alt="User Avatar" />
+                      <div className="user-info">
+                        <h6>
+                          {item.createdBy} <span>({item.createdAt})</span>
+                        </h6>
+                        <p>Customer</p>
+                      </div>
+                    </div>
+                    <div className="review-content">
+                      {item.description}
+                    </div>
+                    <div className="review-images">
+                      {
+                        item.images.map((image, j) => (
+                          <img src={image} alt={`Review Image ${j + 1}`} key={j} />
+                        ))
+                      }
+                    </div>
                   </div>
-                </div>
-                <div className="review-content">
-                  {item.description}
-                </div>
-                <div className="review-images">
-                  {
-                    item.images.map((image, j) => (
-                      <img src={image} alt={`Review Image ${j + 1}`} key={j} />
-                    ))
-                  }
-                </div>
-              </div>
-            ))
+                ))
 
-          }
+              }
 
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
 
 
 

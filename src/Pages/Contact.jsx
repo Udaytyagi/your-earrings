@@ -26,7 +26,7 @@ const Contact = () => {
 
     const handleContactUs = async (e) => {
         e.preventDefault();
-        await contactUsApi(formData, setLoading,setFormData);
+        await contactUsApi(formData, setLoading, setFormData);
     };
 
     return (
@@ -105,7 +105,7 @@ const Contact = () => {
 
                         <div className="col-md-6">
                             <div className="row">
-                                <div className="getintouch-map d-flex justify-content-center">
+                                <div className="getintouch-map d-flex justify-content-center mt-md-0 mt-3">
                                     <iframe
                                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d23636933.18422941!2d-20.123043607120856!3d43.68211601401104!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46ed8886cfadda85%3A0x72ef99e6b3fcf079!2sEurope!5e0!3m2!1sen!2sin!4v1723115314604!5m2!1sen!2sin"
                                         width="600"

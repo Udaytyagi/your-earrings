@@ -113,4 +113,10 @@
   .searchTerm {
     font-size: 12px;
   }
+  .wishlist-count {
+    height: 17px;
+    width: 17px;
+    top: -3px;
+    font-size: 12px;
+  }
 }

@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from "react";
+import "../Styles/SidebarFilters.css";
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import "../Styles/SidebarNavbar.css"
 import { useNavigate } from "react-router-dom";
-import { BiCategory } from "react-icons/bi";
-import { IoHomeOutline, IoDiamondOutline } from "react-icons/io5";
-import { FiUsers } from "react-icons/fi";
-import { SlUser } from "react-icons/sl";
-import { CiHeart } from "react-icons/ci";
-import { CiShoppingCart } from "react-icons/ci";
-import { LuPhoneCall } from "react-icons/lu";
+import { CgProfile } from "react-icons/cg";
+import { RxBorderSplit } from "react-icons/rx";
+import { FaRegAddressCard } from "react-icons/fa";
+import { FaRegHeart } from "react-icons/fa";
+import { MdOutlineShoppingCart } from "react-icons/md";
 
-import { FiBookOpen } from "react-icons/fi";
+const SidebarProfile = ({ show, setShow }) => {
 
-
-
-function SidebarNavbar({ show, setShow }) {
     const navigation = useNavigate()
     const [isAnimating, setIsAnimating] = useState(false);
 
@@ -28,6 +23,7 @@ function SidebarNavbar({ show, setShow }) {
             return () => clearTimeout(timer);
         }
     }, [show]);
+
 
     return (
         <>
@@ -54,45 +50,45 @@ function SidebarNavbar({ show, setShow }) {
 
                     <div className="px-3 sidebar-navbar">
                         <ul className="sidebar-navbar-nav flex-column">
-                            <li className="sidebar-nav-item" onClick={() => { navigation("/"); setShow(false) }}>
-                                <p className="sidebar-nav-link d-flex align-items-center"><IoHomeOutline
+                            <li className="sidebar-nav-item" onClick={() => { navigation("/dashboard/profile"); setShow(false) }}>
+                                <p className="sidebar-nav-link d-flex align-items-center"><CgProfile
                                     style={{
                                         marginRight: "7px",
                                         cursor: "pointer",
                                     }}
-                                />HOME</p>
+                                />My Profile</p>
                             </li>
-                            <li className="sidebar-nav-item" onClick={() => { navigation("/diamond"); setShow(false) }}>
-                                <p className="sidebar-nav-link d-flex align-items-center"><IoDiamondOutline
+                            <li className="sidebar-nav-item" onClick={() => { navigation("/dashboard/orders"); setShow(false) }}>
+                                <p className="sidebar-nav-link d-flex align-items-center"><RxBorderSplit
                                     style={{
                                         marginRight: "7px",
                                         cursor: "pointer",
                                     }}
-                                />Diamond Earrings</p>
+                                />My Orders</p>
                             </li>
-                            <li className="sidebar-nav-item" onClick={() => { navigation("/about-us"); setShow(false) }}>
-                                <p className="sidebar-nav-link d-flex align-items-center"><FiUsers
+                            <li className="sidebar-nav-item" onClick={() => { navigation("/dashboard/addresses"); setShow(false) }}>
+                                <p className="sidebar-nav-link d-flex align-items-center"><FaRegAddressCard
                                     style={{
                                         marginRight: "7px",
                                         cursor: "pointer",
                                     }}
-                                />About Us</p>
+                                />My Addresses</p>
                             </li>
-                            <li className="sidebar-nav-item" onClick={() => { navigation("/contact-us"); setShow(false) }}>
-                                <p className="sidebar-nav-link d-flex align-items-center"><LuPhoneCall
+                            <li className="sidebar-nav-item" onClick={() => { navigation("/wishlist"); setShow(false) }}>
+                                <p className="sidebar-nav-link d-flex align-items-center"><FaRegHeart
                                     style={{
                                         marginRight: "7px",
                                         cursor: "pointer",
                                     }}
-                                />Contact Us</p>
+                                />My Wishlist</p>
                             </li>
-                            <li className="sidebar-nav-item" onClick={() => { navigation("/blogs"); setShow(false) }}>
-                                <p className="sidebar-nav-link d-flex align-items-center"><FiBookOpen
+                            <li className="sidebar-nav-item" onClick={() => { navigation("/cart"); setShow(false) }}>
+                                <p className="sidebar-nav-link d-flex align-items-center"><MdOutlineShoppingCart
                                     style={{
                                         marginRight: "7px",
                                         cursor: "pointer",
                                     }}
-                                />Blogs</p>
+                                />My Cart</p>
                             </li>
                         </ul>
                     </div>
@@ -104,5 +100,4 @@ function SidebarNavbar({ show, setShow }) {
     )
 }
 
-
-export default SidebarNavbar
+export default SidebarProfile

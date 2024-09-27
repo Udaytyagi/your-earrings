@@ -17,7 +17,7 @@ const store = configureStore({
     productDetail: productDetailSlice,
     blogs: blogSlice,
     address: addressSlice,
-    order:orderSlice
+    order: orderSlice
   },
 });
 

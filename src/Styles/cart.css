@@ -230,3 +230,13 @@ h5 {
 .main-col-2 {
   padding-left: 35px;
 }
+
+@media only screen and (max-width: 992px) {
+  .cart-container h5 {
+    font-weight: 600;
+  }
+  .sub-total,
+  .grand-total {
+    font-weight: 600;
+  }
+}
