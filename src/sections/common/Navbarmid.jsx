@@ -5,9 +5,9 @@ import { HiOutlineUser } from "react-icons/hi2";
 import { AiOutlineLogin } from "react-icons/ai";
 import "../../Styles/navbarmid.css";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 import { fetchSearchApi } from "../../apis/mainApis/search/searchApis";
-import debounce from 'debounce';
+import debounce from "debounce";
 import { openLoginModal } from "../../features/slices/user/userSlice";
 import LoginModal from "../../components/LoginModal";
 import { MdDehaze } from "react-icons/md";
@@ -18,21 +18,26 @@ const Navbarmid = () => {
   const searchRef = useRef(null);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
-  const user = useSelector(state => state?.user?.data);
-  const wishlists = useSelector(state => state?.wishlist?.data?.Wishlist_product);
-  const carts = useSelector(state => state?.cart?.data?.Cart_info?.product_info);
+  const user = useSelector((state) => state?.user?.data);
+  const wishlists = useSelector(
+    (state) => state?.wishlist?.data?.Wishlist_product
+  );
+  const carts = useSelector(
+    (state) => state?.cart?.data?.Cart_info?.product_info
+  );
   const [searchData, setSearchData] = useState([]);
-  const [search, setSearch] = useState("")
-  const [loading, setLoading] = useState(false)
+  const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [openLoginModal, setOpenLoginModal] = useState(false)
-  const [updatePage, setUpdatePage] = useState(false)
-  const [show, setShow] = useState(false)
+  const [openLoginModal, setOpenLoginModal] = useState(false);
+  const [updatePage, setUpdatePage] = useState(false);
+  const [show, setShow] = useState(false);
 
+  // console.log("ssss", searchData, showDropdown);
 
   useEffect(() => {
-    setUpdatePage(!updatePage)
-  }, [wishlists, carts])
+    setUpdatePage(!updatePage);
+  }, [wishlists, carts]);
 
   const debouncedSearch = debounce(async (query) => {
     if (query.length >= 1) {
@@ -68,69 +73,88 @@ const Navbarmid = () => {
 
   const handleWishlist = () => {
     if (user) {
-      navigate('/wishlist');
+      navigate("/wishlist");
     } else {
-      setOpenLoginModal(true)
+      setOpenLoginModal(true);
     }
-  }
+  };
 
   const handleCart = () => {
     if (user) {
-      navigate('/cart')
+      navigate("/cart");
     } else {
-      setOpenLoginModal(true)
+      setOpenLoginModal(true);
     }
-  }
+  };
+
+  const handleSearchClick = () => {
+    console.log("Search button clicked!");
+    debouncedSearch(search);
+    setShowDropdown(true);
+  };
 
   return (
     <>
       <SidebarNavbar show={show} setShow={setShow} />
-      <LoginModal openLoginModal={openLoginModal} setOpenLoginModal={setOpenLoginModal} />
+      <LoginModal
+        openLoginModal={openLoginModal}
+        setOpenLoginModal={setOpenLoginModal}
+      />
       <section className="navbarmid d-md-none d-block">
         <div className="container">
           <div className="row d-flex align-items-center mb-3">
-
             <div className="col-1" onClick={() => setShow(true)}>
               <MdDehaze style={{ fontSize: "25px" }} />
             </div>
 
-            <div className="col-1">
-            </div>
+            <div className="col-1"></div>
 
-            <div className="col-6" onClick={() => navigate('/')}>
+            <div className="col-6" onClick={() => navigate("/")}>
               <div className="logo" style={{ cursor: "pointer" }}>
                 <img className="img-fluid" src="/images/logo.png" alt="Logo" />
               </div>
             </div>
 
-            <div className="col-3">
-            </div>
+            <div className="col-3"></div>
 
             <div className="col-1">
               <div className="cart d-flex align-items-center justify-content-end">
-                <div onClick={() => handleWishlist()} className="position-relative" style={{ cursor: "pointer" }}>
+                <div
+                  onClick={() => handleWishlist()}
+                  className="position-relative"
+                  style={{ cursor: "pointer" }}
+                >
                   <IoIosHeartEmpty />
-                  {
-                    wishlists && wishlists.length > 0 && <div className="wishlist-count d-flex justify-content-center align-items-center">
+                  {wishlists && wishlists.length > 0 && (
+                    <div className="wishlist-count d-flex justify-content-center align-items-center">
                       {wishlists.length}
                     </div>
-                  }
+                  )}
                 </div>
-                <div onClick={() => handleCart()} className="position-relative" style={{ cursor: "pointer" }}>
+                <div
+                  onClick={() => handleCart()}
+                  className="position-relative"
+                  style={{ cursor: "pointer" }}
+                >
                   <PiShoppingCartSimple />
-                  {
-                    carts && carts.length > 0 && <div className="wishlist-count d-flex justify-content-center align-items-center">
+                  {carts && carts.length > 0 && (
+                    <div className="wishlist-count d-flex justify-content-center align-items-center">
                       {carts.length}
                     </div>
-                  }
+                  )}
                 </div>
-                {
-                  user ? <div onClick={() => navigate('/dashboard/profile')} style={{ cursor: "pointer" }}>
-                    <HiOutlineUser />
-                  </div> : <div onClick={() => navigate('/login')}>
+                {user ? (
+                  <div
+                    onClick={() => navigate("/dashboard/profile")}
+                    style={{ cursor: "pointer" }}
+                  >
                     <HiOutlineUser />
                   </div>
-                }
+                ) : (
+                  <div onClick={() => navigate("/login")}>
+                    <HiOutlineUser />
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -150,17 +174,33 @@ const Navbarmid = () => {
                   }}
                   onFocus={() => setShowDropdown(true)}
                 />
-                <button type="submit" className="searchButton">
+                <button
+                  type="button"
+                  className="searchButton"
+                  onClick={handleSearchClick}
+                >
                   Search
                 </button>
-                {showDropdown && searchData && searchData?.length > 0 && (
+                {showDropdown && (
                   <div className="searchDropdown" ref={dropdownRef}>
                     {loading && <div className="loading">Loading...</div>}
-                    {searchData?.map(item => (
-                      <div key={item.variation_id} className="searchItem" onClick={() => navigate(`/${item.slug}?vId=${item.variation_id}`)}>
-                        {item.title}
-                      </div>
-                    ))}
+                    {!loading &&
+                      searchData.length === 0 &&
+                      search.length > 0 && (
+                        <div className="loading">No products found...</div>
+                      )}
+                    {searchData.length > 0 &&
+                      searchData.map((item) => (
+                        <div
+                          key={item.variation_id}
+                          className="searchItem"
+                          onClick={() =>
+                            navigate(`/${item.slug}?vId=${item.variation_id}`)
+                          }
+                        >
+                          {item.title}
+                        </div>
+                      ))}
                   </div>
                 )}
               </div>
@@ -169,12 +209,11 @@ const Navbarmid = () => {
         </div>
       </section>
 
-
       {/* Desktop navbar */}
       <section className="navbarmid d-md-block d-none">
         <div className="container">
           <div className="row d-flex align-items-center">
-            <div className="col-lg-2 col-md-3" onClick={() => navigate('/')}>
+            <div className="col-lg-2 col-md-3" onClick={() => navigate("/")}>
               <div className="logo" style={{ cursor: "pointer" }}>
                 <img className="img-fluid" src="/images/logo.png" alt="Logo" />
               </div>
@@ -201,8 +240,14 @@ const Navbarmid = () => {
                 {showDropdown && searchData && searchData?.length > 0 && (
                   <div className="searchDropdown" ref={dropdownRef}>
                     {loading && <div className="loading">Loading...</div>}
-                    {searchData?.map(item => (
-                      <div key={item.variation_id} className="searchItem" onClick={() => navigate(`/${item.slug}?vId=${item.variation_id}`)}>
+                    {searchData?.map((item) => (
+                      <div
+                        key={item.variation_id}
+                        className="searchItem"
+                        onClick={() =>
+                          navigate(`/${item.slug}?vId=${item.variation_id}`)
+                        }
+                      >
                         {item.title}
                       </div>
                     ))}
@@ -215,29 +260,42 @@ const Navbarmid = () => {
 
             <div className="col-md-2">
               <div className="cart d-flex align-items-center justify-content-end">
-                <div onClick={() => handleWishlist()} className="position-relative" style={{ cursor: "pointer" }}>
+                <div
+                  onClick={() => handleWishlist()}
+                  className="position-relative"
+                  style={{ cursor: "pointer" }}
+                >
                   <IoIosHeartEmpty />
-                  {
-                    wishlists && wishlists.length > 0 && <div className="wishlist-count d-flex justify-content-center align-items-center">
+                  {wishlists && wishlists.length > 0 && (
+                    <div className="wishlist-count d-flex justify-content-center align-items-center">
                       {wishlists.length}
                     </div>
-                  }
+                  )}
                 </div>
-                <div onClick={() => handleCart()} className="position-relative" style={{ cursor: "pointer" }}>
+                <div
+                  onClick={() => handleCart()}
+                  className="position-relative"
+                  style={{ cursor: "pointer" }}
+                >
                   <PiShoppingCartSimple />
-                  {
-                    carts && carts.length > 0 && <div className="wishlist-count d-flex justify-content-center align-items-center">
+                  {carts && carts.length > 0 && (
+                    <div className="wishlist-count d-flex justify-content-center align-items-center">
                       {carts.length}
                     </div>
-                  }
+                  )}
                 </div>
-                {
-                  user ? <div onClick={() => navigate('/dashboard/profile')} style={{ cursor: "pointer" }}>
-                    <HiOutlineUser />
-                  </div> : <div onClick={() => navigate('/login')}>
+                {user ? (
+                  <div
+                    onClick={() => navigate("/dashboard/profile")}
+                    style={{ cursor: "pointer" }}
+                  >
                     <HiOutlineUser />
                   </div>
-                }
+                ) : (
+                  <div onClick={() => navigate("/login")}>
+                    <HiOutlineUser />
+                  </div>
+                )}
               </div>
             </div>
           </div>

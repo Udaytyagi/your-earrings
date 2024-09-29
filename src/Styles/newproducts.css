@@ -27,7 +27,7 @@
 .new-product-items img {
   /* padding: 20px 10px 10px 10px; */
   transition: transform 1s ease 0s;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 .new-product-items img:hover {

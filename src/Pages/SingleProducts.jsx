@@ -21,10 +21,11 @@ import FeaturedProduct from "../sections/home/FeaturedProduct";
 import LoginModal from "../components/LoginModal";
 import { fetchCouponApi } from "../apis/mainApis/productDetail/productDetailApis";
 import { RxCross2 } from "react-icons/rx";
-import Dropdown from 'react-bootstrap/Dropdown';
+import Dropdown from "react-bootstrap/Dropdown";
 import { updateWishlist } from "../features/slices/wishlist/wishlistSlice";
 import { addReviewApi } from "../apis/mainApis/productDetail/productDetailApis";
 import { KEY_PREFIX } from "redux-persist/lib/constants";
+import ImageModal from "../components/ImageModal";
 
 const SingleProducts = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -33,27 +34,29 @@ const SingleProducts = () => {
   const fileInputRef = createRef();
   const fullScreenRef = useRef();
   const product = useSelector((state) => state?.productDetail?.data);
-  const user = useSelector(state => state?.user?.data);
-  const All_available_filter = product?.Product_info?.All_available_filter || {};
+  const user = useSelector((state) => state?.user?.data);
+  const All_available_filter =
+    product?.Product_info?.All_available_filter || {};
   const [selectedShapeId, setSelectedShapeId] = useState(null);
   const [selectedSettingId, setSelectedSettingId] = useState(null);
   const [selectedMetalId, setSelectedMetalId] = useState(null);
   const [selectedSizeId, setSelectedSizeId] = useState(null);
   const [selectedTypeId, setSelectedTypeId] = useState(null);
-  const [selectedCouponId, setSelectedCouponId] = useState("")
-  const [discountPrice, setDiscountPrice] = useState("")
-  const [selectedShape, setSelectedShape] = useState("")
-  const [selectedSetting, setSelectedSetting] = useState("")
-  const [selectedMetal, setSelectedMetal] = useState("")
-  const [selectedSize, setSelectedSize] = useState("")
-  const [selectedType, setSelectedType] = useState("")
-  const [updatePage, setUpdatePage] = useState(false)
+  const [selectedCouponId, setSelectedCouponId] = useState("");
+  const [discountPrice, setDiscountPrice] = useState("");
+  const [selectedShape, setSelectedShape] = useState("");
+  const [selectedSetting, setSelectedSetting] = useState("");
+  const [selectedMetal, setSelectedMetal] = useState("");
+  const [selectedSize, setSelectedSize] = useState("");
+  const [selectedType, setSelectedType] = useState("");
+  const [updatePage, setUpdatePage] = useState(false);
   const [activeAccordionKey, setActiveAccordionKey] = useState("0");
   const [openLoginModal, setOpenLoginModal] = useState(false);
-  const [rating, setRating] = useState(0)
-  const [description, setDescription] = useState("")
-  const [reviewImages, setReviewImages] = useState([])
-
+  const [openImageModal, setOpenImageModal] = useState(false);
+  const [image, setImage] = useState("");
+  const [rating, setRating] = useState(0);
+  const [description, setDescription] = useState("");
+  const [reviewImages, setReviewImages] = useState([]);
 
   useEffect(() => {
     const data = {
@@ -61,8 +64,8 @@ const SingleProducts = () => {
       setting: selectedSetting,
       metal: selectedMetal,
       size: selectedSize,
-      type: selectedType
-    }
+      type: selectedType,
+    };
     dispatch(fetchProductDetail({ data: data, variationId: variationId }));
   }, [variationId, dispatch, updatePage]);
 
@@ -82,9 +85,9 @@ const SingleProducts = () => {
     }
   }, [product]);
 
-
   const images =
-    product && product?.Product_info &&
+    product &&
+    product?.Product_info &&
     product?.Product_info?.Gallery_images?.map((imgUrl) => ({
       original: imgUrl,
       thumbnail: imgUrl,
@@ -99,34 +102,38 @@ const SingleProducts = () => {
   };
 
   const handleSelectSize = (key, variationId) => {
-    setSelectedSizeId(key)
+    setSelectedSizeId(key);
     setSearchParams({ vId: variationId });
-  }
+  };
 
   const handleAddToCart = () => {
     if (user) {
       const data = {
         coupon_id: selectedCouponId,
-        action: "add"
-      }
-      dispatch(updateCart({ data: data, variationId: selectedTypeId ? selectedTypeId : variationId }))
+        action: "add",
+      };
+      dispatch(
+        updateCart({
+          data: data,
+          variationId: selectedTypeId ? selectedTypeId : variationId,
+        })
+      );
     } else {
-      setOpenLoginModal(true)
+      setOpenLoginModal(true);
     }
-  }
+  };
 
   const handleUpdateWishlist = async () => {
     if (user) {
       const data = {
-        variation_id: selectedTypeId ? selectedTypeId : variationId
-      }
-      await dispatch(updateWishlist(data))
-      setUpdatePage(!updatePage)
+        variation_id: selectedTypeId ? selectedTypeId : variationId,
+      };
+      await dispatch(updateWishlist(data));
+      setUpdatePage(!updatePage);
     } else {
-      setOpenLoginModal(true)
+      setOpenLoginModal(true);
     }
-  }
-
+  };
 
   const handleAccordionClick = (eventKey) => {
     setActiveAccordionKey(eventKey);
@@ -135,33 +142,40 @@ const SingleProducts = () => {
   const handleAddCoupon = async (couponId) => {
     if (couponId !== selectedCouponId) {
       setSelectedCouponId(couponId);
-      const response = await fetchCouponApi(selectedTypeId ? selectedTypeId : variationId, couponId)
-      setDiscountPrice(response.data.data.Sale_price.After_discount_price)
+      const response = await fetchCouponApi(
+        selectedTypeId ? selectedTypeId : variationId,
+        couponId
+      );
+      setDiscountPrice(response.data.data.Sale_price.After_discount_price);
     }
-  }
+  };
 
   const handleRemoveCoupon = () => {
     setSelectedCouponId(0);
-    setDiscountPrice("")
-  }
+    setDiscountPrice("");
+  };
 
   const handleAddReview = async () => {
-
     const base64Images = await Promise.all(reviewImages.map(convertToBase64));
 
     const data = {
       productId: product?.Product_info?.Id,
       rating: rating,
       description: description,
-      images: base64Images
+      images: base64Images,
+    };
+
+    if (!user) {
+      ErrorToaster("Please login");
+      return;
     }
 
     if (!rating) {
       ErrorToaster("Please give rating");
       return;
     }
-    await addReviewApi(data, setRating, setDescription, setReviewImages)
-  }
+    await addReviewApi(data, setRating, setDescription, setReviewImages);
+  };
 
   const handleImageChange = (event) => {
     const files = Array.from(event.target.files);
@@ -171,16 +185,15 @@ const SingleProducts = () => {
       return;
     }
 
-
     const newImages = files.slice(0, 4 - reviewImages.length);
 
     if (newImages.length + reviewImages.length <= 4) {
-      setReviewImages(prevImages => [...prevImages, ...newImages]);
+      setReviewImages((prevImages) => [...prevImages, ...newImages]);
     }
   };
 
   const handleRemoveImage = (index) => {
-    setReviewImages(prevImages => prevImages.filter((_, i) => i !== index));
+    setReviewImages((prevImages) => prevImages.filter((_, i) => i !== index));
   };
 
   const convertToBase64 = (file) => {
@@ -188,13 +201,26 @@ const SingleProducts = () => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => resolve(reader.result);
-      reader.onerror = error => reject(error);
+      reader.onerror = (error) => reject(error);
     });
+  };
+
+  const handleImageModal = (image) => {
+    setImage(image);
+    setOpenImageModal(true);
   };
 
   return (
     <>
-      <LoginModal openLoginModal={openLoginModal} setOpenLoginModal={setOpenLoginModal} />
+      <ImageModal
+        openImageModal={openImageModal}
+        setOpenImageModal={setOpenImageModal}
+        image={image}
+      />
+      <LoginModal
+        openLoginModal={openLoginModal}
+        setOpenLoginModal={setOpenLoginModal}
+      />
       <Topbar />
       <Navbarmid />
       <NavbarBottom />
@@ -233,13 +259,21 @@ fashion earrings to find your perfect pair."
             <div className="col-lg-4 mt-3 mt-lg-0 product-detail">
               <p>Item ID #: {product?.Product_info?.Item_id}</p>
               <h4>{product?.Product_info?.Title}</h4>
-              <div className="d-flex review-rating">
-                <Rating readonly />
-              </div>
-              <p dangerouslySetInnerHTML={{ __html: product?.Product_info?.Description }}></p>
+              {/* <div className="d-flex review-rating">
+                <Rating ratingValue={product.Rating || 5} readonly />
+              </div> */}
+              <p
+                dangerouslySetInnerHTML={{
+                  __html: product?.Product_info?.Description,
+                }}
+              ></p>
               <h5>Select Other Variation</h5>
               <div className="product-accordion">
-                <Accordion defaultActiveKey="0" activeKey={activeAccordionKey} onSelect={handleAccordionClick}>
+                <Accordion
+                  defaultActiveKey="0"
+                  activeKey={activeAccordionKey}
+                  onSelect={handleAccordionClick}
+                >
                   {/* <Accordion.Item eventKey="1">
                     <Accordion.Header>Change Shape</Accordion.Header>
                     <Accordion.Body>
@@ -271,21 +305,40 @@ fashion earrings to find your perfect pair."
                     </Accordion.Body>
                   </Accordion.Item> */}
                   <Dropdown>
-                    <Dropdown.Toggle variant="success" id="dropdown-basic" className="singleproduct-dropdown-toggle">
+                    <Dropdown.Toggle
+                      variant="success"
+                      id="dropdown-basic"
+                      className="singleproduct-dropdown-toggle"
+                    >
                       Change Setting
                     </Dropdown.Toggle>
-                    {product && All_available_filter?.shape[selectedShapeId]?.settings &&
-                      <Dropdown.Menu style={{ width: "100%" }}>
-                        {
-                          Object.entries(
+                    {product &&
+                      All_available_filter?.shape[selectedShapeId]
+                        ?.settings && (
+                        <Dropdown.Menu style={{ width: "100%" }}>
+                          {Object.entries(
                             All_available_filter.shape[selectedShapeId].settings
                           ).map(([key, setting]) => {
-                            return <Dropdown.Item key={KEY_PREFIX} className={`product-shape ${key == selectedSettingId ? "selected" : ""
-                              }`} onClick={() => { setSelectedSettingId(key); setSelectedSetting(setting.name); setUpdatePage(!updatePage); handleRemoveCoupon() }}> {setting.name}</Dropdown.Item>
-                          }
-                          )}
-                      </Dropdown.Menu>
-                    }
+                            return (
+                              <Dropdown.Item
+                                key={KEY_PREFIX}
+                                className={`product-shape ${
+                                  key == selectedSettingId ? "selected" : ""
+                                }`}
+                                onClick={() => {
+                                  setSelectedSettingId(key);
+                                  setSelectedSetting(setting.name);
+                                  setUpdatePage(!updatePage);
+                                  handleRemoveCoupon();
+                                }}
+                              >
+                                {" "}
+                                {setting.name}
+                              </Dropdown.Item>
+                            );
+                          })}
+                        </Dropdown.Menu>
+                      )}
                   </Dropdown>
 
                   {/* <Accordion.Item eventKey="1">
@@ -318,24 +371,41 @@ fashion earrings to find your perfect pair."
                   </Accordion.Item> */}
 
                   <Dropdown>
-                    <Dropdown.Toggle variant="success" id="dropdown-basic" className="singleproduct-dropdown-toggle">
+                    <Dropdown.Toggle
+                      variant="success"
+                      id="dropdown-basic"
+                      className="singleproduct-dropdown-toggle"
+                    >
                       Change Metal
                     </Dropdown.Toggle>
-                    {product && All_available_filter?.shape[selectedShapeId]?.settings[
-                      selectedSettingId
-                    ]?.metals &&
-                      <Dropdown.Menu style={{ width: "100%" }}>
-                        {Object.entries(
-                          All_available_filter?.shape[selectedShapeId]?.settings[
-                            selectedSettingId
-                          ]?.metals || {}
-                        ).map(([key, metal]) => {
-                          return <Dropdown.Item key={KEY_PREFIX} className={`product-shape ${key == selectedMetalId ? "selected" : ""
-                            }`} onClick={() => { setSelectedMetalId(key); setSelectedMetal(metal.name); setUpdatePage(!updatePage); handleRemoveCoupon() }}>{metal.name}</Dropdown.Item>
-                        }
-                        )}
-                      </Dropdown.Menu>
-                    }
+                    {product &&
+                      All_available_filter?.shape[selectedShapeId]?.settings[
+                        selectedSettingId
+                      ]?.metals && (
+                        <Dropdown.Menu style={{ width: "100%" }}>
+                          {Object.entries(
+                            All_available_filter?.shape[selectedShapeId]
+                              ?.settings[selectedSettingId]?.metals || {}
+                          ).map(([key, metal]) => {
+                            return (
+                              <Dropdown.Item
+                                key={KEY_PREFIX}
+                                className={`product-shape ${
+                                  key == selectedMetalId ? "selected" : ""
+                                }`}
+                                onClick={() => {
+                                  setSelectedMetalId(key);
+                                  setSelectedMetal(metal.name);
+                                  setUpdatePage(!updatePage);
+                                  handleRemoveCoupon();
+                                }}
+                              >
+                                {metal.name}
+                              </Dropdown.Item>
+                            );
+                          })}
+                        </Dropdown.Menu>
+                      )}
                   </Dropdown>
 
                   {/* <Accordion.Item eventKey="2">
@@ -370,29 +440,46 @@ fashion earrings to find your perfect pair."
                     </Accordion.Body>
                   </Accordion.Item> */}
 
-
                   <Dropdown>
-                    <Dropdown.Toggle variant="success" id="dropdown-basic" className="singleproduct-dropdown-toggle">
+                    <Dropdown.Toggle
+                      variant="success"
+                      id="dropdown-basic"
+                      className="singleproduct-dropdown-toggle"
+                    >
                       Change Size
                     </Dropdown.Toggle>
-                    {
-                      product && All_available_filter?.shape[selectedShapeId]?.settings[
+                    {product &&
+                      All_available_filter?.shape[selectedShapeId]?.settings[
                         selectedSettingId
-                      ]?.metals[selectedMetalId]?.sizes &&
-                      <Dropdown.Menu style={{ width: "100%" }}>
-                        {Object.entries(
-                          All_available_filter?.shape[selectedShapeId]?.settings[
-                            selectedSettingId
-                          ]?.metals[selectedMetalId]?.sizes || {}
-                        ).map(([key, size]) => {
-                          return <Dropdown.Item key={KEY_PREFIX} className={`product-shape ${key == selectedSizeId ? "selected" : ""
-                            }`} onClick={() => { setSelectedSizeId(key); setSelectedSize(size.name); setUpdatePage(!updatePage); handleRemoveCoupon() }}> {size.name}</Dropdown.Item>
-                        }
-                        )}
-                      </Dropdown.Menu>
-                    }
+                      ]?.metals[selectedMetalId]?.sizes && (
+                        <Dropdown.Menu style={{ width: "100%" }}>
+                          {Object.entries(
+                            All_available_filter?.shape[selectedShapeId]
+                              ?.settings[selectedSettingId]?.metals[
+                              selectedMetalId
+                            ]?.sizes || {}
+                          ).map(([key, size]) => {
+                            return (
+                              <Dropdown.Item
+                                key={KEY_PREFIX}
+                                className={`product-shape ${
+                                  key == selectedSizeId ? "selected" : ""
+                                }`}
+                                onClick={() => {
+                                  setSelectedSizeId(key);
+                                  setSelectedSize(size.name);
+                                  setUpdatePage(!updatePage);
+                                  handleRemoveCoupon();
+                                }}
+                              >
+                                {" "}
+                                {size.name}
+                              </Dropdown.Item>
+                            );
+                          })}
+                        </Dropdown.Menu>
+                      )}
                   </Dropdown>
-
 
                   {/* <Accordion.Item eventKey="3">
                     <Accordion.Header>Change Size</Accordion.Header>
@@ -428,27 +515,47 @@ fashion earrings to find your perfect pair."
                   </Accordion.Item> */}
 
                   <Dropdown>
-                    <Dropdown.Toggle variant="success" id="dropdown-basic" className="singleproduct-dropdown-toggle">
+                    <Dropdown.Toggle
+                      variant="success"
+                      id="dropdown-basic"
+                      className="singleproduct-dropdown-toggle"
+                    >
                       Change Type
                     </Dropdown.Toggle>
-                    {
-                      product && All_available_filter?.shape[selectedShapeId]?.settings[
+                    {product &&
+                      All_available_filter?.shape[selectedShapeId]?.settings[
                         selectedSettingId
-                      ]?.metals[selectedMetalId]?.sizes[selectedSizeId]?.types &&
-                      <Dropdown.Menu style={{ width: "100%" }}>
-                        {Object.entries(
-                          All_available_filter?.shape[selectedShapeId]?.settings[
-                            selectedSettingId
-                          ]?.metals[selectedMetalId]?.sizes[selectedSizeId].types || {}
-                        ).map(([key, metal]) => {
-                          return <Dropdown.Item key={KEY_PREFIX} className={`product-shape ${metal.variation_ids == selectedTypeId ? "selected" : ""
-                            }`} onClick={() => { setSelectedTypeId(metal.variation_ids); setSelectedType(metal.name); setUpdatePage(!updatePage); handleRemoveCoupon() }}>{metal.name}</Dropdown.Item>
-                        }
-                        )}
-                      </Dropdown.Menu>
-                    }
+                      ]?.metals[selectedMetalId]?.sizes[selectedSizeId]
+                        ?.types && (
+                        <Dropdown.Menu style={{ width: "100%" }}>
+                          {Object.entries(
+                            All_available_filter?.shape[selectedShapeId]
+                              ?.settings[selectedSettingId]?.metals[
+                              selectedMetalId
+                            ]?.sizes[selectedSizeId].types || {}
+                          ).map(([key, metal]) => {
+                            return (
+                              <Dropdown.Item
+                                key={KEY_PREFIX}
+                                className={`product-shape ${
+                                  metal.variation_ids == selectedTypeId
+                                    ? "selected"
+                                    : ""
+                                }`}
+                                onClick={() => {
+                                  setSelectedTypeId(metal.variation_ids);
+                                  setSelectedType(metal.name);
+                                  setUpdatePage(!updatePage);
+                                  handleRemoveCoupon();
+                                }}
+                              >
+                                {metal.name}
+                              </Dropdown.Item>
+                            );
+                          })}
+                        </Dropdown.Menu>
+                      )}
                   </Dropdown>
-
 
                   {/* <Accordion.Item eventKey="4">
                     <Accordion.Header>Change Type</Accordion.Header>
@@ -495,42 +602,60 @@ fashion earrings to find your perfect pair."
                 {discountPrice && <h4>Discounted Price : ${discountPrice}</h4>}
               </div>
               <div className="wishlist-btn">
-                <button className="button-bag" onClick={() => handleAddToCart()}>Add to Bag</button>
-                <button className="button wishlist" onClick={() => handleUpdateWishlist()}>{product?.Product_info?.Wishlist === true ? "Remove from wishlist" : "Add to wishlist"}</button>
+                <button
+                  className="button-bag"
+                  onClick={() => handleAddToCart()}
+                >
+                  Add to Bag
+                </button>
+                <button
+                  className="button wishlist"
+                  onClick={() => handleUpdateWishlist()}
+                >
+                  {product?.Product_info?.Wishlist === true
+                    ? "Remove from wishlist"
+                    : "Add to wishlist"}
+                </button>
               </div>
-              {
-                product?.Product_info && product?.Product_info?.Discount?.length > 0 &&
-                <div className="coupon">
-                  <p>Coupon Available</p>
-                  {
-                    product?.Product_info?.Discount?.map((discount, i) => (
+              {product?.Product_info &&
+                product?.Product_info?.Discount?.length > 0 && (
+                  <div className="coupon">
+                    <p>Coupon Available</p>
+                    {product?.Product_info?.Discount?.map((discount, i) => (
                       <div
-                        className={`discount-field ${discount.coupon_id === selectedCouponId ? "selected" : ""}`}
+                        className={`discount-field ${
+                          discount.coupon_id === selectedCouponId
+                            ? "selected"
+                            : ""
+                        }`}
                         key={i}
-
                       >
                         <div className="d-flex align-items-center justify-content-between">
-                          <div onClick={() => handleAddCoupon(discount?.coupon_id)}>
-                            <span > {discount?.name}</span><br></br>
-                            {
-                              discount?.type === "fixed" ? <>
+                          <div
+                            onClick={() => handleAddCoupon(discount?.coupon_id)}
+                          >
+                            <span> {discount?.name}</span>
+                            <br></br>
+                            {discount?.type === "fixed" ? (
+                              <>
                                 <span>Discount Amount : </span>
                                 <span>{discount?.discount_amount}</span>
-                              </> : <>
+                              </>
+                            ) : (
+                              <>
                                 <span>Discount Percentage : </span>
                                 <span>{discount?.discount_percent}%</span>
                               </>
-                            }
+                            )}
                           </div>
-                          {discountPrice && <RxCross2 onClick={() => handleRemoveCoupon(0)} />}
+                          {discountPrice && (
+                            <RxCross2 onClick={() => handleRemoveCoupon(0)} />
+                          )}
                         </div>
-
                       </div>
-                    ))
-                  }
-                </div>
-              }
-
+                    ))}
+                  </div>
+                )}
 
               {/* <div className="order-main">
                 <h6>FREE 2 DAY SHIPPING ON ALL US ORDERS:</h6>
@@ -563,14 +688,14 @@ fashion earrings to find your perfect pair."
               <div className="col-md-6 earing-information">
                 <h6>EARRING INFORMATION</h6>
                 <div className="product-information-main">
-                  {Object.entries(product?.Product_info?.Earrings_information || {}).map(
-                    ([key, value]) => (
-                      <div className="product-information" key={key}>
-                        <p>{key}:</p>
-                        <p>{value}</p>
-                      </div>
-                    )
-                  )}
+                  {Object.entries(
+                    product?.Product_info?.Earrings_information || {}
+                  ).map(([key, value]) => (
+                    <div className="product-information" key={key}>
+                      <p>{key}:</p>
+                      <p>{value}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
             )}
@@ -578,21 +703,20 @@ fashion earrings to find your perfect pair."
               <div className="col-md-6 earing-information">
                 <h6>DIAMOND INFORMATION</h6>
                 <div className="product-information-main">
-                  {Object.entries(product?.Product_info?.Diamond_information || {}).map(
-                    ([key, value]) => (
-                      <div className="product-information" key={key}>
-                        <p>{key}:</p>
-                        <p>{value}</p>
-                      </div>
-                    )
-                  )}
+                  {Object.entries(
+                    product?.Product_info?.Diamond_information || {}
+                  ).map(([key, value]) => (
+                    <div className="product-information" key={key}>
+                      <p>{key}:</p>
+                      <p>{value}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
             )}
           </div>
         </div>
       </section>
-
 
       <SingleProductSlider product={product} />
       <section className="pt-5">
@@ -611,11 +735,15 @@ fashion earrings to find your perfect pair."
                       <div>
                         <h5>Rating</h5>
                       </div>
-                      <div className="rating-value">{product?.Review_section?.avg_review || 0}/5</div>
+                      <div className="rating-value">
+                        {product?.Review_section?.avg_review || 0}/5
+                      </div>
                       <div className="rating-text">
-                        {product?.Review_section?.total_rating_count || 0} Ratings
+                        {product?.Review_section?.total_rating_count || 0}{" "}
+                        Ratings
                         <br />
-                        {product?.Review_section?.total_review_count || 0} Reviews
+                        {product?.Review_section?.total_review_count || 0}{" "}
+                        Reviews
                       </div>
                     </div>
                   </div>
@@ -626,13 +754,19 @@ fashion earrings to find your perfect pair."
                         <div
                           className="progress-bar bg-success"
                           role="progressbar"
-                          style={{ width: product?.Review_section?.fiveRatingPercentage || 0 }}
+                          style={{
+                            width:
+                              product?.Review_section?.fiveRatingPercentage ||
+                              0,
+                          }}
                           aria-valuenow={70}
                           aria-valuemin={0}
                           aria-valuemax={100}
                         />
                       </div>
-                      <span className="count">{product?.Review_section?.five_rating_count || 0}</span>
+                      <span className="count">
+                        {product?.Review_section?.five_rating_count || 0}
+                      </span>
                     </div>
                     <div className="progress-container">
                       <span className="star">4★</span>
@@ -640,13 +774,19 @@ fashion earrings to find your perfect pair."
                         <div
                           className="progress-bar bg-success"
                           role="progressbar"
-                          style={{ width: product?.Review_section?.fourRatingPercentage || 0 }}
+                          style={{
+                            width:
+                              product?.Review_section?.fourRatingPercentage ||
+                              0,
+                          }}
                           aria-valuenow={50}
                           aria-valuemin={0}
                           aria-valuemax={100}
                         />
                       </div>
-                      <span className="count">{product?.Review_section?.four_rating_count || 0}</span>
+                      <span className="count">
+                        {product?.Review_section?.four_rating_count || 0}
+                      </span>
                     </div>
                     <div className="progress-container">
                       <span className="star">3★</span>
@@ -654,13 +794,19 @@ fashion earrings to find your perfect pair."
                         <div
                           className="progress-bar bg-warning"
                           role="progressbar"
-                          style={{ width: product?.Review_section?.threeRatingPercentage || 0 }}
+                          style={{
+                            width:
+                              product?.Review_section?.threeRatingPercentage ||
+                              0,
+                          }}
                           aria-valuenow={30}
                           aria-valuemin={0}
                           aria-valuemax={100}
                         />
                       </div>
-                      <span className="count">{product?.Review_section?.three_rating_count || 0}</span>
+                      <span className="count">
+                        {product?.Review_section?.three_rating_count || 0}
+                      </span>
                     </div>
                     <div className="progress-container">
                       <span className="star">2★</span>
@@ -668,13 +814,18 @@ fashion earrings to find your perfect pair."
                         <div
                           className="progress-bar bg-warning"
                           role="progressbar"
-                          style={{ width: product?.Review_section?.twoRatingPercentage || 0 }}
+                          style={{
+                            width:
+                              product?.Review_section?.twoRatingPercentage || 0,
+                          }}
                           aria-valuenow={10}
                           aria-valuemin={0}
                           aria-valuemax={100}
                         />
                       </div>
-                      <span className="count">{product?.Review_section?.two_rating_count || 0}</span>
+                      <span className="count">
+                        {product?.Review_section?.two_rating_count || 0}
+                      </span>
                     </div>
                     <div className="progress-container">
                       <span className="star">1★</span>
@@ -682,13 +833,18 @@ fashion earrings to find your perfect pair."
                         <div
                           className="progress-bar bg-danger"
                           role="progressbar"
-                          style={{ width: product?.Review_section?.twoRatingPercentage || 0 }}
+                          style={{
+                            width:
+                              product?.Review_section?.twoRatingPercentage || 0,
+                          }}
                           aria-valuenow={15}
                           aria-valuemin={0}
                           aria-valuemax={100}
                         />
                       </div>
-                      <span className="count">{product?.Review_section?.one_rating_count || 0}</span>
+                      <span className="count">
+                        {product?.Review_section?.one_rating_count || 0}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -723,13 +879,18 @@ fashion earrings to find your perfect pair."
 
                     {reviewImages?.map((image, index) => (
                       <div key={index} className="uploaded-image">
-                        <img src={URL.createObjectURL(image)} alt={`Review Image ${index + 1}`} width={"80px"} height={"80px"} />
+                        <img
+                          src={URL.createObjectURL(image)}
+                          alt={`Review Image ${index + 1}`}
+                          width={"80px"}
+                          height={"80px"}
+                        />
                         <RiDeleteBin6Line
                           style={{
                             cursor: "pointer",
                             color: "red",
                             width: "20px",
-                            height: "20px"
+                            height: "20px",
                           }}
                           onClick={() => handleRemoveImage(index)}
                         />
@@ -739,7 +900,12 @@ fashion earrings to find your perfect pair."
                   <div className="upload-icon" onClick={handleIconClick}>
                     <RiUploadCloud2Line />
                   </div>
-                  <button className="submit-btn mt-3" onClick={() => handleAddReview()}>Submit Review</button>
+                  <button
+                    className="submit-btn mt-3"
+                    onClick={() => handleAddReview()}
+                  >
+                    Submit Review
+                  </button>
                 </div>
               </div>
             </div>
@@ -772,11 +938,16 @@ fashion earrings to find your perfect pair."
         </div> */}
 
             <div className="container p-0 mt-4">
-              {
-                product && product?.Review_section?.all_review && product?.Review_section?.all_review?.length > 0 && product?.Review_section?.all_review?.map((item, i) => (
+              {product &&
+                product?.Review_section?.all_review &&
+                product?.Review_section?.all_review?.length > 0 &&
+                product?.Review_section?.all_review?.map((item, i) => (
                   <div className="review-box" key={i}>
                     <div className="review-header">
-                      <img src="https://via.placeholder.com/40" alt="User Avatar" />
+                      <img
+                        src="https://via.placeholder.com/40"
+                        alt="User Avatar"
+                      />
                       <div className="user-info">
                         <h6>
                           {item.createdBy} <span>({item.createdAt})</span>
@@ -784,27 +955,23 @@ fashion earrings to find your perfect pair."
                         <p>Customer</p>
                       </div>
                     </div>
-                    <div className="review-content">
-                      {item.description}
-                    </div>
+                    <div className="review-content">{item.description}</div>
                     <div className="review-images">
-                      {
-                        item.images.map((image, j) => (
-                          <img src={image} alt={`Review Image ${j + 1}`} key={j} />
-                        ))
-                      }
+                      {item.images.map((image, j) => (
+                        <img
+                          src={image}
+                          alt={`Review Image ${j + 1}`}
+                          key={j}
+                          onClick={() => handleImageModal(image)}
+                        />
+                      ))}
                     </div>
                   </div>
-                ))
-
-              }
-
+                ))}
             </div>
           </div>
         </div>
       </section>
-
-
 
       <Footer />
     </>

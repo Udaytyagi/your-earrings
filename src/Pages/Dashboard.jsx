@@ -39,13 +39,13 @@ function Dashboard() {
         para="Explore our exquisite hoop earrings, climbers and
            fashion earrings to find your perfect pair."
       />
-      <div className="page-nav container px-0">
+      <div className="page-nav container">
         <p>Home</p>
         <FaAngleRight />
         <p>Dashboard</p>
       </div>
 
-      <div className="container px-md-0 py-5">
+      <div className="container px-md-0 py-md-5 py-3">
         <div className="col-1 d-md-none d-block mb-3" onClick={() => setShow(true)}>
           <MdDehaze style={{ fontSize: "25px" }} />
         </div>

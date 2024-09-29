@@ -512,7 +512,6 @@
   font-size: 14px;
 }
 .review-images {
-  margin-top: 10px;
   display: flex;
   flex-wrap: wrap;
 }
@@ -521,6 +520,8 @@
   height: 70px;
   border-radius: 8px;
   margin-right: 10px;
+  margin-top: 10px;
+  cursor: pointer;
 }
 .review-images img:last-child {
   margin-right: 0;
@@ -581,7 +582,7 @@
     padding: 4px 15px !important;
     font-size: 12px !important;
   }
-  .main-heading{
+  .main-heading {
     font-weight: 600 !important;
   }
 }

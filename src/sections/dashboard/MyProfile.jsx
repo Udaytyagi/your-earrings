@@ -67,7 +67,7 @@ function MyProfile() {
         <div className="account__wrapper">
             <div className="account__content">
                 <div className="adreress-right dashboard">
-                    <main className="container">
+                    <main className="container p-0">
                         <div className="row gx-5 m-0">
                             <aside className="col-md-12 col-xl-12 profile-slider-left">
                                 <div className="profile-slider-left-top-div">

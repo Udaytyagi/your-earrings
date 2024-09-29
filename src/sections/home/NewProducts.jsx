@@ -13,7 +13,7 @@ const NewProducts = ({ products, handleUpdateWishlist }) => {
                     <div className="row">
                         <div className="col-md-12">
                             <div className="new-heading text-center">
-                                <h2>New Products</h2>
+                                <h2>{products?.Collection_name || "Collection Name"}</h2>
                             </div>
                         </div>
                     </div>
