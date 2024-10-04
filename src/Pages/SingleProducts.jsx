@@ -322,9 +322,8 @@ fashion earrings to find your perfect pair."
                             return (
                               <Dropdown.Item
                                 key={KEY_PREFIX}
-                                className={`product-shape ${
-                                  key == selectedSettingId ? "selected" : ""
-                                }`}
+                                className={`product-shape ${key == selectedSettingId ? "selected" : ""
+                                  }`}
                                 onClick={() => {
                                   setSelectedSettingId(key);
                                   setSelectedSetting(setting.name);
@@ -390,9 +389,8 @@ fashion earrings to find your perfect pair."
                             return (
                               <Dropdown.Item
                                 key={KEY_PREFIX}
-                                className={`product-shape ${
-                                  key == selectedMetalId ? "selected" : ""
-                                }`}
+                                className={`product-shape ${key == selectedMetalId ? "selected" : ""
+                                  }`}
                                 onClick={() => {
                                   setSelectedMetalId(key);
                                   setSelectedMetal(metal.name);
@@ -462,9 +460,8 @@ fashion earrings to find your perfect pair."
                             return (
                               <Dropdown.Item
                                 key={KEY_PREFIX}
-                                className={`product-shape ${
-                                  key == selectedSizeId ? "selected" : ""
-                                }`}
+                                className={`product-shape ${key == selectedSizeId ? "selected" : ""
+                                  }`}
                                 onClick={() => {
                                   setSelectedSizeId(key);
                                   setSelectedSize(size.name);
@@ -537,11 +534,10 @@ fashion earrings to find your perfect pair."
                             return (
                               <Dropdown.Item
                                 key={KEY_PREFIX}
-                                className={`product-shape ${
-                                  metal.variation_ids == selectedTypeId
-                                    ? "selected"
-                                    : ""
-                                }`}
+                                className={`product-shape ${metal.variation_ids == selectedTypeId
+                                  ? "selected"
+                                  : ""
+                                  }`}
                                 onClick={() => {
                                   setSelectedTypeId(metal.variation_ids);
                                   setSelectedType(metal.name);
@@ -623,11 +619,10 @@ fashion earrings to find your perfect pair."
                     <p>Coupon Available</p>
                     {product?.Product_info?.Discount?.map((discount, i) => (
                       <div
-                        className={`discount-field ${
-                          discount.coupon_id === selectedCouponId
-                            ? "selected"
-                            : ""
-                        }`}
+                        className={`discount-field ${discount.coupon_id === selectedCouponId
+                          ? "selected"
+                          : ""
+                          }`}
                         key={i}
                       >
                         <div className="d-flex align-items-center justify-content-between">
@@ -910,32 +905,37 @@ fashion earrings to find your perfect pair."
               </div>
             </div>
 
-            {/* <div className="container p-0 mt-4">
-          {
-            product && product?.Review_section?.user_review &&
-            <div className="review-box">
-              <div className="review-header">
-                <img src="https://via.placeholder.com/40" alt="User Avatar" />
-                <div className="user-info">
-                  <h6>
-                    {product?.Review_section?.user_review.createdBy} <span>({product?.Review_section?.user_review.createdAt})</span>
-                  </h6>
-                  <p>Customer</p>
-                </div>
-              </div>
-              <div className="review-content">
-                {product?.Review_section?.user_review.description}
-              </div>
-              <div className="review-images">
-                {
-                  product?.Review_section?.user_review.images.map((image, j) => (
-                    <img src={image} alt={`Review Image ${j + 1}`} key={j} />
-                  ))
-                }
-              </div>
+            <div className="container p-0 mt-4">
+              {
+                product && product?.Review_section?.user_review && product?.Review_section?.user_review?.length > 0 &&
+                product?.Review_section?.user_review?.map((product, i) => (
+                  <div className="review-box" key={i}>
+                    <div className="review-header">
+                      <img src={product?.user_img || "https://img.freepik.com/free-icon/user_318-159711.jpg"} alt="User Avatar" />
+                      <div className="user-info">
+                        <h6>
+                          {product?.createdBy} <span>({product?.createdAt})</span>
+                        </h6>
+                        <p>Self</p>
+                      </div>
+                    </div>
+                    <Rating readonly initialValue={product.rating} size={15} />
+                    <div className="review-content">
+                      {product?.description}
+                    </div>
+                    <div className="review-images">
+                      {
+                        product?.review_img.map((image, j) => (
+                          <img src={image} alt={`Review Image ${j + 1}`} key={j} onClick={() => handleImageModal(image)} />
+                        ))
+                      }
+                    </div>
+                  </div>
+                ))
+              }
+
+
             </div>
-          }
-        </div> */}
 
             <div className="container p-0 mt-4">
               {product &&
@@ -945,7 +945,7 @@ fashion earrings to find your perfect pair."
                   <div className="review-box" key={i}>
                     <div className="review-header">
                       <img
-                        src="https://via.placeholder.com/40"
+                        src={item.user_img || "https://img.freepik.com/free-icon/user_318-159711.jpg"}
                         alt="User Avatar"
                       />
                       <div className="user-info">
@@ -955,9 +955,10 @@ fashion earrings to find your perfect pair."
                         <p>Customer</p>
                       </div>
                     </div>
+                    <Rating readonly initialValue={item.rating} size={15} />
                     <div className="review-content">{item.description}</div>
                     <div className="review-images">
-                      {item.images.map((image, j) => (
+                      {item?.review_img?.map((image, j) => (
                         <img
                           src={image}
                           alt={`Review Image ${j + 1}`}

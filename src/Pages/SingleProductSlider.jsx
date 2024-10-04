@@ -51,7 +51,18 @@ const SingleProductSlider = ({ product }) => {
 
         <div className="row">
           <div className="slider-container">
-            <Slider {...settings}>
+            {
+              popularProducts.map((product, i) => (
+                <div className="col-lg-3 col-md-6 featuredpdt-items text-center d-flex flex-column align-items-center" key={i} onClick={() => navigate(`/${product.Slug}?vId=${product.Variation_id}`)}>
+                  <div className='featuredpdt-round'>
+                    <img className='img-fluid' src={product.image || "/images/products-1.png"}
+                      alt={product.Name || "Product Image"} />
+                  </div>
+                  <h3>{product.Name || 'Product Name'}</h3>
+                </div>
+              ))
+            }
+            {/* <Slider {...settings}>
               {popularProducts.map((product, i) => (
                 <div key={i} onClick={() => navigate(`/${product.Slug}?vId=${product.Variation_id}`)}>
                   <div className="new-product-items slide">
@@ -72,7 +83,7 @@ const SingleProductSlider = ({ product }) => {
                   </div>
                 </div>
               ))}
-            </Slider>
+            </Slider> */}
           </div>
         </div>
       </div>
