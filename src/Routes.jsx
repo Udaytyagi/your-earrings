@@ -18,7 +18,12 @@ import NewPassword from "./Pages/authpages/NewPassword";
 import OtpVerification from "./Pages/authpages/OtpVerification";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ReturnPolicy from "./Pages/ReturnPolicy";
-import CheckoutIntegrationSample from "./Pages/CheckoutIntegrationSample";
+import Success from "./sections/paymentStatusWorldPay/Success";
+import Pending from "./sections/paymentStatusWorldPay/Pending";
+import Failure from "./sections/paymentStatusWorldPay/Failure";
+import Error from "./sections/paymentStatusWorldPay/Error";
+import Cancel from "./sections/paymentStatusWorldPay/Cancel";
+import Expiry from "./sections/paymentStatusWorldPay/Expiry";
 
 const router = createBrowserRouter([
   {
@@ -158,10 +163,50 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/payment/worldpay",
+    path: "/success/:orderId",
     element: (
       <ScrollToTop>
-        <CheckoutIntegrationSample />
+        <ProtectedRoute element={Success} />
+      </ScrollToTop>
+    ),
+  },
+  {
+    path: "/pending/:orderId",
+    element: (
+      <ScrollToTop>
+        <ProtectedRoute element={Pending} />
+      </ScrollToTop>
+    ),
+  },
+  {
+    path: "/failure/:orderId",
+    element: (
+      <ScrollToTop>
+        <ProtectedRoute element={Failure} />
+      </ScrollToTop>
+    ),
+  },
+  {
+    path: "/error/:orderId",
+    element: (
+      <ScrollToTop>
+        <ProtectedRoute element={Error} />
+      </ScrollToTop>
+    ),
+  },
+  {
+    path: "/cancel/:orderId",
+    element: (
+      <ScrollToTop>
+        <ProtectedRoute element={Cancel} />
+      </ScrollToTop>
+    ),
+  },
+  {
+    path: "/expiry/:orderId",
+    element: (
+      <ScrollToTop>
+        <ProtectedRoute element={Expiry} />
       </ScrollToTop>
     ),
   },

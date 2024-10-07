@@ -10,13 +10,13 @@ export const createOrderApi = async (data, setLoading, navigate) => {
             Authorization: `Bearer ${token}`,
         };
         const response = await axios.post(`${baseUrl}order/create`, data, { headers });
+        // console.log("response from createOrderApi", response?.data?.response?.url)
         SuccessToaster(response.data.message)
         if (data.payment_method === "cod") {
             navigate("/")
-        } else {
-            navigate("/payment/worldpay")
+        } else if (data.payment_method === "world_pay") {
+            window.location.href = response?.data?.response?.url;
         }
-
         setLoading(false)
         return response;
     } catch (error) {
@@ -55,6 +55,18 @@ export const fetchOrderDetailApi = async (data, setLoading, setOrderDetail, setO
         setOrderAddress(response.data.data.shipping_details)
     } catch (error) {
         setLoading(false)
+        return null;
+    }
+};
+
+export const orderStatusApi = async (data) => {
+    try {
+        const token = localStorage.getItem('earringsToken')
+        const headers = {
+            Authorization: `Bearer ${token}`,
+        };
+        await axios.post(`${baseUrl}fetch-payment-details`, data, { headers });
+    } catch (error) {
         return null;
     }
 };

@@ -26,6 +26,7 @@ import { updateWishlist } from "../features/slices/wishlist/wishlistSlice";
 import { addReviewApi } from "../apis/mainApis/productDetail/productDetailApis";
 import { KEY_PREFIX } from "redux-persist/lib/constants";
 import ImageModal from "../components/ImageModal";
+import jewelleryVideo from "../../public/video/jewelleryVideo.mp4"
 
 const SingleProducts = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -85,13 +86,34 @@ const SingleProducts = () => {
     }
   }, [product]);
 
-  const images =
-    product &&
-    product?.Product_info &&
-    product?.Product_info?.Gallery_images?.map((imgUrl) => ({
-      original: imgUrl,
-      thumbnail: imgUrl,
-    }));
+  const images = [
+    ...(product?.Product_info?.Gallery_images?.map((item) => {
+      const isVideo = item.endsWith('.mp4');
+      return {
+        original: item,
+        thumbnail: item,
+        isVideo,
+      };
+    }) || []),
+    {
+      original: jewelleryVideo,
+      thumbnail: "/images/blog-1.png",
+      isVideo: true,
+    },
+  ];
+
+  const renderItem = (item) => {
+    if (item.isVideo) {
+      return (
+        <video controls autoPlay muted style={{ width: '100%' }}>
+          <source src={item.original} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      );
+    }
+
+    return <img src={item.original} alt="" style={{ width: '100%' }} />;
+  };
 
   const handleIconClick = () => {
     fileInputRef.current.click();
@@ -251,6 +273,7 @@ fashion earrings to find your perfect pair."
                   lazyLoad={true}
                   slideOnThumbnailOver={true}
                   onClick={showFullScreen}
+                  renderItem={renderItem}
                 />
               ) : (
                 <p>Loading images...</p>

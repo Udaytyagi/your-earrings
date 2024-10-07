@@ -73,6 +73,7 @@ function MyOrders() {
                           <th scope="col">TotalAmount</th>
                           <th scope="col">Quantity</th>
                           <th scope="col">Status</th>
+                          <th scope="col">Type</th>
                           <th scope="col">Date</th>
                           <th scope="col">Actions</th>
                         </tr>
@@ -89,6 +90,11 @@ function MyOrders() {
                                 <td>{item.order_number}</td>
                                 <td>${item.pay_amount}</td>
                                 <td>{item.total_product}</td>
+                                <td>
+                                  <p className="d-flex justify-content-center mt-3 order-table-status">
+                                    <button>{item.payment_status}</button>
+                                  </p>
+                                </td>
                                 <td>
                                   <p className="d-flex justify-content-center mt-3 order-table-status">
                                     <button>{item.payment_type}</button>
