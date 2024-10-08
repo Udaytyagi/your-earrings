@@ -1,0 +1,195 @@
+.compare h2 {
+  text-transform: uppercase;
+  font-size: 28px;
+  font-weight: 600;
+  padding-bottom: 20px;
+}
+
+.compare .instruction {
+  text-align: right;
+  margin-bottom: 10px;
+  display: none;
+  margin-right: 10px;
+}
+.compare em {
+  color: lightgrey;
+  font-size: 12px;
+  font-weight: ital;
+}
+
+.compare .zui-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: "Roboto", sans-serif;
+  margin-bottom: 0;
+}
+
+.compare .zui-scroller::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.compare .zui-scroller {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.compare h5 {
+  font-size: 1em;
+  font-weight: 700;
+}
+
+.compare tr:nth-child(even) {
+  background: #f3f3f3;
+}
+.compare .zui-table thead th {
+  padding: 15px 20px;
+  text-align: left;
+  vertical-align: top;
+  min-width: 180px;
+}
+.compare .zui-table tbody td {
+  color: #333;
+  font-size: 16px;
+  padding: 15px 20px;
+  white-space: normal;
+  vertical-align: top;
+}
+.compare .zui-wrapper {
+  max-width: 1200px;
+  position: relative;
+}
+.compare .zui-scroller {
+  overflow-x: scroll;
+  overflow-y: visible;
+  padding-bottom: 5px;
+  width: 100%;
+}
+
+.compare .zui-table .zui-sticky-col {
+  left: 0;
+  position: sticky;
+  top: auto;
+  font-weight: 700;
+  min-width: 200px;
+  background-color: #ffffff;
+  box-shadow: inset -15px 0 10px -7px rgba(0, 0, 0, 0.15);
+}
+
+.compare .zui-sticky-col.zui-stripe-row {
+  background-color: #f3f3f3;
+}
+
+.compare .product-img {
+  /* height: auto;
+      width: 150px; */
+  margin-bottom: 10px;
+}
+
+.compare .product-link {
+  color: #0371bd;
+  text-decoration: none;
+}
+
+.compare th:not(:first-child),
+td:not(:first-child) {
+  border-left: 1px solid lightgrey;
+}
+
+.compare .svg-inline--fa {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  line-height: 1;
+  font-family: "Font Awesome 5 Pro";
+  font-weight: 500;
+  font-size: 23px;
+  padding-right: 5px;
+}
+
+.compare .fa-check-circle {
+  color: #028845;
+}
+.compare .fa-plus-circle {
+  color: #2275d3;
+}
+.compare .fa-times-circle {
+  color: gray;
+}
+
+.compare .scroll-button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  background-color: #fdb813;
+}
+
+.compare #prev-button,
+.compare #next-button {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  position: absolute;
+  top: 50%;
+}
+
+.compare #prev-button {
+  left: 230px;
+  display: none;
+}
+
+.compare #next-button {
+  right: -25px;
+}
+
+.compare .fa-chevron-left,
+.compare .fa-chevron-right {
+  font-size: 22px;
+  padding-right: 0;
+}
+
+/* Phone */
+@media screen and (max-width: 768px) and (min-width: 320px) {
+  .compare .zui-table .zui-sticky-col {
+    min-width: 125px;
+  }
+
+  .compare .zui-table thead th {
+    min-width: 190px;
+  }
+
+  .compare .zui-table tbody td {
+    font-size: 15px;
+  }
+  /*
+      .scroll-button {
+          top: 36%;
+          width: 40px;
+          height: 40px;
+      }
+      #prev-button {
+          display: block;
+          left: 130px;
+      }
+      #next-button {
+          left: 35%;
+      }
+      */
+}
+
+@media screen and (max-width: 1280px) and (min-width: 768px) {
+  .compare .zui-table .zui-sticky-col {
+    min-width: 175px;
+  }
+  .compare .zui-table thead th {
+    min-width: 180px;
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .compare .instruction {
+    display: block;
+  }
+}

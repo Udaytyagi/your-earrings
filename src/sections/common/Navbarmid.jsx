@@ -12,6 +12,7 @@ import { openLoginModal } from "../../features/slices/user/userSlice";
 import LoginModal from "../../components/LoginModal";
 import { MdDehaze } from "react-icons/md";
 import SidebarNavbar from "../../components/SidebarNavbar";
+import { IoIosGitCompare } from "react-icons/io";
 
 const Navbarmid = () => {
   const dispatch = useDispatch();
@@ -107,7 +108,7 @@ const Navbarmid = () => {
               <MdDehaze style={{ fontSize: "25px" }} />
             </div>
 
-            <div className="col-1"></div>
+           
 
             <div className="col-6" onClick={() => navigate("/")}>
               <div className="logo" style={{ cursor: "pointer" }}>
@@ -117,8 +118,20 @@ const Navbarmid = () => {
 
             <div className="col-3"></div>
 
-            <div className="col-1">
+            <div className="col-2">
               <div className="cart d-flex align-items-center justify-content-end">
+                <div
+                  onClick={() => navigate("/compare")}
+                  className="position-relative"
+                  style={{ cursor: "pointer" }}
+                >
+                  <IoIosGitCompare />
+                  {/* {wishlists && wishlists.length > 0 && (
+                    <div className="wishlist-count d-flex justify-content-center align-items-center">
+                      {wishlists.length}
+                    </div>
+                  )} */}
+                </div>
                 <div
                   onClick={() => handleWishlist()}
                   className="position-relative"
@@ -258,8 +271,21 @@ const Navbarmid = () => {
 
             <div className="col-md-1"></div>
 
+
             <div className="col-md-2">
               <div className="cart d-flex align-items-center justify-content-end">
+                <div
+                  onClick={() => navigate("/compare")}
+                  className="position-relative"
+                  style={{ cursor: "pointer" }}
+                >
+                  <IoIosGitCompare />
+                  {/* {wishlists && wishlists.length > 0 && (
+                    <div className="wishlist-count d-flex justify-content-center align-items-center">
+                      {wishlists.length}
+                    </div>
+                  )} */}
+                </div>
                 <div
                   onClick={() => handleWishlist()}
                   className="position-relative"

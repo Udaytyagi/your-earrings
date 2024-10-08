@@ -56,13 +56,10 @@ function Checkout() {
     } else if (!selectedAddressId) {
       ErrorToaster("Please select address")
       return;
-    } else if (!selectedPaymentMethod) {
-      ErrorToaster("Please select payment method")
-      return;
     }
     const data = {
       addressId: selectedAddressId,
-      payment_method: selectedPaymentMethod
+      payment_method: "world_pay"
     }
     await createOrderApi(data, setLoading, navigate)
   }
@@ -96,7 +93,7 @@ function Checkout() {
       />
 
       <div className="checkout__page--area section--padding">
-        <div className="container">
+        <div className="container" style={{ padding: "0px 35px" }}>
           <div className="row">
             <div className="col-lg-7 col-md-6 main checkout__mian">
 
@@ -171,7 +168,7 @@ function Checkout() {
               </div>
 
             </div>
-            <div className="col-lg-5 col-md-6">
+            <div className="col-lg-5 col-md-6 pt-3 pt-md-0 px-md-3 px-0">
               <div className="order-summary">
                 <h5>Your Order Summary</h5>
                 <div style={{ maxHeight: "240px", overflowY: "scroll", scrollbarWidth: "none" }}>
@@ -202,7 +199,7 @@ function Checkout() {
                   </div>
                   <div className="d-flex justify-content-between shipping-btn">
                     <span>Shipping</span>
-                    <span>Calculated after selecting address</span>
+                    <span>$0</span>
                   </div>
                   <div className="d-flex justify-content-between total-main">
                     <span>Total</span>
@@ -212,8 +209,13 @@ function Checkout() {
                 <div className="payment-main py-3">
                   <h5>Payment Method</h5>
                   <div className="payment-methods">
-                    <button className={`btn btn-outline-secondary ${selectedPaymentMethod === "cod" ? "selected" : ""}`} onClick={() => setSelectedPaymentMethod("cod")}>COD</button>
-                    <button className={`btn btn-outline-secondary ${selectedPaymentMethod === "world_pay" ? "selected" : ""}`} onClick={() => setSelectedPaymentMethod("world_pay")}>World Pay</button>
+                    {/* <button className={`btn btn-outline-secondary ${selectedPaymentMethod === "cod" ? "selected" : ""}`} onClick={() => setSelectedPaymentMethod("cod")}>COD</button> */}
+                    {/* <button className={`btn btn-outline-secondary ${selectedPaymentMethod === "world_pay" ? "selected" : ""}`} onClick={() => setSelectedPaymentMethod("world_pay")}>World Pay</button> */}
+                    <img src="/public/images/visa.svg" className="img-fluid"></img>
+                    <img src="/public/images/mastercard.svg" className="img-fluid"></img>
+                    <img src="/public/images/americanexpress.svg" className="img-fluid"></img>
+                    <img src="/public/images/discover.svg" className="img-fluid"></img>
+                    <img src="/public/images/jcb.svg" className="img-fluid"></img>
                   </div>
                 </div>
                 <button className="btn btn-lg mt-3 w-100" onClick={() => handleCheckout()} disabled={loading}>{loading ? <Loader height="22"

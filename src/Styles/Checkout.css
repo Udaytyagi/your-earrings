@@ -213,7 +213,7 @@ label {
 
 .payment-methods {
   display: flex;
-  gap: 15px;
+  /* gap: 15px; */
 }
 
 .payment-main h5 {
@@ -276,3 +276,10 @@ label {
     font-size: 14px;
   }
 }
+
+/* @media only screen and (max-width: 375px) {
+  .payment-methods img {
+    height: 45px;
+    width: 45px;
+  }
+} */

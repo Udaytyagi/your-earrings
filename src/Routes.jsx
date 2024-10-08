@@ -24,6 +24,7 @@ import Failure from "./sections/paymentStatusWorldPay/Failure";
 import Error from "./sections/paymentStatusWorldPay/Error";
 import Cancel from "./sections/paymentStatusWorldPay/Cancel";
 import Expiry from "./sections/paymentStatusWorldPay/Expiry";
+import Compare from "./Pages/Compare";
 
 const router = createBrowserRouter([
   {
@@ -207,6 +208,14 @@ const router = createBrowserRouter([
     element: (
       <ScrollToTop>
         <ProtectedRoute element={Expiry} />
+      </ScrollToTop>
+    ),
+  },
+  {
+    path: "/compare",
+    element: (
+      <ScrollToTop>
+        <Compare />
       </ScrollToTop>
     ),
   },

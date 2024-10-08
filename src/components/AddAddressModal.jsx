@@ -150,8 +150,8 @@ const AddAddressModal = ({ isPopupOpen, closePopup }) => {
                                         </div>
                                         <div className="profile-address-radio-buttons">
                                             <h6>Address Type</h6>
-                                            <div className="d-flex">
-                                                <div className="form-check">
+                                            <div className="d-flex flex-wrap align-items-center">
+                                                <div className="form-check me-3">
                                                     <input
                                                         className="form-check-input"
                                                         type="radio"
@@ -164,7 +164,7 @@ const AddAddressModal = ({ isPopupOpen, closePopup }) => {
                                                         Home
                                                     </label>
                                                 </div>
-                                                <div className="form-check mx-5">
+                                                <div className="form-check me-3">
                                                     <input
                                                         className="form-check-input"
                                                         type="radio"
@@ -177,7 +177,7 @@ const AddAddressModal = ({ isPopupOpen, closePopup }) => {
                                                         Office
                                                     </label>
                                                 </div>
-                                                <div className="form-check">
+                                                <div className="form-check me-3">
                                                     <input
                                                         className="form-check-input"
                                                         type="radio"
