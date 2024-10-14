@@ -1,0 +1,65 @@
+.price-comparison-table {
+  width: 100%;
+  margin: 0px auto;
+  border-collapse: collapse;
+  position: relative; /* Added for sticky positioning */
+}
+
+.price-comparison-table h5 {
+  text-align: left;
+  padding: 13px 20px;
+  background-color: #a07936;
+  color: #fff;
+  border-radius: 8px 8px 0px 0px;
+}
+
+.price-comparison-table table {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+}
+
+.price-comparison-table th,
+.price-comparison-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.price-comparison-table th {
+  background-color: #f7f7f7;
+  font-weight: bold;
+}
+
+.price-comparison-table td {
+  background-color: #fff;
+}
+
+/* Fixed column styling */
+.price-comparison-table th:first-child,
+.price-comparison-table td:first-child {
+  text-align: left;
+  position: sticky;
+  left: 0;
+  background-color: #fff; /* Background for fixed column */
+  z-index: 1; /* Ensure it stays on top */
+}
+
+.price-comparison-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.price-comparison-table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Scrollable container for the table */
+.table-responsive {
+  display: block;
+  overflow-x: auto; /* Enable horizontal scrolling */
+}
+
+.table-responsive table {
+  min-width: 600px; /* Set a min-width for proper scrolling */
+}

@@ -85,9 +85,7 @@
 
 .filter-icon {
   margin-right: 8px; /* Space between icon and text */
-  font-size: 18px; /* Icon size */
 }
-
 
 .range-contain {
   background-color: #a079361a;
@@ -287,7 +285,6 @@
 }
 
 @media only screen and (max-width: 500px) {
-
   .page-nav p {
     font-size: 15px;
   }
@@ -300,16 +297,15 @@
   .daimond {
     padding: 0px 35px !important;
   }
-  .select-btn{
+  .select-btn {
     padding: 20px !important;
   }
-  .select-btn{
+  .select-btn {
     justify-content: center !important;
   }
-  .shapes-inner-btn{
+  .shapes-inner-btn {
     width: 45% !important;
   }
-
 }
 
 @media only screen and (max-width: 768px) {
@@ -318,23 +314,26 @@
   }
 }
 
-
 @media only screen and (min-width: 400px) and (max-width: 499px) {
-  .shapes-inner-btn h6{
+  .shapes-inner-btn h6 {
     font-size: 13px !important;
   }
-  .shapes-inner-slt{
-  width: 40%;
-  
+  .shapes-inner-slt {
+    width: 40%;
   }
-  .slt{
-  padding: 20px 0px;
-  gap: 30px;
+  .slt {
+    padding: 20px 0px;
+    gap: 30px;
   }
-  .shapes-inner-slt img{
+  .shapes-inner-slt img {
     width: 95%;
     height: 100%;
     object-fit: contain;
   }
 }
 
+@media only screen and (max-width: 575px) {
+  .daimondPriceComparison {
+    padding: 0px 25px;
+  }
+}
