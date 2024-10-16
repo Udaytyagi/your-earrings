@@ -26,7 +26,6 @@ const Diamond = () => {
   const [selectedShapeSlug, setSelectedShapeSlug] = useState("");
   const [selectedSettingSlug, setSelectedSettingSlug] = useState("");
   const [selectedMetalSlug, setSelectedMetalSlug] = useState("");
-  // const [selectedSize, setSelectedSize] = useState("");
   const [types, setTypes] = useState(null);
   const [shapes, setShapes] = useState([]);
   const [settings, setSettings] = useState([]);
@@ -220,7 +219,7 @@ const Diamond = () => {
               onClick={() => setPriceView(!priceView)}
             >
               {
-                priceView ? <div className="d-flex align-items-center">
+                !priceView ? <div className="d-flex align-items-center">
                   <span className="filter-icon">
                     <CiGrid2H />
                   </span>

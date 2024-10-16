@@ -67,7 +67,7 @@ const FeaturedProduct = ({ products }) => {
                   <Slider {...settings}>
                     {
                       products && products?.Product_details && products?.Product_details?.length > 0 && products.Product_details.map((product, i) => (
-                        <div className="featuredpdt-items text-center d-flex" key={i} onClick={() => navigate(`/${product.Slug}?vId=${product.Variation_id}`)}>
+                        <div className="featuredpdt-items text-center d-flex" key={i} onClick={() => navigate(`/${product.Slug}?vId=${product.Variation_id}`)} style={{ cursor: "pointer" }}>
                           <div className='featuredpdt-round'>
                             <img className='img-fluid' src={product.image || "/images/products-1.png"} alt="" />
                           </div>
@@ -79,7 +79,7 @@ const FeaturedProduct = ({ products }) => {
                   </Slider>   </div> : <>
                   {
                     products && products?.Product_details && products?.Product_details?.length > 0 && products.Product_details.map((product, i) => (
-                      <div className="col-lg-3 col-md-6 featuredpdt-items text-center d-flex flex-column align-items-center" key={i} onClick={() => navigate(`/${product.Slug}?vId=${product.Variation_id}`)}>
+                      <div className="col-lg-3 col-md-6 featuredpdt-items text-center d-flex flex-column align-items-center" key={i} onClick={() => navigate(`/${product.Slug}?vId=${product.Variation_id}`)} style={{ cursor: "pointer" }}>
                         <div className='featuredpdt-round'>
                           <img className='img-fluid' src={product.image || "/images/products-1.png"} alt="" />
                         </div>

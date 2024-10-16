@@ -91,10 +91,10 @@
   text-decoration: none;
 }
 
-.compare th:not(:first-child),
+/* .compare .zui-table th:not(:first-child),
 td:not(:first-child) {
   border-left: 1px solid lightgrey;
-}
+} */
 
 .compare .svg-inline--fa {
   -moz-osx-font-smoothing: grayscale;

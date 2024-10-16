@@ -8,23 +8,33 @@ export const fetchProductDetailApi = async (data, variationId) => {
     const headers = {
       Authorization: `Bearer ${token}`,
     };
-    if (data.shape || data.setting || data.metal || data.size || data.type) {
-      const response = await axios.post(
-        `${baseUrl}fetch/product/variation`,
-        data, { headers }
-      );
-      return response;
-    } else {
-      const response = await axios.post(
-        `${baseUrl}fetch/product/variation/${variationId}`,
-        data, { headers }
-      );
-      return response;
-    }
+    const response = await axios.post(
+      `${baseUrl}fetch/product/variation/${variationId}`,
+      data, { headers }
+    );
+    return response;
   } catch (error) {
     return null;
   }
 };
+
+export const fetchVariationProductDetailApi = async (data, navigate) => {
+  try {
+    const token = localStorage.getItem('earringsToken')
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const response = await axios.post(
+      `${baseUrl}fetch/product/variation`,
+      data, { headers }
+    );
+    navigate(`/${response?.data?.product?.Product_info.Slug}?vId=${response?.data?.product?.Product_info?.Already_selected_filter?.v_Id}`);
+    return response;
+  } catch (error) {
+    return null;
+  }
+};
+
 
 export const fetchCouponApi = async (variationId, couponId) => {
   try {

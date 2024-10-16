@@ -1,11 +1,23 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { fetchProductDetailApi } from "../../../apis/mainApis/productDetail/productDetailApis";
+import { fetchProductDetailApi, fetchVariationProductDetailApi } from "../../../apis/mainApis/productDetail/productDetailApis";
 
 export const fetchProductDetail = createAsyncThunk(
   "fetchProductDetail",
   async ({ data, variationId }) => {
     try {
       const response = await fetchProductDetailApi(data, variationId);
+      return response?.data?.product;
+    } catch (error) {
+      return null;
+    }
+  }
+);
+
+export const fetchVariationProductDetail = createAsyncThunk(
+  "fetchProductDetail",
+  async ({ data, navigate }) => {
+    try {
+      const response = await fetchVariationProductDetailApi(data, navigate);
       return response?.data?.product;
     } catch (error) {
       return null;

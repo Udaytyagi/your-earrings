@@ -35,6 +35,7 @@ const userSlice = createSlice({
         data: null,
         isError: false,
         isLoginModal: false,
+        compareLength: 0
     },
     reducers: {
         openLoginModal: (state) => {
@@ -42,6 +43,9 @@ const userSlice = createSlice({
         },
         closeLoginModal: (state) => {
             state.isLoginModal = false;
+        },
+        setCompareLength: (state,action) => {
+            state.compareLength = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -59,5 +63,5 @@ const userSlice = createSlice({
     },
 });
 
-export const { openLoginModal, closeLoginModal } = userSlice.actions;
+export const { openLoginModal, closeLoginModal, setCompareLength } = userSlice.actions;
 export default userSlice.reducer;

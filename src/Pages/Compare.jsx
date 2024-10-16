@@ -1,11 +1,45 @@
-import React from 'react'
-import "../Styles/Compare.css"
-import Topbar from '../sections/common/Topbar'
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import "../Styles/Compare.css";
+import Topbar from '../sections/common/Topbar';
 import Navbarmid from "../sections/common/Navbarmid";
 import NavbarBottom from "../sections/common/NavbarBottom";
 import Footer from "../sections/common/Footer";
+import { fetchCompareProduct } from '../features/slices/compare/compareSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { FaTrash } from "react-icons/fa";
 
 const Compare = () => {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [variationIds, setVariationIds] = useState([]);
+    const compareProducts = useSelector((state) => state.compare.data);
+
+    useEffect(() => {
+        const queryParams = new URLSearchParams(location.search);
+        const productsParam = queryParams.get('products');
+
+        if (productsParam) {
+            const productArray = productsParam.split(',').map(product => product.split('-').pop());
+            setVariationIds(productArray);
+            const data = { variation_ids: productArray };
+            dispatch(fetchCompareProduct(data));
+        }
+    }, [location, dispatch]);
+
+    const handleDelete = (variationId) => {
+        const compareIds = JSON.parse(localStorage.getItem("compareItems")) || [];
+        const updatedCompareIds = compareIds.filter(item => item.variationId != variationId);
+        localStorage.setItem("compareItems", JSON.stringify(updatedCompareIds));
+
+        const updatedVariationIds = variationIds.filter(id => id !== variationId);
+        setVariationIds(updatedVariationIds);
+
+        const products = updatedCompareIds.map(item => `${item.productSlug}-${item.variationId}`).join(",");
+        navigate(`/compare?products=${products}`);
+    };
+
     return (
         <>
             <Topbar />
@@ -24,90 +58,34 @@ const Compare = () => {
                                     <thead>
                                         <tr>
                                             <th className="zui-sticky-col">&nbsp;</th>
-                                            <th id="product-col" className="table-col">
-                                                <img className="product-img img-fluid" src="/images/compare4.png" />
-                                                <h5>
-                                                    Natural Diamonds Round 4-Prong Martini
-                                                </h5>
-                                            </th>
-                                            <th className="table-col">
-                                                <img className="product-img img-fluid" src="/images/compare4.png" />
-                                                <h5>
-                                                    Natural Diamonds Round 4-Prong Martini
-                                                </h5>
-                                            </th>
-                                            <th className="table-col">
-                                                <img className="product-img img-fluid" src="/images/compare4.png" />
-                                                <h5>
-                                                    Natural Diamonds Round 4-Prong Martini
-                                                </h5>
-                                            </th>
-                                            <th className="table-col">
-                                                <img className="product-img img-fluid" src="/images/compare4.png" />
-                                                <h5>
-                                                    Natural Diamonds Round 4-Prong Martini
-                                                </h5>
-                                            </th>
+                                            {compareProducts && compareProducts.slice(1).map((_, index) => {
+                                                const productId = variationIds[index];
+                                                return (
+                                                    <th key={index} className="table-col">
+                                                        <img className="product-img img-fluid" src="/images/compare4.png" alt={`Product ${index + 1}`} />
+                                                        <h5>{`Product ${index + 1}`}</h5>
+                                                        <button onClick={() => handleDelete(productId)} className="delete-btn">
+                                                            <FaTrash />
+                                                        </button>
+                                                    </th>
+                                                );
+                                            })}
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td className="zui-sticky-col">Shape</td>
-                                            <td>Round</td>
-                                            <td>Oval</td>
-                                            <td>Pear</td>
-                                            <td>Cushion</td>
-                                        </tr>
-                                        <tr>
-                                            <td className="zui-sticky-col">Setting</td>
-                                            <td>4-Prong Basket</td>
-                                            <td>Halo</td>
-                                            <td>Crown</td>
-                                            <td>4-Prong Basket</td>
-                                        </tr>
-                                        <tr>
-                                            <td className="zui-sticky-col">Metal</td>
-                                            <td>18k Yellow Gold</td>
-                                            <td>14k yellow gold</td>
-                                            <td>18k Yellow Gold</td>
-                                            <td>14k yellow gold</td>
-                                        </tr>
-                                        <tr>
-                                            <td className="zui-sticky-col">Size</td>
-                                            <td>0.25</td>
-                                            <td>0.35</td>
-                                            <td>0.25</td>
-                                            <td>0.35</td>
-                                        </tr>
-                                        <tr>
-                                            <td className="zui-sticky-col">Clarity</td>
-                                            <td>Beautiful</td>
-                                            <td>Brilliant</td>
-                                            <td>Beautiful</td>
-                                            <td>Masterpiece</td>
-                                        </tr>
-                                        <tr>
-                                            <td className="zui-sticky-col">Color</td>
-                                            <td>I-J</td>
-                                            <td>H-I</td>
-                                            <td>G-H</td>
-                                            <td>I-J</td>
-                                        </tr>
-                                        <tr>
-                                            <td className="zui-sticky-col">Base Price</td>
-                                            <td>$399</td>
-                                            <td>$399</td>
-                                            <td>$399</td>
-                                            <td>$399</td>
-                                        </tr>
-                                        <tr>
-                                            <td className="zui-sticky-col">Sale Price</td>
-                                            <td>$299</td>
-                                            <td>$299</td>
-                                            <td>$299</td>
-                                            <td>$299</td>
-                                        </tr>
-
+                                        {compareProducts && compareProducts[0].Key.map((key, index) => (
+                                            <tr key={index}>
+                                                <td className="zui-sticky-col">{key}</td>
+                                                {compareProducts.slice(1).map((product, productIndex) => {
+                                                    const productData = product[`product_${productIndex + 1}`];
+                                                    return (
+                                                        <td key={productIndex}>
+                                                            {productData && productData[key] ? productData[key] : 'N/A'}
+                                                        </td>
+                                                    );
+                                                })}
+                                            </tr>
+                                        ))}
                                     </tbody>
                                 </table>
                             </div>
@@ -117,7 +95,7 @@ const Compare = () => {
             </div>
             <Footer />
         </>
-    )
-}
+    );
+};
 
-export default Compare
+export default Compare;

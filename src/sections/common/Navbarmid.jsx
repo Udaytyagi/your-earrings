@@ -26,6 +26,7 @@ const Navbarmid = () => {
   const carts = useSelector(
     (state) => state?.cart?.data?.Cart_info?.product_info
   );
+  const compareLength = useSelector((state) => state?.user?.compareLength)
   const [searchData, setSearchData] = useState([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
@@ -34,7 +35,6 @@ const Navbarmid = () => {
   const [updatePage, setUpdatePage] = useState(false);
   const [show, setShow] = useState(false);
 
-  // console.log("ssss", searchData, showDropdown);
 
   useEffect(() => {
     setUpdatePage(!updatePage);
@@ -94,6 +94,12 @@ const Navbarmid = () => {
     setShowDropdown(true);
   };
 
+  const handleCompare = () => {
+    const compareIds = JSON.parse(localStorage.getItem("compareItems")) || [];
+    const products = compareIds.map(item => `${item.productSlug}-${item.variationId}`).join(",");
+    navigate(`/compare?products=${products}`);
+  };
+
   return (
     <>
       <SidebarNavbar show={show} setShow={setShow} />
@@ -108,7 +114,7 @@ const Navbarmid = () => {
               <MdDehaze style={{ fontSize: "25px" }} />
             </div>
 
-           
+
 
             <div className="col-6" onClick={() => navigate("/")}>
               <div className="logo" style={{ cursor: "pointer" }}>
@@ -126,11 +132,11 @@ const Navbarmid = () => {
                   style={{ cursor: "pointer" }}
                 >
                   <IoIosGitCompare />
-                  {/* {wishlists && wishlists.length > 0 && (
+                  {compareLength !== 0 && (
                     <div className="wishlist-count d-flex justify-content-center align-items-center">
-                      {wishlists.length}
+                      {compareLength}
                     </div>
-                  )} */}
+                  )}
                 </div>
                 <div
                   onClick={() => handleWishlist()}
@@ -275,16 +281,16 @@ const Navbarmid = () => {
             <div className="col-md-2">
               <div className="cart d-flex align-items-center justify-content-end">
                 <div
-                  onClick={() => navigate("/compare")}
+                  onClick={handleCompare}
                   className="position-relative"
                   style={{ cursor: "pointer" }}
                 >
                   <IoIosGitCompare />
-                  {/* {wishlists && wishlists.length > 0 && (
+                  {compareLength !== 0 && (
                     <div className="wishlist-count d-flex justify-content-center align-items-center">
-                      {wishlists.length}
+                      {compareLength}
                     </div>
-                  )} */}
+                  )}
                 </div>
                 <div
                   onClick={() => handleWishlist()}

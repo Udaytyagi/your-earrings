@@ -22,7 +22,7 @@ const NewProducts = ({ products, handleUpdateWishlist }) => {
                         {
                             products && products?.Product_details && products?.Product_details?.length > 0 && products?.Product_details?.map((product, i) => (
                                 <div className="col-md-6 col-lg-3" key={i}>
-                                    <div className="new-product-items">
+                                    <div className="new-product-items" style={{ cursor: "pointer" }}>
                                         {
                                             product?.Wishlist === true ? <div className="wishlist-icon-fill d-flex justify-content-end" onClick={() => handleUpdateWishlist(product?.Variation_id)}><FaHeart /></div> : <div className="wishlist-icon d-flex justify-content-end" onClick={() => handleUpdateWishlist(product?.Variation_id)}><FaRegHeart /></div>
                                         }
