@@ -8,7 +8,7 @@ import { setCompareLength } from './features/slices/user/userSlice';
 function App() {
 
   const dispatch = useDispatch();
-  const existingCompareIds = JSON.parse(localStorage.getItem('compareIds')) || [];
+  const existingCompareIds = JSON.parse(localStorage.getItem('compareItems')) || [];
   const compareLength = existingCompareIds.length;
   dispatch(setCompareLength(compareLength));
 
@@ -18,6 +18,7 @@ function App() {
     dispatch(fetchWishlist());
     dispatch(fetchCart());
   }
+
   return (
     <>
       <Routes />

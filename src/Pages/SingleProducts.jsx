@@ -11,7 +11,10 @@ import SingleProductSlider from "../Pages/SingleProductSlider";
 import { RiUploadCloud2Line, RiDeleteBin6Line } from "react-icons/ri";
 import { FaAngleRight } from "react-icons/fa6";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { fetchProductDetail, fetchVariationProductDetail } from "../features/slices/productDetail/productDetailSlice";
+import {
+  fetchProductDetail,
+  fetchVariationProductDetail,
+} from "../features/slices/productDetail/productDetailSlice";
 import { useDispatch, useSelector } from "react-redux";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
@@ -26,13 +29,13 @@ import { updateWishlist } from "../features/slices/wishlist/wishlistSlice";
 import { addReviewApi } from "../apis/mainApis/productDetail/productDetailApis";
 import { KEY_PREFIX } from "redux-persist/lib/constants";
 import ImageModal from "../components/ImageModal";
-import jewelleryVideo from "../../public/video/jewelleryVideo.mp4"
+import jewelleryVideo from "../../public/video/jewelleryVideo.mp4";
 import { setCompareLength } from "../features/slices/user/userSlice";
 
 const SingleProducts = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const variationId = searchParams.get("vId");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const fileInputRef = createRef();
   const fullScreenRef = useRef();
@@ -90,37 +93,33 @@ const SingleProducts = () => {
   }, [product]);
 
   useEffect(() => {
-    const existingCompareIds = JSON.parse(localStorage.getItem('compareIds')) || [];
-    setIsInCompare(existingCompareIds.includes(variationId));
+    const existingCompareIds =
+      JSON.parse(localStorage.getItem("compareItems")) || [];
+    setIsInCompare(existingCompareIds.some((item) => item.variationId==variationId));
   }, [variationId]);
 
   const images = [
     ...(product?.Product_info?.Gallery_images?.map((item) => {
-      const isVideo = item.endsWith('.mp4');
+      const isVideo = item.endsWith(".mp4");
       return {
         original: item,
-        thumbnail: item,
+        thumbnail: isVideo ? "/images/blog-1.png" : item,
         isVideo,
       };
     }) || []),
-    {
-      original: jewelleryVideo,
-      thumbnail: "/images/blog-1.png",
-      isVideo: true,
-    },
   ];
 
   const renderItem = (item) => {
     if (item.isVideo) {
       return (
-        <video controls autoPlay muted style={{ width: '100%' }}>
+        <video controls autoPlay muted style={{ width: "100%" }}>
           <source src={item.original} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       );
     }
 
-    return <img src={item.original} alt="" style={{ width: '100%' }} />;
+    return <img src={item.original} alt="" style={{ width: "100%" }} />;
   };
 
   const handleIconClick = () => {
@@ -167,10 +166,7 @@ const SingleProducts = () => {
   const handleAddCoupon = async (couponId) => {
     if (couponId !== selectedCouponId) {
       setSelectedCouponId(couponId);
-      const response = await fetchCouponApi(
-        variationId,
-        couponId
-      );
+      const response = await fetchCouponApi(variationId, couponId);
       setDiscountPrice(response.data.data.Sale_price.After_discount_price);
     }
   };
@@ -245,49 +241,62 @@ const SingleProducts = () => {
     };
 
     switch (type) {
-      case 'setting':
+      case "setting":
         updatedData.setting = newValue;
         setSelectedSetting(newValue);
         break;
-      case 'metal':
+      case "metal":
         updatedData.metal = newValue;
         setSelectedMetal(newValue);
         break;
-      case 'size':
+      case "size":
         updatedData.size = newValue;
         setSelectedSize(newValue);
         break;
-      case 'type':
+      case "type":
         updatedData.type = newValue;
         setSelectedType(newValue);
         break;
       default:
         break;
     }
-    dispatch(fetchVariationProductDetail({ data: updatedData, navigate: navigate }));
+    dispatch(
+      fetchVariationProductDetail({ data: updatedData, navigate: navigate })
+    );
   };
 
   const handleAddToCompare = () => {
-    const existingCompareItems = JSON.parse(localStorage.getItem('compareItems')) || [];
-    const existingItemIndex = existingCompareItems.findIndex(item => item.variationId === variationId);
+    const existingCompareItems =
+      JSON.parse(localStorage.getItem("compareItems")) || [];
+    const existingItemIndex = existingCompareItems.findIndex(
+      (item) => item.variationId == variationId
+    );
 
     if (existingCompareItems.length === 4 && existingItemIndex === -1) {
       ErrorToaster("You cannot compare more than 4 products");
     } else if (existingItemIndex === -1) {
-      existingCompareItems.push({ variationId: parseInt(variationId), productSlug: product.Product_info.Slug });
-      localStorage.setItem('compareItems', JSON.stringify(existingCompareItems));
+      existingCompareItems.push({
+        variationId: parseInt(variationId),
+        productSlug: product.Product_info.Slug,
+      });
+      localStorage.setItem(
+        "compareItems",
+        JSON.stringify(existingCompareItems)
+      );
       dispatch(setCompareLength(existingCompareItems.length));
       SuccessToaster("Item added to your compare list.");
       setIsInCompare(true);
     } else {
       existingCompareItems.splice(existingItemIndex, 1);
-      localStorage.setItem('compareItems', JSON.stringify(existingCompareItems));
+      localStorage.setItem(
+        "compareItems",
+        JSON.stringify(existingCompareItems)
+      );
       dispatch(setCompareLength(existingCompareItems.length));
       SuccessToaster("Item removed from your compare list.");
       setIsInCompare(false);
     }
   };
-
 
   return (
     <>
@@ -372,13 +381,17 @@ fashion earrings to find your perfect pair."
                             return (
                               <Dropdown.Item
                                 key={KEY_PREFIX}
-                                className={`product-shape ${key == selectedSettingId ? "selected" : ""
-                                  }`}
+                                className={`product-shape ${
+                                  key == selectedSettingId ? "selected" : ""
+                                }`}
                                 onClick={async () => {
                                   setSelectedSettingId(key);
                                   setSelectedSetting(setting.name);
                                   // setUpdatePage(!updatePage);
-                                  handleChangeVariation(setting.name, "setting")
+                                  handleChangeVariation(
+                                    setting.name,
+                                    "setting"
+                                  );
                                   handleRemoveCoupon();
                                 }}
                               >
@@ -411,13 +424,14 @@ fashion earrings to find your perfect pair."
                             return (
                               <Dropdown.Item
                                 key={KEY_PREFIX}
-                                className={`product-shape ${key == selectedMetalId ? "selected" : ""
-                                  }`}
+                                className={`product-shape ${
+                                  key == selectedMetalId ? "selected" : ""
+                                }`}
                                 onClick={() => {
                                   setSelectedMetalId(key);
                                   setSelectedMetal(metal.name);
                                   // setUpdatePage(!updatePage);
-                                  handleChangeVariation(metal.name, "metal")
+                                  handleChangeVariation(metal.name, "metal");
                                   handleRemoveCoupon();
                                 }}
                               >
@@ -451,13 +465,14 @@ fashion earrings to find your perfect pair."
                             return (
                               <Dropdown.Item
                                 key={KEY_PREFIX}
-                                className={`product-shape ${key == selectedSizeId ? "selected" : ""
-                                  }`}
+                                className={`product-shape ${
+                                  key == selectedSizeId ? "selected" : ""
+                                }`}
                                 onClick={() => {
                                   setSelectedSizeId(key);
                                   setSelectedSize(size.name);
                                   // setUpdatePage(!updatePage)
-                                  handleChangeVariation(size.name, "size")
+                                  handleChangeVariation(size.name, "size");
                                   handleRemoveCoupon();
                                 }}
                               >
@@ -493,15 +508,16 @@ fashion earrings to find your perfect pair."
                             return (
                               <Dropdown.Item
                                 key={KEY_PREFIX}
-                                className={`product-shape ${metal.variation_ids == selectedTypeId
-                                  ? "selected"
-                                  : ""
-                                  }`}
+                                className={`product-shape ${
+                                  metal.variation_ids == selectedTypeId
+                                    ? "selected"
+                                    : ""
+                                }`}
                                 onClick={() => {
                                   setSelectedTypeId(metal.variation_ids);
                                   setSelectedType(metal.name);
                                   // setUpdatePage(!updatePage);
-                                  handleChangeVariation(metal.name, "type")
+                                  handleChangeVariation(metal.name, "type");
                                   handleRemoveCoupon();
                                 }}
                               >
@@ -552,10 +568,11 @@ fashion earrings to find your perfect pair."
                     <p>Coupon Available</p>
                     {product?.Product_info?.Discount?.map((discount, i) => (
                       <div
-                        className={`discount-field ${discount.coupon_id === selectedCouponId
-                          ? "selected"
-                          : ""
-                          }`}
+                        className={`discount-field ${
+                          discount.coupon_id === selectedCouponId
+                            ? "selected"
+                            : ""
+                        }`}
                         key={i}
                       >
                         <div className="d-flex align-items-center justify-content-between">
@@ -584,7 +601,6 @@ fashion earrings to find your perfect pair."
                     ))}
                   </div>
                 )}
-
             </div>
           </div>
         </div>
@@ -824,35 +840,41 @@ fashion earrings to find your perfect pair."
             </div>
 
             <div className="container p-0 mt-4">
-              {
-                product && product?.Review_section?.user_review && product?.Review_section?.user_review?.length > 0 &&
+              {product &&
+                product?.Review_section?.user_review &&
+                product?.Review_section?.user_review?.length > 0 &&
                 product?.Review_section?.user_review?.map((product, i) => (
                   <div className="review-box" key={i}>
                     <div className="review-header">
-                      <img src={product?.user_img || "https://img.freepik.com/free-icon/user_318-159711.jpg"} alt="User Avatar" />
+                      <img
+                        src={
+                          product?.user_img ||
+                          "https://img.freepik.com/free-icon/user_318-159711.jpg"
+                        }
+                        alt="User Avatar"
+                      />
                       <div className="user-info">
                         <h6>
-                          {product?.createdBy} <span>({product?.createdAt})</span>
+                          {product?.createdBy}{" "}
+                          <span>({product?.createdAt})</span>
                         </h6>
                         <p>Self</p>
                       </div>
                     </div>
                     <Rating readonly initialValue={product.rating} size={15} />
-                    <div className="review-content">
-                      {product?.description}
-                    </div>
+                    <div className="review-content">{product?.description}</div>
                     <div className="review-images">
-                      {
-                        product?.review_img.map((image, j) => (
-                          <img src={image} alt={`Review Image ${j + 1}`} key={j} onClick={() => handleImageModal(image)} />
-                        ))
-                      }
+                      {product?.review_img.map((image, j) => (
+                        <img
+                          src={image}
+                          alt={`Review Image ${j + 1}`}
+                          key={j}
+                          onClick={() => handleImageModal(image)}
+                        />
+                      ))}
                     </div>
                   </div>
-                ))
-              }
-
-
+                ))}
             </div>
 
             <div className="container p-0 mt-4">
@@ -863,7 +885,10 @@ fashion earrings to find your perfect pair."
                   <div className="review-box" key={i}>
                     <div className="review-header">
                       <img
-                        src={item.user_img || "https://img.freepik.com/free-icon/user_318-159711.jpg"}
+                        src={
+                          item.user_img ||
+                          "https://img.freepik.com/free-icon/user_318-159711.jpg"
+                        }
                         alt="User Avatar"
                       />
                       <div className="user-info">

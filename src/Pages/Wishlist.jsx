@@ -54,7 +54,7 @@ function Wishlist() {
           <div className="container">
             <div className="row">
               <div className="col-md-12">
-                {wishlists && wishlists.length > 0 ? <div className="main-heading mb-20">My Wishlist</div> : <h1 className="main-heading mb-20 d-flex justify-content-center fw-bold">Your Wishlist is empty</h1>}
+                {wishlists && wishlists.length > 0 ? <div className="main-heading mb-20">My Wishlist</div> : <h1 className="main-heading mb-20 d-flex justify-content-center fw-bold">Your wishlist is empty</h1>}
                 {
                   wishlists && wishlists.length > 0 ? <div className="table-wishlist">
                     <table
