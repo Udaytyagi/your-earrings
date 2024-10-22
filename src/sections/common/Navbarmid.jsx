@@ -127,7 +127,7 @@ const Navbarmid = () => {
             <div className="col-2">
               <div className="cart d-flex align-items-center justify-content-end">
                 <div
-                  onClick={() => navigate("/compare")}
+                  onClick={handleCompare}
                   className="position-relative"
                   style={{ cursor: "pointer" }}
                 >

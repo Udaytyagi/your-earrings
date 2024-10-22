@@ -17,7 +17,6 @@ const Compare = () => {
   const [variationIds, setVariationIds] = useState([]);
   const [lastProductDeleted, setLastProductDeleted] = useState(false);
   const compareProducts = useSelector((state) => state.compare.data);
-  console.log(compareProducts);
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);

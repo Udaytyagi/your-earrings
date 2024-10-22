@@ -19,7 +19,7 @@ const store = configureStore({
     blogs: blogSlice,
     address: addressSlice,
     order: orderSlice,
-    compare:compareSlice
+    compare: compareSlice
   },
 });
 

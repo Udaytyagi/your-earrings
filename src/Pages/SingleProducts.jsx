@@ -64,6 +64,7 @@ const SingleProducts = () => {
   const [description, setDescription] = useState("");
   const [reviewImages, setReviewImages] = useState([]);
   const [isInCompare, setIsInCompare] = useState(false);
+  const [videoThumnailImage, setVideoThumnailImage] = useState(null)
 
   useEffect(() => {
     const data = {
@@ -89,13 +90,14 @@ const SingleProducts = () => {
       setSelectedMetal(Already_selected_filter?.metal);
       setSelectedSize(Already_selected_filter?.size);
       setSelectedType(Already_selected_filter?.type);
+      setVideoThumnailImage(product?.Product_info?.thumbnail)
     }
   }, [product]);
 
   useEffect(() => {
     const existingCompareIds =
       JSON.parse(localStorage.getItem("compareItems")) || [];
-    setIsInCompare(existingCompareIds.some((item) => item.variationId==variationId));
+    setIsInCompare(existingCompareIds.some((item) => item.variationId == variationId));
   }, [variationId]);
 
   const images = [
@@ -103,7 +105,7 @@ const SingleProducts = () => {
       const isVideo = item.endsWith(".mp4");
       return {
         original: item,
-        thumbnail: isVideo ? "/images/blog-1.png" : item,
+        thumbnail: isVideo ? videoThumnailImage : item,
         isVideo,
       };
     }) || []),
@@ -381,9 +383,8 @@ fashion earrings to find your perfect pair."
                             return (
                               <Dropdown.Item
                                 key={KEY_PREFIX}
-                                className={`product-shape ${
-                                  key == selectedSettingId ? "selected" : ""
-                                }`}
+                                className={`product-shape ${key == selectedSettingId ? "selected" : ""
+                                  }`}
                                 onClick={async () => {
                                   setSelectedSettingId(key);
                                   setSelectedSetting(setting.name);
@@ -424,9 +425,8 @@ fashion earrings to find your perfect pair."
                             return (
                               <Dropdown.Item
                                 key={KEY_PREFIX}
-                                className={`product-shape ${
-                                  key == selectedMetalId ? "selected" : ""
-                                }`}
+                                className={`product-shape ${key == selectedMetalId ? "selected" : ""
+                                  }`}
                                 onClick={() => {
                                   setSelectedMetalId(key);
                                   setSelectedMetal(metal.name);
@@ -465,9 +465,8 @@ fashion earrings to find your perfect pair."
                             return (
                               <Dropdown.Item
                                 key={KEY_PREFIX}
-                                className={`product-shape ${
-                                  key == selectedSizeId ? "selected" : ""
-                                }`}
+                                className={`product-shape ${key == selectedSizeId ? "selected" : ""
+                                  }`}
                                 onClick={() => {
                                   setSelectedSizeId(key);
                                   setSelectedSize(size.name);
@@ -508,11 +507,10 @@ fashion earrings to find your perfect pair."
                             return (
                               <Dropdown.Item
                                 key={KEY_PREFIX}
-                                className={`product-shape ${
-                                  metal.variation_ids == selectedTypeId
-                                    ? "selected"
-                                    : ""
-                                }`}
+                                className={`product-shape ${metal.variation_ids == selectedTypeId
+                                  ? "selected"
+                                  : ""
+                                  }`}
                                 onClick={() => {
                                   setSelectedTypeId(metal.variation_ids);
                                   setSelectedType(metal.name);
@@ -568,11 +566,10 @@ fashion earrings to find your perfect pair."
                     <p>Coupon Available</p>
                     {product?.Product_info?.Discount?.map((discount, i) => (
                       <div
-                        className={`discount-field ${
-                          discount.coupon_id === selectedCouponId
-                            ? "selected"
-                            : ""
-                        }`}
+                        className={`discount-field ${discount.coupon_id === selectedCouponId
+                          ? "selected"
+                          : ""
+                          }`}
                         key={i}
                       >
                         <div className="d-flex align-items-center justify-content-between">

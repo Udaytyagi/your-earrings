@@ -1,0 +1,35 @@
+.earring-view-container {
+  text-align: center;
+}
+
+.carat-weight-info {
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.carat-selection {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  background-color: #ededed;
+}
+
+.carat-radio {
+  margin: 5px;
+  text-align: center;
+}
+.carat-radio label {
+  font-size: 12px;
+}
+
+.carat-radio input[type="radio"] {
+  margin-right: 5px;
+  color: #a07936 !important;
+}
+
+.carat-info-text {
+  font-size: 12px;
+  margin-top: 10px;
+  color: #666;
+}

@@ -28,9 +28,10 @@ export const contactUsApi = async (data, setLoading, setFormData) => {
     }
 };
 
-export const newsLetterApi = async (data, setEmail) => {
+export const newsLetterApi = async (data, setEmail, setSuccessfulSignUp) => {
     try {
         const response = await axios.post(`${baseUrl}subscribe/newsletter`, data);
+        setSuccessfulSignUp(true)
         SuccessToaster(response.data.message)
         setEmail("");
     } catch (error) {

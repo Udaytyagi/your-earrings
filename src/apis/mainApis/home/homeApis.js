@@ -13,3 +13,13 @@ export const fetchHomeDataApi = async () => {
         return null;
     }
 };
+
+export const fetchOfferBannerApi = async () => {
+    try {
+        const response = await axios.get(`${baseUrl}discount/offer/ad`, {});
+        console.log(response.data)
+        return response;
+    } catch (error) {
+        return null;
+    }
+};

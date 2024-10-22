@@ -19,6 +19,8 @@ import { updateWishlist } from "../features/slices/wishlist/wishlistSlice";
 import SidebarFilters from "../components/SidebarFilters";
 import PriceComparisonTable from "../sections/diamond/PriceComparisonTable";
 import { CiGrid2H, CiGrid2V } from "react-icons/ci";
+import { LuEar } from "react-icons/lu";
+import EarringSizeModal from "../components/EarringSizeModal";
 
 const Diamond = () => {
   const navigate = useNavigate();
@@ -38,6 +40,7 @@ const Diamond = () => {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState("5000+");
   const [priceView, setPriceView] = useState(false)
+  const [openEarringSizeModal, setEarringSizeModal] = useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -98,6 +101,7 @@ const Diamond = () => {
 
   return (
     <>
+      <EarringSizeModal openEarringSizeModal={openEarringSizeModal} setEarringSizeModal={setEarringSizeModal} />
       <SidebarFilters
         showFilters={showFilters}
         setShowFilters={setShowFilters}
@@ -214,24 +218,39 @@ const Diamond = () => {
               </span>
               Filters
             </button>
-            <button
-              className="filter-button"
-              onClick={() => setPriceView(!priceView)}
-            >
-              {
-                !priceView ? <div className="d-flex align-items-center">
-                  <span className="filter-icon">
-                    <CiGrid2H />
-                  </span>
-                  View Price Comparison
-                </div> : <div className="d-flex align-items-center">
-                  <span className="filter-icon">
-                    <CiGrid2V />
-                  </span>
-                  View Products
-                </div>
-              }
-            </button>
+            <div className="d-flex">
+              <button
+                className="filter-button"
+                onClick={() => setEarringSizeModal(true)}
+              >
+                {
+                  <div className="d-flex align-items-center">
+                    <span className="filter-icon">
+                      <LuEar />
+                    </span>
+                    Earring Size
+                  </div>
+                }
+              </button>
+              <button
+                className="filter-button"
+                onClick={() => setPriceView(!priceView)}
+              >
+                {
+                  !priceView ? <div className="d-flex align-items-center">
+                    <span className="filter-icon">
+                      <CiGrid2H />
+                    </span>
+                    Price Comparison
+                  </div> : <div className="d-flex align-items-center">
+                    <span className="filter-icon">
+                      <CiGrid2V />
+                    </span>
+                    Products
+                  </div>
+                }
+              </button>
+            </div>
           </div>
         </div>
       </div>
