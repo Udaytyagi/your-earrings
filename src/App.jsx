@@ -10,6 +10,8 @@ import { fetchOfferBannerApi } from './apis/mainApis/home/homeApis';
 
 function App() {
   const [openOfferModal, setOpenOfferModal] = useState(true)
+  const [offerImage, setOfferImage] = useState("")
+  const [loadingImage,setLoadingImage]=useState()
   const dispatch = useDispatch();
   const existingCompareIds = JSON.parse(localStorage.getItem('compareItems')) || [];
   const compareLength = existingCompareIds.length;
@@ -22,10 +24,19 @@ function App() {
     dispatch(fetchCart());
   }
 
+  const fetchOfferBanner = async () => {
+    const response = await fetchOfferBannerApi(setLoadingImage);
+    setOfferImage(response.data.offerImage)
+  }
+
+  useEffect(() => {
+    fetchOfferBanner()
+  }, [])
+
 
   return (
     <>
-      <OfferModal openOfferModal={openOfferModal} setOpenOfferModal={setOpenOfferModal} />
+      <OfferModal openOfferModal={openOfferModal} setOpenOfferModal={setOpenOfferModal} offerImage={offerImage} loadingImage={loadingImage}/>
       <Routes />
     </>
   )
