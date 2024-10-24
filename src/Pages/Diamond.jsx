@@ -41,6 +41,7 @@ const Diamond = () => {
   const [maxPrice, setMaxPrice] = useState("5000+");
   const [priceView, setPriceView] = useState(false)
   const [openEarringSizeModal, setEarringSizeModal] = useState(false)
+  const [earringSize, setEarringSize] = useState(null)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,7 +57,7 @@ const Diamond = () => {
       };
 
       const response = await fetchFilterApi(data);
-      const { Shape_list, Size_list, types, selected } = response.data.data;
+      const { Shape_list, Size_list, types, selected, availableEarringSizes } = response.data.data;
       setShapes(Shape_list);
       const selectedShape = Shape_list.find(
         (shape) => shape.slug === selected.shape_id
@@ -71,6 +72,7 @@ const Diamond = () => {
       setSelectedShapeSlug(selected.shape_id);
       setSelectedSettingSlug(selected.setting_id);
       setSelectedMetalSlug(selected.metal_id);
+      setEarringSize(availableEarringSizes)
     };
 
     fetchData();
@@ -101,7 +103,7 @@ const Diamond = () => {
 
   return (
     <>
-      <EarringSizeModal openEarringSizeModal={openEarringSizeModal} setEarringSizeModal={setEarringSizeModal} />
+      <EarringSizeModal openEarringSizeModal={openEarringSizeModal} setEarringSizeModal={setEarringSizeModal} earringSize={earringSize}/>
       <SidebarFilters
         showFilters={showFilters}
         setShowFilters={setShowFilters}

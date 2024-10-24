@@ -11,14 +11,14 @@ import { fetchOfferBannerApi } from './apis/mainApis/home/homeApis';
 function App() {
   const [openOfferModal, setOpenOfferModal] = useState(true)
   const [offerImage, setOfferImage] = useState("")
-  const [loadingImage,setLoadingImage]=useState()
+  const [loadingImage, setLoadingImage] = useState()
   const dispatch = useDispatch();
   const existingCompareIds = JSON.parse(localStorage.getItem('compareItems')) || [];
   const compareLength = existingCompareIds.length;
   dispatch(setCompareLength(compareLength));
 
   const token = localStorage.getItem("earringsToken");
-  if (token) {
+  if (token && openOfferModal) {
     dispatch(fetchUser());
     dispatch(fetchWishlist());
     dispatch(fetchCart());
@@ -36,7 +36,7 @@ function App() {
 
   return (
     <>
-      <OfferModal openOfferModal={openOfferModal} setOpenOfferModal={setOpenOfferModal} offerImage={offerImage} loadingImage={loadingImage}/>
+      <OfferModal openOfferModal={openOfferModal} setOpenOfferModal={setOpenOfferModal} offerImage={offerImage} loadingImage={loadingImage} />
       <Routes />
     </>
   )

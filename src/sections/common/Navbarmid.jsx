@@ -97,7 +97,11 @@ const Navbarmid = () => {
   const handleCompare = () => {
     const compareIds = JSON.parse(localStorage.getItem("compareItems")) || [];
     const products = compareIds.map(item => `${item.productSlug}-${item.variationId}`).join(",");
-    navigate(`/compare?products=${products}`);
+    if (compareIds && compareIds.length > 0) {
+      navigate(`/compare?products=${products}`);
+    } else {
+      navigate(`/compare`);
+    }
   };
 
   return (

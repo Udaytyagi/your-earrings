@@ -13,9 +13,9 @@ function PriceComparisonTable({ types }) {
                     <thead>
                         <tr>
                             <th>Carat Total Weight</th>
-                            <th>Beautiful (Color: I-J, Clarity: I1-I2)</th>
-                            <th>Brilliant (Color: H-I, Clarity: SI1-SI2)</th>
-                            <th>Masterpiece (Color: G-H, Clarity: VS1-VS2)</th>
+                            <th>Beautiful (Color: I-J, Clarity: VS2+)</th>
+                            <th>Brilliant (Color: H-I, Clarity: VS1+)</th>
+                            <th>Masterpiece (Color: G-H, Clarity: VVS2+)</th>
                         </tr>
                     </thead>
                     <tbody>

@@ -1,3 +1,8 @@
+/* .custom-modal {
+  height: 200px !important;
+  overflow-y: auto;
+} */
+
 .earring-view-container {
   text-align: center;
 }
@@ -23,9 +28,9 @@
   font-size: 12px;
 }
 
-.carat-radio input[type="radio"] {
+.carat-radio input[type='radio']:checked {
   margin-right: 5px;
-  color: #a07936 !important;
+  accent-color: #a07936 !important;
 }
 
 .carat-info-text {

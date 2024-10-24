@@ -17,6 +17,7 @@ const Compare = () => {
   const [variationIds, setVariationIds] = useState([]);
   const [lastProductDeleted, setLastProductDeleted] = useState(false);
   const compareProducts = useSelector((state) => state.compare.data);
+  console.log("location", location)
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
@@ -30,7 +31,7 @@ const Compare = () => {
       const data = { variation_ids: productArray };
       dispatch(fetchCompareProduct(data));
     }
-  }, [location, dispatch]);
+  }, [location.search, dispatch]);
 
   const handleDelete = (variationId) => {
     const compareIds = JSON.parse(localStorage.getItem("compareItems")) || [];

@@ -4,8 +4,10 @@ import { FaLinkedinIn } from "react-icons/fa6";
 import { FaInstagram } from "react-icons/fa";
 import "../../Styles/footer.css";
 import { newsLetterApi } from "../../apis/mainApis/footer/footerApis";
+import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
+  const navigate = useNavigate()
   const [email, setEmail] = useState("")
 
   const handleNewsLetter = async (e) => {
@@ -43,17 +45,17 @@ const Footer = () => {
 
                 <ul className="usefull-info">
                   <li onClick={() => {
-                    window.open("/about-us", "_blank");
+                    navigate("/about-us");
                   }}>
                     About Us
                   </li>
                   <li onClick={() => {
-                    window.open("/return-policy", "_blank");
+                    navigate("/return-policy");
                   }}>
                     Return Policy
                   </li>
                   <li onClick={() => {
-                    window.open("/contact-us", "_blank");
+                    navigate("/contact-us");
                   }}>
                     Contact Us
                   </li>
