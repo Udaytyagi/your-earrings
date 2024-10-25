@@ -211,11 +211,11 @@ function Checkout() {
                   <div className="payment-methods">
                     {/* <button className={`btn btn-outline-secondary ${selectedPaymentMethod === "cod" ? "selected" : ""}`} onClick={() => setSelectedPaymentMethod("cod")}>COD</button> */}
                     {/* <button className={`btn btn-outline-secondary ${selectedPaymentMethod === "world_pay" ? "selected" : ""}`} onClick={() => setSelectedPaymentMethod("world_pay")}>World Pay</button> */}
-                    <img src="/public/images/visa.svg" className="img-fluid"></img>
-                    <img src="/public/images/mastercard.svg" className="img-fluid"></img>
-                    <img src="/public/images/americanexpress.svg" className="img-fluid"></img>
-                    <img src="/public/images/discover.svg" className="img-fluid"></img>
-                    <img src="/public/images/jcb.svg" className="img-fluid"></img>
+                    <img src="/images/visa.svg" className="img-fluid"></img>
+                    <img src="/images/mastercard.svg" className="img-fluid"></img>
+                    <img src="/images/americanexpress.svg" className="img-fluid"></img>
+                    <img src="/images/discover.svg" className="img-fluid"></img>
+                    <img src="/images/jcb.svg" className="img-fluid"></img>
                   </div>
                 </div>
                 <button className="btn btn-lg mt-3 w-100" onClick={() => handleCheckout()} disabled={loading}>{loading ? <Loader height="22"
